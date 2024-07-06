@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// use App\Http\Controller\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,16 @@ Route::get('/', function () {
 
 Route::get("/setting_gedung", function () {
     return view("setting_gedung/setting_gedung", ["nama"=> "setting gedung"]);
+});
+
+Route::get("/login", function() {
+    return view("login/login", ["nama"=> "login"]);
+});
+
+Route::get('/register', function () {
+    return view("register/register", ["nama"=> "register"]);
+});
+
+Route::get("/profile", function(){
+    return view("profile/profile", ["nama"=> "profile"]);
 });
