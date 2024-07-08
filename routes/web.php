@@ -20,3 +20,9 @@ Route::get('/', function () {
 Route::get("/setting_gedung", function () {
     return view("setting_gedung/setting_gedung", ["nama"=> "setting gedung"]);
 });
+Route::get("/pembayaran", function () {
+    return view("pembayaran.pembayaran", ["nama"=> "pembayaran"]);
+});
+Route::get("/bayar", function () {
+    return view("pembayaran.bayar", ["nama"=> "pembayaran"]);
+});
