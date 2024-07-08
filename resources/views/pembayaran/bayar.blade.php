@@ -51,7 +51,8 @@
                                 <label for="inputEmail3" class="col-sm-4 col-form-label">Tahun</label>
                                 <div class="col-sm-8">
                                     <select name="" id="" class="form-control">
-                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021 (Lunas)</option>
                                     </select>
                                 </div>
                             </div>
@@ -74,7 +75,7 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-4 col-form-label">Total Bayar</label>
                                 <div class="col-sm-8">
-                                  <input type="number" class="form-control" id="inputEmail3" placeholder="Email">
+                                  <input type="number" class="form-control" id="" placeholder="Masukan Total Bayar">
                                 </div>
                             </div>
                         </div>
@@ -87,9 +88,65 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-11">
+                            <button class="btn btn-danger" style="position: absolute; right: 1px">Batal</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-success pull-right" style="justify-content: right">Bayar</button>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Riwayat Pembayaran</h4>
+                        </div>
+                        <div class="col-md-12">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nominal Bayar</th>
+                                        <th>Sisa Bayar</th>
+                                        <th>Tanggal Bayar</th>
+                                        <th>Status</th>
+                                        <th>Opsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Rp 650.000</td>
+                                        <td>Rp 0</td>
+                                        <td>Sat 12 Dec 2022</td>
+                                        <td><center><span class="badge badge-success">Lunas</span></center></td>
+                                        <td><center><a href="" class="btn btn-primary btn-sm"><i class="fa fa-print"></i>&nbsp;Cetak Struk</a></center></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn btn-success btn-sm" style="position: absolute; top: 1px"><i class="fa fa-sort"></i> Shorting</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+@endsection
+@section('jscript')
+<script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
 @endsection
