@@ -24,6 +24,11 @@ Route::get("/setting_gedung", function () {
 Route::get("/pembayaran", function () {
     return view("pembayaran.pembayaran", ["nama"=> "pembayaran"]);
 });
+
+Route::get("/tagihan", function () {
+    return view ("tagihan.tagihan", ["nama"=> "tagihan"]);
+});
+
 Route::get("/bayar", function () {
     return view("pembayaran.bayar", ["nama"=> "pembayaran"]);
 });

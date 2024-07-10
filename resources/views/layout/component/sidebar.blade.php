@@ -38,30 +38,36 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="seting_ruangan" class="nav-link ">
+            <a href="seting_ruangan" class="nav-link {{ $nama == "setting ruangan" ? "active" : ""}}">
             <i class="far nav-icon fas fa-solid fa-bed"></i>
             <p>Setting Ruangan</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="penghuni_ruang" class="nav-link ">
+            <a href="penghuni_ruang" class="nav-link {{ $nama == "penghuni ruang" ? "active" : ""}}">
             <i class="far fa-circle nav-icon fas fa-users"></i>
             <p>Penghuni</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="pindah_ruang" class="nav-link">
+            <a href="pindah_ruang" class="nav-link {{ $nama == "pindah ruang" ? "active" : ""}}">
             <i class="far nav-icon fas fa-solid fa-edit"></i>
             <p>Pindah Ruangan</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="pembayaran" class="nav-link">
+            <a href="pembayaran" class="nav-link {{ $nama == "pembayaran" ? "active" : ""}}">
             <i class="fas nav-icon fa-money-bill-wave-alt"></i>
             <p>Entry Pembayaran</p>
             </a>
         </li>
         <li class="nav-header">Laporan</li>
+        <li class="nav-item">
+          <a href="/tagihan" class="nav-link {{ $nama == "tagihan" ? "active" : ""}}">
+          <i class="fas nav-icon fa-dollar-sign"></i>
+          <p>Tagihan</p>
+          </a>
+      </li>
         <li class="nav-item">
             <a href="rekap_pembayaran" class="nav-link">
             <i class="fas nav-icon fa-calculator"></i>

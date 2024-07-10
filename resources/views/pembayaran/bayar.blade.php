@@ -88,6 +88,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12 input-bukti">
+                            
+                        </div>
                         <div class="col-md-11">
                             <button class="btn btn-danger" style="position: absolute; right: 1px">Batal</button>
                         </div>
@@ -130,6 +133,9 @@
             </div>
         </div>
     </section>
+@endsection
+@section('js')
+    <script src="{{ asset('vendor/script/pembayaran/index.js') }}" type="module"></script>
 @endsection
 @section('jscript')
 <script>
