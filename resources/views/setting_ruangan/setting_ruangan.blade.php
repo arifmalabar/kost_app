@@ -1,19 +1,19 @@
 @extends('layout.layout')
 @section('judul')
-    Setting Gedung
+    Setting Ruangan
 @endsection
 @section('content')
     <section class="content">
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
-                    <h4 class="card-title">Informasi Gedung</h4>
+                    <h4 class="card-title">Informasi Ruangan</h4>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahGedungModal">
-                                <i class="fa fa-plus"></i>&nbsp;Tambah Gedung
+                                <i class="fa fa-plus"></i>&nbsp;Tambah Ruangan
                             </button>
                         </div>
                     </div>
@@ -22,21 +22,21 @@
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th style="width: 30px">NO</th>
                                         <th style="width: 30px">Kode</th>
-                                        <th style="width: 150px">Nama Gedung</th>
+                                        <th style="width: 150px">Nama Ruangan</th>
                                         <th style="width: 20px">Kapasitas</th>
-                                        <th style="width: 140px">Jumlah Lantai</th>
-                                        <th style="width: 300px">Alamat</th>
                                         <th style="text-align: center">Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>Gedung1</td>
-                                        <td>40 Orang</td>
-                                        <td>3 Lantai</td>
-                                        <td>Blimbing Malang</td>
+                                        <td>R001
+                                        </td>
+                                        <td>Ruangan1
+                                        </td>
+                                        <td>2 Orang</td>
                                         <td>
                                             <center>
                                                 <a href="#" class="btn btn-outline-info btn-sm"><i
@@ -111,23 +111,5 @@
         function simpan() {
             $('#tambahGedungModal').modal('hide');
         }
-
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
     </script>
 @endsection
