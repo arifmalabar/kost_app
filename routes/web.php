@@ -48,3 +48,11 @@ Route::get('/register', function () {
 Route::get("/profile", function(){
     return view("profile/profile", ["nama"=> "profile"]);
 });
+
+Route::get("/penghuni_ruang", function () {
+    return view("penghuni/penghuni", ["nama"=> "penghuni ruang"]);
+});
+
+Route::get("/pindah_ruang", function () {
+    return view("pindah_ruang/pindahruang", ["nama"=> "pindah ruang"]);
+});
