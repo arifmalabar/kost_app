@@ -12,9 +12,9 @@
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahGedungModal">
+                            <!--<button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahGedungModal">
                                 <i class="fa fa-plus"></i>&nbsp;Tambah Data Pindah Ruang
-                            </button>
+                            </button>-->
                         </div>
                     </div>
                     <div class="row">
