@@ -10,21 +10,18 @@
                     <h4 class="card-title">Informasi Ruangan</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahGedungModal">
-                                <i class="fa fa-plus"></i>&nbsp;Tambah Ruangan
-                            </button>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
+                            <button class="btn btn-success btn-sm position-absolute" style="z-index: 10;" data-toggle="modal"
+                                data-target="#tambahGedungModal">
+                                <i class="fa fa-plus"></i>&nbsp;Tambah Ruangan
+                            </button>
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th style="width: 30px">NO</th>
-                                        <th style="width: 30px">Kode</th>
-                                        <th style="width: 150px">Nama Ruangan</th>
+                                        <th style="width: 30px">No</th>
+                                        <th style="width: 150px">Kode</th>
+                                        <th style="width: 140px">Nama Ruangan</th>
                                         <th style="width: 20px">Kapasitas</th>
                                         <th style="text-align: center">Opsi</th>
                                     </tr>
@@ -32,11 +29,9 @@
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>R001
-                                        </td>
-                                        <td>Ruangan1
-                                        </td>
-                                        <td>2 Orang</td>
+                                        <td>R001</td>
+                                        <td>Ruangan1</td>
+                                        <td>1 Orang</td>
                                         <td>
                                             <center>
                                                 <a href="#" class="btn btn-outline-info btn-sm"><i
@@ -70,31 +65,19 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Kode Gedung" id="#">
+                            <input type="text" class="form-control" placeholder="Kode Ruangan" id="#">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-tag"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Nama Gedung" id="#">
+                            <input type="text" class="form-control" placeholder="Nama Ruangan" id="#">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Kapasitas Gedung" id="#">
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Jumlah Lantai" id="#">
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Alamat" id="#">
+                            <input type="text" class="form-control" placeholder="Kapasitas Ruangan" id="#">
                         </div>
                     </form>
                 </div>
@@ -111,5 +94,23 @@
         function simpan() {
             $('#tambahGedungModal').modal('hide');
         }
+
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
     </script>
 @endsection

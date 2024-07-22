@@ -10,23 +10,20 @@
                     <h4 class="card-title">Informasi Gedung</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahGedungModal">
-                                <i class="fa fa-plus"></i>&nbsp;Tambah Gedung
-                            </button>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
+                            <button class="btn btn-success btn-sm position-absolute" style="z-index: 10;" data-toggle="modal"
+                                data-target="#tambahGedungModal">
+                                <i class="fa fa-plus"></i>&nbsp;Tambah Gedung
+                            </button>
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th style="width: 30px">Kode</th>
-                                        <th style="width: 150px">Nama Gedung</th>
+                                        <th style="width: 120px">Nama Gedung</th>
                                         <th style="width: 20px">Kapasitas</th>
-                                        <th style="width: 140px">Jumlah Lantai</th>
-                                        <th style="width: 300px">Alamat</th>
+                                        <th style="width: 120px">Jumlah Lantai</th>
+                                        <th style="width: 120px">Alamat</th>
                                         <th style="text-align: center">Opsi</th>
                                     </tr>
                                 </thead>
