@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pendapatan" class="nav-link">
+                    <a href="/laporan_pendapatan" class="nav-link {{ $nama == 'laporan pendapatan' ? 'active' : ''}}">
                         <i class="fas nav-icon fa-money-check"></i>
                         <p>Laporan Pendapatan</p>
                     </a>
