@@ -2,7 +2,7 @@
 <aside class="main-sidebar elevation-4 sidebar-light-success">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="assets/dist/img/KOS.png" alt="AdminLTE Logo" class="brand-image" style="width: 40px; height: auto;">
+        <img src="{{ asset('assets/dist/img/KOS.png') }}" alt="AdminLTE Logo" class="brand-image" style="width: 40px; height: auto;">
         <span class="brand-text font-weight-bold">NAMA KOST</span>
     </a>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\pembayaran\Bayar;
 use App\Http\Controllers\pembayaran\PembayaranController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controller\LoginController;
@@ -36,8 +37,8 @@ Route::get("/tagihan", function () {
     return view ("tagihan.tagihan", ["nama"=> "tagihan"]);
 }); 
 
-Route::get("/bayar", function () {
-    return view("pembayaran.bayar", ["nama"=> "pembayaran"]);
+Route::controller(Bayar::class)->group(function () {
+    Route::get("/bayar/{id}", 'index');
 });
 Route::get("/login", function() {
     return view("login/login", ["nama"=> "login"]);

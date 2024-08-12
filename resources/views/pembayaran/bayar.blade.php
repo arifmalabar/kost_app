@@ -20,23 +20,23 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>NIK:</label>
-                                    <p>35072412220023</p>
+                                    <p>{{$data->NIK}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Nama:</label>
-                                    <p>Zaidan Sultansyah Adi Darmawan</p>
+                                    <p>{{ $data ->nama }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Gedung</label>
-                                    <p>Gedung 1</p>
+                                    <p>{{ $data->ruangan->gedung->nama_gedung }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Ruangan</label>
-                                    <p>Ruang 1</p>
+                                    <p>{{ $data->ruangan->nama_ruang }}</p>
                                 </div>
                                 <div class="col-md-12">
                                     <label>Total Tagihan</label>
-                                    <p style="color:red;"><b>Rp 850.000,00-</b> </p>
+                                    <p style="color:red;"><b>Rp {{ number_format($data->harga, 2, ',', '.') }}-</b> </p>
                                 </div>
                                 <div class="col-md-12">
                                     <br>
@@ -112,7 +112,7 @@
                                         <th>Sisa Bayar</th>
                                         <th>Tanggal Bayar</th>
                                         <th>Status</th>
-                                        <th>Opsi</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>

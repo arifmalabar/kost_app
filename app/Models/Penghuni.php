@@ -15,6 +15,6 @@ class Penghuni extends Model
 
     public function ruangan()
     {
-        return $this->hasMany(Kamar::class, 'kode_kamar', 'kode_kamar');
+        return $this->hasOne(Kamar::class, 'kode_kamar', 'kode_kamar');
     }
 }

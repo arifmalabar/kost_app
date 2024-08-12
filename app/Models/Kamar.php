@@ -15,4 +15,8 @@ class Kamar extends Model
     {
         return $this->belongsTo(Penghuni::class, 'kode_kamar', 'kode_kamar');
     }
+    public function gedung()
+    {
+        return $this->hasOne(Gedung::class, 'kode_gedung', 'kode_gedung');
+    }
 }

@@ -15,20 +15,6 @@ export default async function getPenghuni() {
 }
 function showTables(dt)
 {
-    $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-        data : dt,
-        columns: [
-            {data : 'NIK'},
-            {data: 'nama'},
-
-        ]
-    });
+    
     console.log(dt[0]);
 }

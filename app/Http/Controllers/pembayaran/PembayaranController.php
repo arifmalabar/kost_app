@@ -18,6 +18,7 @@ class PembayaranController extends Controller
     {
         $data = array(
             "nama"=> "setting ruangan",
+            "data" => Penghuni::all()
         );
         return view("pembayaran/pembayaran", $data);
     }
@@ -27,11 +28,6 @@ class PembayaranController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDataPenghuni()
-    {
-        //return json_encode(Penghuni::all());
-        return dd(Penghuni::all());
-    }
 
     /**
      * Store a newly created resource in storage.
