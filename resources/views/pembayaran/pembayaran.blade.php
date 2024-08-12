@@ -15,7 +15,7 @@
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>NIK</th>
                                         <th>Nama Penghuni</th>
                                         <th>Gedung</th>
                                         <th>Ruang</th>
@@ -23,13 +23,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Zaidan S</td>
-                                        <td>Gedung1</td>
-                                        <td>G1 01</td>
-                                        <td><center><a href="/bayar" class="btn btn-outline-info btn-sm"><i class="fas fa-dollar-sign"></i>&nbsp;Bayar</a></center></td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -40,21 +34,14 @@
     </section>
 @endsection
 @section('jscript')
+<script src="{{ asset("assets/script/app/Pembayaran/index.js") }}" type="module"></script>
 <script>
     $(function () {
       $("#example1").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
+      
     });
   </script>
 @endsection

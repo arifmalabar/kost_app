@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\pembayaran\PembayaranController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controller\LoginController;
 
@@ -26,13 +27,14 @@ Route::get("/setting_ruangan", function () {
     return view("setting_ruangan/setting_ruangan", ["nama"=> "setting ruangan"]);
 });
 
-Route::get("/pembayaran", function () {
-    return view("pembayaran.pembayaran", ["nama"=> "pembayaran"]);
+Route::controller(PembayaranController::class)->group(function() {
+    Route::get('/pembayaran', 'index');
+    Route::get('/get_penghuni', 'getDataPenghuni');
 });
 
 Route::get("/tagihan", function () {
     return view ("tagihan.tagihan", ["nama"=> "tagihan"]);
-});
+}); 
 
 Route::get("/bayar", function () {
     return view("pembayaran.bayar", ["nama"=> "pembayaran"]);
