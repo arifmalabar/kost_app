@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Gedung extends Model
 {
@@ -15,6 +14,6 @@ class Gedung extends Model
 
     public function ruangan()
     {
-        return $this->belongsTo(Kamar::class, 'kode_gedung', 'kode_gedung');
+        return $this->hasMany(Kamar::class, 'kode_gedung', 'kode_gedung');
     }
 }

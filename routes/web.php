@@ -1,9 +1,10 @@
 <?php
 
+
+use App\Http\Controllers\gedung\GedungController;
 use App\Http\Controllers\pembayaran\Bayar;
 use App\Http\Controllers\pembayaran\PembayaranController;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controller\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,12 @@ Route::get('/', function () {
     return view('dashboard/dashboard', ["nama" => "dashboard"]);
 });
 
-Route::get("/setting_gedung", function () {
-    return view("setting_gedung/setting_gedung", ["nama"=> "setting gedung"]);
+Route::controller(GedungController::class)->group(function () {
+    Route::get('/setting_gedung', 'index')->name('gedung.index');
+    Route::post('/setting_gedung/store', 'store')->name('gedung.store');
+    Route::get('/setting_gedung/{kode_gedung}/edit', 'edit')->name('gedung.edit');
+    Route::put('/setting_gedung/{kode_gedung}/update', 'update')->name('gedung.update');
+    Route::delete('/setting_gedung/{kode_gedung}/delete', 'delete')->name('gedung.delete');
 });
 
 Route::get("/setting_ruangan", function () {
@@ -35,7 +40,7 @@ Route::controller(PembayaranController::class)->group(function() {
 
 Route::get("/tagihan", function () {
     return view ("tagihan.tagihan", ["nama"=> "tagihan"]);
-}); 
+});
 
 Route::controller(Bayar::class)->group(function () {
     Route::get("/bayar/{id}", 'index');
@@ -59,6 +64,7 @@ Route::get("/penghuni_ruang", function () {
 Route::get("/pindah_ruang", function () {
     return view("pindah_ruang/pindahruang", ["nama"=> "pindah ruang"]);
 });
+
 Route::get("/laporan_pendapatan", function(){
     return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"]);
 });

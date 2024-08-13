@@ -1,7 +1,9 @@
 @extends('layout.layout')
+
 @section('judul')
     Setting Gedung
 @endsection
+
 @section('content')
     <section class="content">
         <div class="container-fluid">
@@ -19,30 +21,38 @@
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th style="width: 30px">Kode</th>
+                                        <th style="width: 30px">Kode Gedung</th>
                                         <th style="width: 120px">Nama Gedung</th>
-                                        <th style="width: 20px">Kapasitas</th>
-                                        <th style="width: 120px">Jumlah Lantai</th>
-                                        <th style="width: 120px">Alamat</th>
+                                        <th style="width: 120px">Alamat Gedung</th>
                                         <th style="text-align: center">Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Gedung1</td>
-                                        <td>40 Orang</td>
-                                        <td>3 Lantai</td>
-                                        <td>Blimbing Malang</td>
-                                        <td>
-                                            <center>
-                                                <a href="#" class="btn btn-outline-info btn-sm"><i
-                                                        class="fas fa-pencil-alt"></i>&nbsp;Ubah</a>
-                                                <a href="#" class="btn btn-outline-danger btn-sm"><i
-                                                        class="fas fa-trash-alt"></i>&nbsp;Hapus</a>
-                                            </center>
-                                        </td>
-                                    </tr>
+                                    @foreach ($data as $d)
+                                        <tr>
+                                            <td>{{ $d->kode_gedung }}</td>
+                                            <td>{{ $d->nama_gedung }}</td>
+                                            <td>{{ $d->alamat_gedung }}</td>
+                                            <td>
+                                                <center>
+                                                    <a href="{{ route('gedung.edit', $d->kode_gedung) }}"
+                                                        class="btn btn-outline-info btn-sm">
+                                                        <i class="fas fa-pencil-alt"></i>&nbsp;Ubah
+                                                    </a>
+                                                    <form action="{{ route('gedung.delete', $d->kode_gedung) }}"
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm"
+                                                            onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                                            <i class="fas fa-trash-alt"></i>&nbsp;Hapus
+                                                        </button>
+                                                    </form>
+                                                </center>
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -51,6 +61,8 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal Tambah Gedung -->
     <div class="modal fade" id="tambahGedungModal" tabindex="-1" role="dialog" aria-labelledby="tambahGedungModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -62,60 +74,42 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formTambahGedung">
+                    <form id="formTambahGedung" action="{{ url('/setting_gedung/store') }}" method="POST">
+                        @csrf
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Kode Gedung" id="#">
+                            <input type="text" class="form-control" name="kode_gedung" placeholder="Kode Gedung"
+                                required>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-tag"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Nama Gedung" id="#">
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-building"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Kapasitas Gedung" id="#">
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Jumlah Lantai" id="#">
+                            <input type="text" class="form-control" name="nama_gedung" placeholder="Nama Gedung"
+                                required>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Alamat" id="#">
+                            <input type="text" class="form-control" name="alamat_gedung" placeholder="Alamat" required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                    <button type="submit" class="btn btn-primary" form="formTambahGedung">Simpan</button>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
 @section('jscript')
     <script>
-        function simpan() {
-            $('#tambahGedungModal').modal('hide');
-        }
-
         $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,

@@ -2,7 +2,8 @@
 <aside class="main-sidebar elevation-4 sidebar-light-success">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="{{ asset('assets/dist/img/KOS.png') }}" alt="AdminLTE Logo" class="brand-image" style="width: 40px; height: auto;">
+        <img src="{{ asset('assets/dist/img/KOS.png') }}" alt="AdminLTE Logo" class="brand-image"
+            style="width: 40px; height: auto;">
         <span class="brand-text font-weight-bold">NAMA KOST</span>
     </a>
 
@@ -82,7 +83,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/laporan_pendapatan" class="nav-link {{ $nama == 'laporan pendapatan' ? 'active' : ''}}">
+                    <a href="/laporan_pendapatan" class="nav-link {{ $nama == 'laporan pendapatan' ? 'active' : '' }}">
                         <i class="fas nav-icon fa-money-check"></i>
                         <p>Laporan Pendapatan</p>
                     </a>
