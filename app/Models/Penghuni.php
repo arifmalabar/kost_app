@@ -17,4 +17,8 @@ class Penghuni extends Model
     {
         return $this->hasOne(Kamar::class, 'kode_kamar', 'kode_kamar');
     }
+    public function pembayaran()
+    {
+        return $this->belongsTo(Pembayaran::class, 'NIK', 'NIK');
+    }
 }

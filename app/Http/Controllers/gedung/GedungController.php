@@ -7,6 +7,7 @@ use App\Models\Gedung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use App\Helper\Kode;
 
 class GedungController extends Controller
 {
@@ -25,7 +26,7 @@ class GedungController extends Controller
         $nama_gedung = $request->nama_gedung;
         $alamat_gedung = $request->alamat_gedung;
         $data = [
-            'kode_gedung' => $this->getKodeGedung(),
+            'kode_gedung' => Kode::getCustomCode(new Gedung(), "G"),
             'nama_gedung' => $nama_gedung,
             'alamat_gedung' => $alamat_gedung
         ];
@@ -35,18 +36,6 @@ class GedungController extends Controller
         } else {
             return Redirect::back()->with(['warning' => 'Data Gagal Disimpan!']);
         }
-    }
-    private function getKodeGedung()
-    {   
-        $newcode = "";
-        $lastcode = Gedung::latest('kode_gedung')->first();
-        if(Gedung::count() == 0) {
-            $newcode = "G001";
-        } else {
-            $number = intval(substr($lastcode->kode_gedung, 1)) + 1;
-            $newcode = 'G' . str_pad($number, 3, '0', STR_PAD_LEFT);
-        }
-        return $newcode;
     }
     public function edit(Request $request)
     {
