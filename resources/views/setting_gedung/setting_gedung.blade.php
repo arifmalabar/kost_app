@@ -76,13 +76,13 @@
                 <div class="modal-body">
                     <form id="formTambahGedung" action="{{ url('/setting_gedung/store') }}" method="POST">
                         @csrf
-                        <div class="input-group mb-3">
+                        <!--<div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
                             <input type="text" class="form-control" name="kode_gedung" placeholder="Kode Gedung"
                                 required>
-                        </div>
+                        </div>-->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-tag"></i></span>

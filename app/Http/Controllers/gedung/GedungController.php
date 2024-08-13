@@ -22,15 +22,13 @@ class GedungController extends Controller
 
     public function store(Request $request)
     {
-        $kode_gedung = $request->kode_gedung;
         $nama_gedung = $request->nama_gedung;
         $alamat_gedung = $request->alamat_gedung;
         $data = [
-            'kode_gedung' => $kode_gedung,
+            'kode_gedung' => $this->getKodeGedung(),
             'nama_gedung' => $nama_gedung,
             'alamat_gedung' => $alamat_gedung
         ];
-
         $simpan = DB::table('tb_gedung')->insert($data);
         if ($simpan) {
             return Redirect::back()->with(['success' => 'Data Berhasil Disimpan!']);
@@ -38,7 +36,18 @@ class GedungController extends Controller
             return Redirect::back()->with(['warning' => 'Data Gagal Disimpan!']);
         }
     }
-
+    private function getKodeGedung()
+    {   
+        $newcode = "";
+        $lastcode = Gedung::latest('kode_gedung')->first();
+        if(Gedung::count() == 0) {
+            $newcode = "G001";
+        } else {
+            $number = intval(substr($lastcode->kode_gedung, 1)) + 1;
+            $newcode = 'G' . str_pad($number, 3, '0', STR_PAD_LEFT);
+        }
+        return $newcode;
+    }
     public function edit(Request $request)
     {
         $kode_gedung = $request->kode_gedung;

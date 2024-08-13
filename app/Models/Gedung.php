@@ -12,6 +12,8 @@ class Gedung extends Model
     protected $table = "tb_gedung";
     protected $primaryKey = "kode_gedung";
 
+    public $incrementing = false;
+
     public function ruangan()
     {
         return $this->hasMany(Kamar::class, 'kode_gedung', 'kode_gedung');
