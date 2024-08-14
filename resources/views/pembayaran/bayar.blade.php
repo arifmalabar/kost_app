@@ -20,23 +20,23 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>NIK:</label>
-                                    <p>{{$data->NIK}}</p>
+                                    <p class="view-nik">undefined</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Nama:</label>
-                                    <p>{{ $data ->nama }}</p>
+                                    <p class="view-nama">undefined</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Gedung</label>
-                                    <p>{{ $data->ruangan->gedung->nama_gedung }}</p>
+                                    <p class="view-gedung">undefined</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Ruangan</label>
-                                    <p>{{ $data->ruangan->nama_ruang }}</p>
+                                    <p class="view-ruang">undefined</p>
                                 </div>
                                 <div class="col-md-12">
                                     <label>Total Tagihan</label>
-                                    <p style="color:red;"><b>Rp {{ number_format($data->harga, 2, ',', '.') }}-</b> </p>
+                                    <p class="view-tagihan" style="color:red;"></p>
                                 </div>
                                 <div class="col-md-12">
                                     <br>
@@ -135,7 +135,7 @@
     </section>
 @endsection
 @section('js')
-    <script src="{{ asset('vendor/script/pembayaran/index.js') }}" type="module"></script>
+    <script src="{{ asset('assets/script/app/bayar/index.js') }}" type="module"></script>
 @endsection
 @section('jscript')
 <script>

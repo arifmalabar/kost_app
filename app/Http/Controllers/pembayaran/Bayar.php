@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class Bayar extends Controller
 {
+    private $data = [];
+
+    function __construct()
+    {
+        $this->data = [
+            "penghuni_detail" => [],
+            "list_pembayaran" => []
+        ];
+    }
     public function index($id)
     {
         $data = array(
@@ -17,27 +26,41 @@ class Bayar extends Controller
         );
         return view('pembayaran.bayar', $data);
     }
-    public function getDataPembayaran()
+    private function getPenghuniDetail()
     {
         $nik = "3507241212020002";
-        $data = [];
+        $find = Penghuni::find($nik)->get();
+        $dt= [];
+        foreach ($find as $key) {
+            $dt['NIK'] = $key->NIK;
+            $dt['nama'] = $key->nama;
+            $dt['gedung'] = $key->ruangan->gedung->nama_gedung;
+            $dt['ruangan'] = $key->ruangan->nama_ruang;
+            $dt['harga'] = $key->harga;
+        }
+        $this->data["penghuni_detail"] = $dt;
+    }
+    public function getDataPembayaran()
+    {
+        $this->getPenghuniDetail();
+        $nik = "3507241212020002";
         $i = 0;
-        $data = Pembayaran::select(Pembayaran::raw('* ,SUM(jml_bayar) as total'))->whereRaw(Pembayaran::raw("NIK = ".$nik.""))->groupByRaw(Pembayaran::raw("tanggal_tagihan"))->get();
-        foreach ($data as $key) {
-            $data[$i]['jml_bayar'] = $key->jml_bayar;
-            $data[$i]['sisa_bayar'] = $this->getSisaByr($key->total, $key->jml_bayar);
-            $data[$i]['status'] = $this->getStatus($data[$i]['status']);
-            $data[$i]['tanggal'] = $key->tgl_bayar;
+        $dt = Pembayaran::select(Pembayaran::raw('* ,SUM(jml_bayar) as total'))->whereRaw(Pembayaran::raw("NIK = ".$nik.""))->groupByRaw(Pembayaran::raw("tanggal_tagihan"))->get();
+        foreach ($dt as $key) {
+            $this->data["list_pembayaran"][$i]['jml_bayar'] = $key->total;
+            $this->data["list_pembayaran"][$i]['sisa_bayar'] = $this->getSisaByr($key->tagihan, $key->total);
+            $this->data["list_pembayaran"][$i]['status'] = $this->getStatus($this->data["list_pembayaran"][$i]['sisa_bayar']);
+            $this->data["list_pembayaran"][$i]['tanggal'] = $key->tgl_bayar;
             $i++;
         }
-        echo json_encode($data);
+        echo json_encode($this->data);
     }
     private function getSisaByr($nawal, $nakhir) : int
     {
         return $nawal - $nakhir;
     }
     private function getStatus($sisa) : string {
-        if($sisa < 0)
+        if($sisa == 0)
         {
             return "lunas";
         } else{
