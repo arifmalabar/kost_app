@@ -104,26 +104,27 @@
                             <h4>Riwayat Pembayaran</h4>
                         </div>
                         <div class="col-md-12">
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nominal Bayar</th>
                                         <th>Sisa Bayar</th>
                                         <th>Tanggal Bayar</th>
+                                        <th>Tanggal Tagihan</th>
                                         <th>Status</th>
-                                        <th></th>
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <!--<tr>
                                         <td>1</td>
                                         <td>Rp 650.000</td>
                                         <td>Rp 0</td>
                                         <td>Sat 12 Dec 2022</td>
                                         <td><center><span class="badge badge-success">Lunas</span></center></td>
                                         <td><center><a href="" class="btn btn-primary btn-sm"><i class="fa fa-print"></i>&nbsp;Cetak Struk</a></center></td>
-                                    </tr>
+                                    </tr>-->
                                 </tbody>
                             </table>
                             <button class="btn btn-success btn-sm" style="position: absolute; top: 1px"><i class="fa fa-sort"></i> Shorting</button>
@@ -144,15 +145,6 @@
         "responsive": true, "lengthChange": false, "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
     });
   </script>
 @endsection

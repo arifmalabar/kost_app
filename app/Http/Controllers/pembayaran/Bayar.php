@@ -40,20 +40,26 @@ class Bayar extends Controller
         }
         $this->data["penghuni_detail"] = $dt;
     }
-    public function getDataPembayaran()
+    public function getDataPembayaran($nik)
     {
-        $this->getPenghuniDetail();
-        $nik = "3507241212020002";
-        $i = 0;
-        $dt = Pembayaran::select(Pembayaran::raw('* ,SUM(jml_bayar) as total'))->whereRaw(Pembayaran::raw("NIK = ".$nik.""))->groupByRaw(Pembayaran::raw("tanggal_tagihan"))->get();
-        foreach ($dt as $key) {
-            $this->data["list_pembayaran"][$i]['jml_bayar'] = $key->total;
-            $this->data["list_pembayaran"][$i]['sisa_bayar'] = $this->getSisaByr($key->tagihan, $key->total);
-            $this->data["list_pembayaran"][$i]['status'] = $this->getStatus($this->data["list_pembayaran"][$i]['sisa_bayar']);
-            $this->data["list_pembayaran"][$i]['tanggal'] = $key->tgl_bayar;
-            $i++;
+        $data_penghuni = Penghuni::find($nik);
+        if($data_penghuni){
+            $this->getPenghuniDetail();
+            //$nik = "3507241212020002";
+            $i = 0;
+            $dt = Pembayaran::select(Pembayaran::raw('* ,SUM(jml_bayar) as total'))->whereRaw(Pembayaran::raw("NIK = ".$nik.""))->groupByRaw(Pembayaran::raw("tanggal_tagihan"))->get();
+            foreach ($dt as $key) {
+                $this->data["list_pembayaran"][$i]['jml_bayar'] = $key->total;
+                $this->data["list_pembayaran"][$i]['sisa_bayar'] = $this->getSisaByr($key->tagihan, $key->total);
+                $this->data["list_pembayaran"][$i]['status'] = $this->getStatus($this->data["list_pembayaran"][$i]['sisa_bayar']);
+                $this->data["list_pembayaran"][$i]['tanggal'] = $key->tgl_bayar;
+                $this->data["list_pembayaran"][$i]['tanggal_tagihan'] = $key->tanggal_tagihan;
+                $i++;
+            }
+            echo json_encode($this->data);
+        } else {
+            echo json_encode(0);
         }
-        echo json_encode($this->data);
     }
     private function getSisaByr($nawal, $nakhir) : int
     {
