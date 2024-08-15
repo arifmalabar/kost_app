@@ -20,7 +20,7 @@ class PembayaranController extends Controller
             "nama"=> "setting ruangan",
             "data" => Penghuni::all()
         );
-        return view("pembayaran/pembayaran", $data);
+        return view('pembayaran/pembayaran', $data);
     }
     public function getDataPenghuni()
     {

@@ -40,8 +40,11 @@ class GedungController extends Controller
     public function edit(Request $request)
     {
         $kode_gedung = $request->kode_gedung;
-        $gedung = DB::table('tb_gedung')->where('kode_gedung', $kode_gedung)->first();
-        return view('setting_gedung.edit', compact('gedung'));
+        $data = array(
+            "nama"=> "setting gedung",
+            "gedung" => DB::table('tb_gedung')->where('kode_gedung', $kode_gedung)->first(),
+        );
+        return view('setting_gedung.edit', $data);
     }
 
     public function update($kode_gedung, Request $request)
