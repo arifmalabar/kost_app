@@ -26,28 +26,18 @@ class Bayar extends Controller
         );
         return view('pembayaran.bayar', $data);
     }
-    private function getPenghuniDetail()
+    
+    public function bayarTagihan(Request $request)
     {
-        $nik = "3507241212020002";
-        $find = Penghuni::find($nik)->get();
-        $dt= [];
-        foreach ($find as $key) {
-            $dt['NIK'] = $key->NIK;
-            $dt['nama'] = $key->nama;
-            $dt['gedung'] = $key->ruangan->gedung->nama_gedung;
-            $dt['ruangan'] = $key->ruangan->nama_ruang;
-            $dt['harga'] = $key->harga;
-        }
-        $this->data["penghuni_detail"] = $dt;
+        $this->isLunas($request->nik, $request->tanggal);
     }
     public function getDataPembayaran($nik)
     {
         $data_penghuni = Penghuni::find($nik);
         if($data_penghuni){
             $this->getPenghuniDetail();
-            //$nik = "3507241212020002";
             $i = 0;
-            $dt = Pembayaran::select(Pembayaran::raw('* ,SUM(jml_bayar) as total'))->whereRaw(Pembayaran::raw("NIK = ".$nik.""))->groupByRaw(Pembayaran::raw("tanggal_tagihan"))->get();
+            $dt = $this->queryTagihan($nik)->get();
             foreach ($dt as $key) {
                 $this->data["list_pembayaran"][$i]['jml_bayar'] = $key->total;
                 $this->data["list_pembayaran"][$i]['sisa_bayar'] = $this->getSisaByr($key->tagihan, $key->total);
@@ -61,6 +51,32 @@ class Bayar extends Controller
             echo json_encode(0);
         }
     }
+    private function queryTagihan($nik)
+    {
+        return Pembayaran::select(Pembayaran::raw('* ,SUM(jml_bayar) as total'))->whereRaw(Pembayaran::raw("NIK = ".$nik.""))->groupByRaw(Pembayaran::raw("tanggal_tagihan"));
+    }
+    private function isLunas($nik, $tanggal)
+    {
+        $cek = $this->queryTagihan($nik)->whereDate($tanggal)->get();
+        foreach ($cek as $key) {
+            echo $key->tagihan;
+        }
+    }
+    private function getPenghuniDetail()
+    {
+        $nik = "3507241212020002";
+        $find = Penghuni::find($nik)->get();
+        $dt= [];
+        foreach ($find as $key) {
+            $dt['NIK'] = $key->NIK;
+            $dt['nama'] = $key->nama;
+            $dt['gedung'] = $key->ruangan->gedung->nama_gedung;
+            $dt['ruangan'] = $key->ruangan->nama_ruang;
+            $dt['harga'] = $key->harga;
+            $dt['tanggal_bergabung'] = $key->tanggal_bergabung;
+        }
+        $this->data["penghuni_detail"] = $dt;
+    }
     private function getSisaByr($nawal, $nakhir) : int
     {
         return $nawal - $nakhir;
@@ -73,4 +89,5 @@ class Bayar extends Controller
             return "terhutang";
         }
     }
+
 }

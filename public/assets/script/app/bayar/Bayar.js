@@ -1,6 +1,7 @@
 
 import { data_pembayaran, host } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
+import { errorMsg } from "../message/Message.js";
 
 let view_nik = document.querySelector('.view-nik');
 let view_ktp = document.querySelector('.view-ktp');
@@ -9,7 +10,25 @@ let view_gedung = document.querySelector('.view-gedung');
 let view_ruang = document.querySelector('.view-ruang');
 let view_tagihan = document.querySelector('.view-tagihan');
 
-export default async function fecthDataPembayaran() 
+const field_tahun = document.querySelector('.field-tahun');
+const field_bulan = document.querySelector('.field-bulan');
+const field_total = document.querySelector('.field-total');
+let btn_proses = document.querySelector('.btn-proses');
+
+let tgl_bergabung = "";
+
+export function initData()
+{
+    btn_proses.addEventListener('click', function (params) {
+        let tahun = field_tahun.value;
+        let bulan = field_bulan.value;
+        let total = field_total.value;
+        let date = new Date(tgl_bergabung);
+        console.log(`${tahun}-${bulan}-${date.getDate()}`);
+    });
+}
+
+export async function fecthDataPembayaran() 
 {
     await fetch(data_pembayaran)
         .then(response => {
@@ -19,14 +38,38 @@ export default async function fecthDataPembayaran()
             if(response != 0){
                 setData(response.penghuni_detail);
                 setTabel(response.list_pembayaran);
+                setTahun();
             } else {
-                alert('NIK tidak terdafar di sistem ')
-                window.location.href = `${host}/pembayaran`;
+                errorMsg("Error", "NIK Tidak terdaftar di sistem").then((res) => {
+                    if(res.isConfirmed)
+                    {
+                        window.location.href = `${host}/pembayaran`;
+                    }
+                });
+                
             }
         })
         .catch(err => {
             console.log(err);
         });
+}
+function setTahun()
+{
+    let date = new Date(tgl_bergabung);
+    let date_now = new Date().getUTCFullYear();
+    let opt = ``;
+    var i = date.getFullYear();
+    while (i <= date_now) {
+        opt = opt + `<option value="${i}">${i}</option>`
+        i++;
+    }
+    field_tahun.innerHTML = opt;
+}
+async function bayarTagihan() {
+    let tahun = field_tahun.value;
+    let bulan = field_bulan.value;
+    let total = field_total.value;
+    console.log(tahun);
 }
 
 function setData(data) 
@@ -36,6 +79,7 @@ function setData(data)
     view_gedung.innerHTML = data.gedung;
     view_ruang.innerHTML = data.ruangan;
     view_tagihan.innerHTML = `<b>${getRupiah(data.harga)}</b>`;
+    tgl_bergabung = data.tanggal_bergabung;
 }
 function setTabel(dt)
 {

@@ -46,13 +46,13 @@
                             </div>
                         </div>
                         <div class="col-md-12"><br><h4>Bayar Tagihan</h4></div>
+                        @csrf
                         <div class="col-md-12">
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-4 col-form-label">Tahun</label>
                                 <div class="col-sm-8">
-                                    <select name="" id="" class="form-control">
-                                        <option value="2022">2022</option>
-                                        <option value="2021">2021 (Lunas)</option>
+                                    <select name="" id="" class="form-control field-tahun">
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -61,12 +61,19 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-4 col-form-label">Bulan</label>
                                 <div class="col-sm-8">
-                                    <select name="" id="" class="form-control">
+                                    <select name="" id="" class="form-control field-bulan">
                                         <option value="1">Januari(Sdh Bayar)</option>
                                         <option value="2">Februari(Sdh Bayar)</option>
                                         <option value="3">Maret(Sdh Bayar)</option>
                                         <option value="4">April(Sdh Bayar)</option>
                                         <option value="5">Mei</option>
+                                        <option value="6">Juni</option>
+                                        <option value="7">Juli</option>
+                                        <option value="8">Agustus</option>
+                                        <option value="9">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">Nopember</option>
+                                        <option value="12">Desember</option>
                                     </select>
                                 </div>
                             </div>
@@ -75,7 +82,7 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-4 col-form-label">Total Bayar</label>
                                 <div class="col-sm-8">
-                                  <input type="number" class="form-control" id="" placeholder="Masukan Total Bayar">
+                                  <input type="number" class="form-control field-total" id="" placeholder="Masukan Total Bayar">
                                 </div>
                             </div>
                         </div>
@@ -95,7 +102,7 @@
                             <button class="btn btn-danger" style="position: absolute; right: 1px">Batal</button>
                         </div>
                         <div class="col-md-1">
-                            <button class="btn btn-success pull-right" style="justify-content: right">Bayar</button>
+                            <button class="btn btn-success pull-right btn-proses"  style="justify-content: right">Bayar</button>
                         </div>
                     </div>
                     <br>
