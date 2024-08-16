@@ -45,6 +45,7 @@ Route::get("/tagihan", function () {
 Route::controller(Bayar::class)->group(function () {
     Route::get("/bayar/{id}", 'index');
     Route::get("/get_bayar/{nik}", 'getDataPembayaran');
+    Route::post("/bayar_tagihan", "bayarTagihan");
 });
 Route::get("/login", function() {
     return view("login/login", ["nama"=> "login"]);

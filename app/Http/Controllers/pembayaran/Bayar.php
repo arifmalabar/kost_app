@@ -5,7 +5,10 @@ namespace App\Http\Controllers\pembayaran;
 use App\Http\Controllers\Controller;
 use App\Models\Pembayaran;
 use App\Models\Penghuni;
+use ErrorException;
 use Illuminate\Http\Request;
+use App\Helper\Kode;
+use App\Models\Gedung;
 
 class Bayar extends Controller
 {
@@ -26,10 +29,59 @@ class Bayar extends Controller
         );
         return view('pembayaran.bayar', $data);
     }
-    
+    private function getCustomCode()
+    {
+        $newcode = "";
+        $lastcode = Pembayaran::latest('kode_bayar')->first();
+        if(Pembayaran::count() == 0) {
+            $newcode = "P"."001";
+        } else {
+            $number = intval(substr($lastcode->kode_bayar, 1)) + 1;
+            $newcode = "P" . str_pad($number, 3, '0', STR_PAD_LEFT);
+        }
+        return $newcode;
+    }
     public function bayarTagihan(Request $request)
     {
-        $this->isLunas($request->nik, $request->tanggal);
+        $data_penghuni = Penghuni::find($request->NIK);
+        $dt = [];
+        $query_cek =  Pembayaran::select(Pembayaran::raw('* ,SUM(jml_bayar) as total'))->whereRaw(Pembayaran::raw("NIK = ".$request->NIK." AND tanggal_tagihan = '".$request->tanggal_tagihan."' "))->groupByRaw(Pembayaran::raw("tanggal_tagihan"))->limit(1)->get();
+        $is_lunas = false;
+        foreach ($query_cek as $key) {
+            $this->data["list_pembayaran"]['jml_bayar'] = $key->total;
+            $this->data["list_pembayaran"]['sisa_bayar'] = $this->getSisaByr($key->tagihan, $key->total);
+            $this->data["list_pembayaran"]['status'] = $this->getStatus($this->data["list_pembayaran"]['sisa_bayar']);
+            $this->data["list_pembayaran"]['tanggal'] = $key->tgl_bayar;
+            $this->data["list_pembayaran"]['tanggal_tagihan'] = $key->tanggal_tagihan;
+            if($this->getStatus($this->data["list_pembayaran"]['sisa_bayar']) == "terhutang")
+            {
+                $is_lunas = false;
+            } else {
+                $is_lunas = true;
+            }
+        }
+        if(!$is_lunas)
+        {
+            $data = [
+                "kode_bayar" => Kode::getCustomCode(new Pembayaran(), "P", "kode_bayar"),
+                "NIK" => $request->NIK,
+                "jml_bayar" => $request->jml_bayar,
+                "metode_bayar" => $request->metode_bayar,
+                "tanggal_tagihan" => $request->tanggal_tagihan,
+                "tagihan" => $data_penghuni->harga,
+            ];
+            //$query = Pembayaran::insert($data);
+            /*if(!$query)
+            {
+                return response()->json(["status" => "failed"]);
+            } else {
+                return response()->json(["status" => "success"]);
+            }*/
+            return response()->json(["status" => $data]);
+            
+        } else {
+            return response()->json(["status" => "failed", "msg" => "pembayaran anda telah lunas"]);
+        }
     }
     public function getDataPembayaran($nik)
     {

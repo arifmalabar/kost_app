@@ -26,7 +26,7 @@ class GedungController extends Controller
         $nama_gedung = $request->nama_gedung;
         $alamat_gedung = $request->alamat_gedung;
         $data = [
-            'kode_gedung' => Kode::getCustomCode(new Gedung(), "G"),
+            'kode_gedung' => Kode::getCustomCode(new Gedung(), "G", 'kode_gedung'),
             'nama_gedung' => $nama_gedung,
             'alamat_gedung' => $alamat_gedung
         ];

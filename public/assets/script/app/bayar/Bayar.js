@@ -1,5 +1,5 @@
 
-import { data_pembayaran, host } from "../config/EndPoint.js";
+import { bayar_tagihan, data_pembayaran, host } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
 import { errorMsg } from "../message/Message.js";
 
@@ -13,18 +13,16 @@ let view_tagihan = document.querySelector('.view-tagihan');
 const field_tahun = document.querySelector('.field-tahun');
 const field_bulan = document.querySelector('.field-bulan');
 const field_total = document.querySelector('.field-total');
+const csrf = document.querySelector('.csrf');
 let btn_proses = document.querySelector('.btn-proses');
 
 let tgl_bergabung = "";
+let nik = 0;
 
 export function initData()
 {
     btn_proses.addEventListener('click', function (params) {
-        let tahun = field_tahun.value;
-        let bulan = field_bulan.value;
-        let total = field_total.value;
-        let date = new Date(tgl_bergabung);
-        console.log(`${tahun}-${bulan}-${date.getDate()}`);
+        bayarTagihan();
     });
 }
 
@@ -69,7 +67,30 @@ async function bayarTagihan() {
     let tahun = field_tahun.value;
     let bulan = field_bulan.value;
     let total = field_total.value;
-    console.log(tahun);
+    let date = new Date(tgl_bergabung);
+    let tanggal = `${tahun}-${bulan}-${date.getDate()}`;
+    
+    const data = {
+        NIK : nik,
+        jml_bayar: total,
+        metode_bayar: "tunai",
+        tanggal_tagihan : tanggal
+    };
+    await fetch(bayar_tagihan, {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN' : csrf.value
+        },
+        body: JSON.stringify(data)
+    }).then(result => {
+        //console.log(result);
+        return result.json();
+    }).then(data => {
+        console.log(data);
+    }).catch(err => {
+        console.log(err);
+    })
 }
 
 function setData(data) 
@@ -80,6 +101,7 @@ function setData(data)
     view_ruang.innerHTML = data.ruangan;
     view_tagihan.innerHTML = `<b>${getRupiah(data.harga)}</b>`;
     tgl_bergabung = data.tanggal_bergabung;
+    nik = data.NIK;
 }
 function setTabel(dt)
 {

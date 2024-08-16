@@ -5,10 +5,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kode 
 {
-    public static function getCustomCode(Model $model, $first)
+    public static function getCustomCode(Model $model, $first, $pk)
     {
         $newcode = "";
-        $lastcode = $model::latest('kode_gedung')->first();
+        $lastcode = $model::latest($pk)->first();
         if($model::count() == 0) {
             $newcode = $first."001";
         } else {
