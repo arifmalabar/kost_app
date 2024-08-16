@@ -1,7 +1,7 @@
 
 import { bayar_tagihan, data_pembayaran, host } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
-import { errorMsg } from "../message/Message.js";
+import { errorMsg, successMsg } from "../message/Message.js";
 
 let view_nik = document.querySelector('.view-nik');
 let view_ktp = document.querySelector('.view-ktp');
@@ -76,21 +76,30 @@ async function bayarTagihan() {
         metode_bayar: "tunai",
         tanggal_tagihan : tanggal
     };
-    await fetch(bayar_tagihan, {
-        method: 'POST',
-        headers: {
-            'Content-Type' : 'application/json',
-            'X-CSRF-TOKEN' : csrf.value
-        },
-        body: JSON.stringify(data)
-    }).then(result => {
-        //console.log(result);
-        return result.json();
-    }).then(data => {
-        console.log(data);
-    }).catch(err => {
-        console.log(err);
-    })
+    if(total.length != 0)
+    {
+        await fetch(bayar_tagihan, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'X-CSRF-TOKEN' : csrf.value
+            },
+            body: JSON.stringify(data)
+        }).then(result => {
+            return result.json();
+        }).then(data => {
+            if(data.status == 'failed'){
+                errorMsg('Transaksi Gagal', data.msg);
+            } else{
+                successMsg('Transaksi Sukses', data.msg);
+                fecthDataPembayaran();
+            }
+        }).catch(err => {
+            errorMsg(err);
+        })
+    } else {
+        errorMsg("Error", "Total transaksi belum diisi");
+    }
 }
 
 function setData(data) 
@@ -113,7 +122,8 @@ function setTabel(dt)
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "responsive": true,
+        "responsive": true, 
+        "bDestroy": true,
         data : dt,
         columns : [
             {

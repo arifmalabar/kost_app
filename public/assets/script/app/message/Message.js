@@ -5,3 +5,11 @@ export function errorMsg(...params) {
         text: params[1],
     });
 }
+export function successMsg(...params)
+{
+    return Swal.fire({
+        title: params[0],
+        text: params[1],
+        icon: "success"
+    });
+}
