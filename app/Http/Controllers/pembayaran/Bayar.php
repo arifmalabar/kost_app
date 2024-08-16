@@ -63,21 +63,21 @@ class Bayar extends Controller
         if(!$is_lunas)
         {
             $data = [
-                "kode_bayar" => Kode::getCustomCode(new Pembayaran(), "P", "kode_bayar"),
+                "kode_bayar" => $this->getCustomCode(),
                 "NIK" => $request->NIK,
                 "jml_bayar" => $request->jml_bayar,
                 "metode_bayar" => $request->metode_bayar,
                 "tanggal_tagihan" => $request->tanggal_tagihan,
                 "tagihan" => $data_penghuni->harga,
             ];
-            //$query = Pembayaran::insert($data);
-            /*if(!$query)
+            $query = Pembayaran::insert($data);
+            if(!$query)
             {
                 return response()->json(["status" => "failed"]);
             } else {
                 return response()->json(["status" => "success"]);
-            }*/
-            return response()->json(["status" => $data]);
+            }
+            //return response()->json(["status" => $data]);
             
         } else {
             return response()->json(["status" => "failed", "msg" => "pembayaran anda telah lunas"]);
