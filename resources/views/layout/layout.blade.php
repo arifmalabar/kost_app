@@ -8,13 +8,15 @@
 @section('layout')
 
     <body class="hold-transition sidebar-mini layout-fixed">
+               
         <div class="wrapper">
 
             <!-- Preloader -->
+            
             <div class="preloader flex-column justify-content-center align-items-center">
-                <img class="animation__shake" src="assets/dist/img/KOS.png" alt="AdminLTELogo" height="90" width="100">
+                <img class="animation__shake" src="{{ asset('assets/dist/img/KOS.png') }}" alt="AdminLTELogo" height="90" width="100">
             </div>
-
+            
             @include('layout.component.navbar')
             @include('layout.component.sidebar')
             <!-- Content Wrapper. Contains page content -->

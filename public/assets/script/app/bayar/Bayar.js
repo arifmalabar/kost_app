@@ -10,6 +10,7 @@ let view_gedung = document.querySelector('.view-gedung');
 let view_ruang = document.querySelector('.view-ruang');
 let view_tagihan = document.querySelector('.view-tagihan');
 let view_inputbukti = document.querySelector('.input-bukti');
+let view_loading = document.querySelector('.preloader');
 
 const field_tahun = document.querySelector('.field-tahun');
 const field_bulan = document.querySelector('.field-bulan');
@@ -68,7 +69,7 @@ async function bayarTagihan() {
     let tahun = field_tahun.value;
     let bulan = field_bulan.value;
     let total = field_total.value;
-    let bukti = field_bukti.files[0].size;
+    //let bukti = field_bukti.files[0];
     let date = new Date(tgl_bergabung);
     let tanggal = `${tahun}-${bulan}-${date.getDate()}`;
     
@@ -77,7 +78,7 @@ async function bayarTagihan() {
         jml_bayar: total,
         metode_bayar: (is_tranfer) ? "transfer" : "tunai",
         tanggal_tagihan : tanggal,
-        bukti : bukti,
+        //bukti : bukti,
     };
     if(total.length != 0)
     {
