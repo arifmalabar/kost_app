@@ -95,8 +95,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 input-bukti">
-                            
+                        <div class="col-md-12 input-bukti" style="display: none">
+                            <div class="form-group row" >
+                                <label for="inputEmail3" class="col-sm-4 col-form-label">Bukti Transfer</label>
+                                <div class="col-sm-8">
+                                  <input type="file" class="form-control field-bukti" id="">
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-11">
                             <button class="btn btn-danger" style="position: absolute; right: 1px">Batal</button>

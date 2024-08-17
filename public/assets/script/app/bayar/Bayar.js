@@ -9,13 +9,18 @@ let view_nama = document.querySelector('.view-nama');
 let view_gedung = document.querySelector('.view-gedung');
 let view_ruang = document.querySelector('.view-ruang');
 let view_tagihan = document.querySelector('.view-tagihan');
+let view_inputbukti = document.querySelector('.input-bukti');
 
 const field_tahun = document.querySelector('.field-tahun');
 const field_bulan = document.querySelector('.field-bulan');
 const field_total = document.querySelector('.field-total');
+const field_bukti = document.querySelector('.field-bukti');
+const jt_tunai = document.querySelector('#tunai');
+const jt_transfer = document.querySelector("#transfer");
 const csrf = document.querySelector('.csrf');
 let btn_proses = document.querySelector('.btn-proses');
 
+let is_tranfer = false;
 let tgl_bergabung = "";
 let nik = 0;
 
@@ -24,6 +29,14 @@ export function initData()
     btn_proses.addEventListener('click', function (params) {
         bayarTagihan();
     });
+    jt_transfer.addEventListener('click', function (params) {
+        is_tranfer = true;
+        showUploadBukti();
+    });
+    jt_tunai.addEventListener('click', function (params) {
+        is_tranfer = false;
+        showUploadBukti();
+    })
 }
 
 export async function fecthDataPembayaran() 
@@ -51,30 +64,20 @@ export async function fecthDataPembayaran()
             console.log(err);
         });
 }
-function setTahun()
-{
-    let date = new Date(tgl_bergabung);
-    let date_now = new Date().getUTCFullYear();
-    let opt = ``;
-    var i = date.getFullYear();
-    while (i <= date_now) {
-        opt = opt + `<option value="${i}">${i}</option>`
-        i++;
-    }
-    field_tahun.innerHTML = opt;
-}
 async function bayarTagihan() {
     let tahun = field_tahun.value;
     let bulan = field_bulan.value;
     let total = field_total.value;
+    let bukti = field_bukti.files[0].size;
     let date = new Date(tgl_bergabung);
     let tanggal = `${tahun}-${bulan}-${date.getDate()}`;
     
     const data = {
         NIK : nik,
         jml_bayar: total,
-        metode_bayar: "tunai",
-        tanggal_tagihan : tanggal
+        metode_bayar: (is_tranfer) ? "transfer" : "tunai",
+        tanggal_tagihan : tanggal,
+        bukti : bukti,
     };
     if(total.length != 0)
     {
@@ -101,7 +104,27 @@ async function bayarTagihan() {
         errorMsg("Error", "Total transaksi belum diisi");
     }
 }
-
+function setTahun()
+{
+    let bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
+    let date = new Date(tgl_bergabung);
+    let date_now = new Date().getUTCFullYear();
+    let opt = ``;
+    var i = date.getFullYear();
+    while (i <= date_now) {
+        opt = opt + `<option value="${i}">${i}</option>`
+        i++;
+    }
+    field_tahun.innerHTML = opt;
+    
+}
+function showUploadBukti() {
+    if (is_tranfer) {
+        view_inputbukti.style.display = 'block';
+    } else {
+        view_inputbukti.style.display = 'none';
+    }
+}
 function setData(data) 
 {
     view_nik.innerHTML = data.NIK;
