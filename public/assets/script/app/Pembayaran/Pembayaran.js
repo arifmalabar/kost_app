@@ -46,7 +46,8 @@ async function sortGedung(id)
             }
         })
         .then(data => {
-            console.log(data)
+            console.log(data);
+            showTables(data);
         })
         .catch(err => {
             errorMsg("Error", err);
@@ -62,6 +63,7 @@ function showListGedung(e) {
 }
 function showTables(dt)
 {
+    //$('#example2').DataTable().clear().draw();
     $('#example2').DataTable({
         "paging": true,
         "lengthChange": false,
@@ -70,6 +72,7 @@ function showTables(dt)
         "info": true,
         "autoWidth": false,
         "responsive": true,
+        "bDestroy": true,
         data : dt,
         columns : [
             {data : 'NIK'},

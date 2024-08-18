@@ -71,6 +71,7 @@ class Bayar extends Controller
                     "tagihan" => $data_penghuni[0]->harga,
                 ];
                 $query = Pembayaran::insert($data);
+                
                 if(!$query)
                 {
                     return response()->json(["status" => "failed", "msg" => "Transaksi Gagal"]);
@@ -86,6 +87,11 @@ class Bayar extends Controller
         } catch (\Throwable $th) {
             return response()->json(["Error" => $th]);
         }
+        //$this->doUploadBukti($request);
+    }
+    private function doUploadBukti($request)
+    {
+        return response()->json(["cek" => "oke"]);
     }
     public function getDataPembayaran($nik)
     {
