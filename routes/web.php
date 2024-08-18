@@ -4,6 +4,8 @@
 use App\Http\Controllers\gedung\GedungController;
 use App\Http\Controllers\pembayaran\Bayar;
 use App\Http\Controllers\pembayaran\PembayaranController;
+use App\Models\Penghuni;
+use App\Http\Controllers\penghuni\PenghuniController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +29,15 @@ Route::controller(GedungController::class)->group(function () {
     Route::get('/setting_gedung/{kode_gedung}/edit', 'edit')->name('gedung.edit');
     Route::put('/setting_gedung/{kode_gedung}/update', 'update')->name('gedung.update');
     Route::delete('/setting_gedung/{kode_gedung}/delete', 'delete')->name('gedung.delete');
+});
+
+Route::controller(PenghuniController::class)->group(function () {
+    Route::get('/penghuni_ruang', 'index')->name('penghuni.index');
+    Route::post('/penghuni_ruang/store', 'store')->name('penghuni.store');
+    Route::get('/penghuni_ruang/{NIK}/edit', 'edit')->name('penghuni.edit');
+    Route::put('/penghuni_ruang/{NIK}/update', 'update')->name('penghuni.update');
+    Route::delete('/penghuni_ruang/{NIK}/delete', 'delete')->name('penghuni.delete');
+
 });
 
 Route::get("/setting_ruangan", function () {
@@ -61,9 +72,9 @@ Route::get("/profile", function(){
     return view("profile/profile", ["nama"=> "profile"]);
 });
 
-Route::get("/penghuni_ruang", function () {
-    return view("penghuni/penghuni", ["nama"=> "penghuni ruang"]);
-});
+// Route::get("/penghuni_ruang", function () {
+//     return view("penghuni/penghuni", ["nama"=> "penghuni ruang"]);
+// });
 
 Route::get("/pindah_ruang", function () {
     return view("pindah_ruang/pindahruang", ["nama"=> "pindah ruang"]);

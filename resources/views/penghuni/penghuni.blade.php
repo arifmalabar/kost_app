@@ -1,140 +1,349 @@
 @extends('layout.layout')
+
 @section('judul')
-    Tambah Penghuni
+Tambah Penghuni
 @endsection
+
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="card card-default">
-                <div class="card-header">
-                    <h4 class="card-title">Informasi Penghuni</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahGedungModal">
-                                <i class="fa fa-plus"></i>&nbsp;Tambah Penghuni Baru
-                            </button>
-                        </div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h4 class="card-title">Informasi Penghuni</h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahPenghuniModal">
+                            <i class="fa fa-plus"></i>&nbsp;Tambah Penghuni Baru
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table id="example2" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 30px">Kode</th>
-                                        <th style="width: 150px">Nama Penghuni</th>
-                                        <th style="width: 20px">Nomer telepon</th>
-                                        <th style="width: 140px">Kode kamar</th>
-                                        <th style="width: 300px">Alamat penghuni</th>
-                                        <th style="text-align: center">Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dimas Rizky</td>
-                                        <td>0888382813123</td>
-                                        <td>1</td>
-                                        <td>Peterongan</td>
-                                        <td>
-                                            <center>
-                                                <a href="#" class="btn btn-outline-info btn-sm"><i
-                                                        class="fas fa-pencil-alt"></i>&nbsp;Ubah</a>
-                                                <a href="#" class="btn btn-outline-danger btn-sm"><i
-                                                        class="fas fa-trash-alt"></i>&nbsp;Hapus</a>
-                                            </center>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px">Nik</th>
+                                    <th style="width: 30px">Nama</th>
+                                    <th style="width: 20px">Email</th>
+                                    <th style="width: 30px">Harga</th>
+                                    <th style="width: 30px">No Telepon</th>
+                                    <th style="width: 30px">Nama Wali</th>
+                                    <th style="width: 30px">Nama Kampus</th>
+                                    <th style="width: 30px">Alamat Kampus</th>
+                                    <th style="width: 30px">Status</th>
+                                    <th style="width: 30px">Alamat</th>
+                                    <th style="width: 30px">Kode Kamar</th>
+                                    <th style="text-align: center">Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $d )
+                                <tr>
+                                    <td>{{ $d->NIK }}</td>
+                                    <td>{{ $d->nama }}</td>
+                                    <td>{{ $d->email}}</td>
+                                    <td>{{ $d->harga }}</td>
+                                    <td>{{ $d->no_telp}}</td>
+                                    <td>{{ $d->nama_wali}}</td>
+                                    <td>{{ $d->nama_kampus_kantor}}</td>
+                                    <td>{{ $d->alamat_kampus_kantor}}</td>
+                                    <td>{{ $d->status}}</td>
+                                    <td>{{ $d->alamat}}</td>
+                                    <td>{{ $d->kode_kamar}}</td>
+                                    <td>
+                                        <center>
+                                            <button class="btn btn-outline-info btn-sm" data-toggle="modal"
+                                                data-target="#editPenghuniModal"
+                                                data-nik="{{ $d->NIK }}"
+                                                data-nama="{{ $d->nama }}"
+                                                data-harga="{{ $d->harga }}"
+                                                data-no_telp="{{ $d->no_telp }}"
+                                                data-nama_wali="{{ $d->nama_wali }}"
+                                                data-nama_kampus_kantor="{{ $d->nama_kampus_kantor }}"
+                                                data-alamat_kampus_kantor="{{ $d->alamat_kampus_kantor }}"
+                                                data-status="{{ $d->status }}"
+                                                data-alamat="{{ $d->alamat }}"
+                                                data-kode_kamar="{{ $d->kode_kamar }}">
+                                                <i class="fas fa-pencil-alt"></i>&nbsp;Ubah
+                                            </button>
+                                            <form action="{{ route('penghuni.delete', $d->NIK) }}"
+                                                method="POST" id="delete-form-{{ $d->NIK }}"
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-outline-danger btn-sm"
+                                                    onclick="confirmDelete('{{ $d->NIK }}')">
+                                                    <i class="fas fa-trash-alt"></i>&nbsp;Hapus
+                                                </button>
+                                            </form>
+                                        </center>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <div class="modal fade" id="tambahGedungModal" tabindex="-1" role="dialog" aria-labelledby="tambahGedungModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tambahGedungModalLabel">Tambah Penghuni baru</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="formTambahGedung">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Kode Penghuni" id="#">
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-id-card"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Nama Penghuni" id="#">
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-phone-square"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Nomer Telepon" id="#">
-                        </div>
-                        <div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
     </div>
-    <select class="form-control" id="kodeKamar">
-        <option value="" disabled selected>Pilih Kode Kamar</option>
-        <option value="kamar1">Kamar 1</option>
-        <option value="kamar2">Kamar 2</option>
-        <option value="kamar3">Kamar 3</option>
-        <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
-    </select>
+</section>
+<!-- Tambah data -->
+<div class="modal fade" id="tambahPenghuniModal" tabindex="-1" role="dialog" aria-labelledby="tambahPenghuniModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tambahPenghuniModalLabel">Tambah Penghuni</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahPenghuni" action="{{ url('/penghuni_ruang/store') }}" method="POST">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="NIK" placeholder="Nik"
+                            required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="nama" placeholder="Nama" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="email" placeholder="Email"
+                            required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="harga" placeholder="harga" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="no_telp" placeholder="No Telepon"
+                            required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="nama_wali" placeholder="nama_wali" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="nama_kampus_kantor" placeholder="Nama Kampus"
+                            required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="alamat_kampus_kantor" placeholder="Alamat Kampus" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="status" placeholder="Status"
+                            required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="kode_kamar" placeholder="Kode Kamar"
+                            required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary" form="formTambahPenghuni">Simpan</button>
+            </div>
+        </div>
+    </div>
 </div>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Alamat penghuni" id="#">
+<!-- Modal Edit Penghuni -->
+<div class="modal fade" id="editPenghuniModal" tabindex="-1" role="dialog" aria-labelledby="editPenghuniModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPenghuniModalLabel">Edit Penghuni</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditPenghuni" action="" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" onclick="simpan()">Simpan</button>
-                </div>
+                        <input type="text" class="form-control" id="editNikPenghuni" name="NIK" readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editNamaPenghuni" name="nama" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editHargaPenghuni" name="harga"
+                            required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editnotelp" name="no_telp" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editnamakampus" name="nama_kampus_kantor" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editalamatkampus" name="alamat_kampus_kantor" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="ditstatus" name="status" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editalamat" name="alamat" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editkode" name="kode_kamar" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary" form="formEditPenghuni">Simpan</button>
             </div>
         </div>
     </div>
+</div>
 @endsection
-@section('jscript')
-    <script>
-        function simpan() {
-            $('#tambahGedungModal').modal('hide');
-        }
 
-        $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+
+@section('jscript')
+<script>
+    $(function() {
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
         });
-    </script>
+    });
+
+    $('#editPenghuniModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget);
+    var nikPenghuni = button.data('nik');
+    var namaPenghuni = button.data('nama');
+    var emailPenghuni = button.data('email');
+    var hargaPenghuni = button.data('harga');
+    var noTelpPenghuni = button.data('no_telp');
+    var namaWaliPenghuni = button.data('nama_wali');
+    var namaKampusPenghuni = button.data('nama_kampus_kantor');
+    var alamatKampusPenghuni = button.data('alamat_kampus_kantor');
+    var statusPenghuni = button.data('status');
+    var alamatPenghuni = button.data('alamat');
+    var kodeKamarPenghuni = button.data('kode_kamar');
+
+
+    var modal = $(this);
+    modal.find('.modal-body #editNikPenghuni').val(nikPenghuni);
+    modal.find('.modal-body #editNamaPenghuni').val(namaPenghuni);
+    modal.find('.modal-body #editHargaPenghuni').val(hargaPenghuni);
+    modal.find('.modal-body #editnotelp').val(noTelpPenghuni);
+    modal.find('.modal-body #editnamakampus').val(namaKampusPenghuni);
+    modal.find('.modal-body #editalamatkampus').val(alamatKampusPenghuni);
+    modal.find('.modal-body #editstatus').val(statusPenghuni);
+    modal.find('.modal-body #editalamat').val(alamatPenghuni);
+    modal.find('.modal-body #editkode').val(kodeKamarPenghuni);
+
+    var formAction = '{{ url('/penghuni_ruang/') }}/' + nikPenghuni + '/update';
+    modal.find('.modal-body form').attr('action', formAction);
+});
+
+    @if(session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: '{{ session('
+        success ') }}',
+        showConfirmButton: false,
+        timer: 2000
+    });
+    @endif
+
+    function confirmDelete(NIK) {
+        Swal.fire({
+            title: "Apakah kamu yakin?",
+            text: "Ingin menghapus data gedung ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#068c15",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, hapus!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + NIK).submit();
+                Swal.fire({
+                    title: "Dihapus!",
+                    text: "Data penghuni dihapus",
+                    icon: "success"
+                });
+            }
+        });
+    }
+</script>
 @endsection
