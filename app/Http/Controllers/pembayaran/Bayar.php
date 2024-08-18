@@ -43,44 +43,48 @@ class Bayar extends Controller
     }
     public function bayarTagihan(Request $request)
     {
-        $data_penghuni = Penghuni::where("NIK", $request->NIK)->get();
-        $query_cek =  Pembayaran::select(Pembayaran::raw('* ,SUM(jml_bayar) as total'))->whereRaw(Pembayaran::raw("NIK = ".$request->NIK." AND tanggal_tagihan = '".$request->tanggal_tagihan."' "))->groupByRaw(Pembayaran::raw("tanggal_tagihan"))->limit(1)->get();
-        $is_lunas = false;
-        foreach ($query_cek as $key) {
-            $this->data["list_pembayaran"]['jml_bayar'] = $key->total;
-            $this->data["list_pembayaran"]['sisa_bayar'] = $this->getSisaByr($key->tagihan, $key->total);
-            $this->data["list_pembayaran"]['status'] = $this->getStatus($this->data["list_pembayaran"]['sisa_bayar']);
-            $this->data["list_pembayaran"]['tanggal'] = $key->tgl_bayar;
-            $this->data["list_pembayaran"]['tanggal_tagihan'] = $key->tanggal_tagihan;
-            if($this->getStatus($this->data["list_pembayaran"]['sisa_bayar']) == "terhutang")
-            {
-                $is_lunas = false;
-            } else {
-                $is_lunas = true;
+        try {
+            $data_penghuni = Penghuni::where("NIK", $request->NIK)->get();
+            $query_cek =  Pembayaran::select(Pembayaran::raw('* ,SUM(jml_bayar) as total'))->whereRaw(Pembayaran::raw("NIK = ".$request->NIK." AND tanggal_tagihan = '".$request->tanggal_tagihan."' "))->groupByRaw(Pembayaran::raw("tanggal_tagihan"))->limit(1)->get();
+            $is_lunas = false;
+            foreach ($query_cek as $key) {
+                $this->data["list_pembayaran"]['jml_bayar'] = $key->total;
+                $this->data["list_pembayaran"]['sisa_bayar'] = $this->getSisaByr($key->tagihan, $key->total);
+                $this->data["list_pembayaran"]['status'] = $this->getStatus($this->data["list_pembayaran"]['sisa_bayar']);
+                $this->data["list_pembayaran"]['tanggal'] = $key->tgl_bayar;
+                $this->data["list_pembayaran"]['tanggal_tagihan'] = $key->tanggal_tagihan;
+                if($this->getStatus($this->data["list_pembayaran"]['sisa_bayar']) == "terhutang")
+                {
+                    $is_lunas = false;
+                } else {
+                    $is_lunas = true;
+                }
             }
-        }
-        if(!$is_lunas && $request->jml_bayar <= $data_penghuni[0]->harga)
-        {
-            $data = [
-                "kode_bayar" => $this->getCustomCode(),
-                "NIK" => $request->NIK,
-                "jml_bayar" => $request->jml_bayar,
-                "metode_bayar" => $request->metode_bayar,
-                "tanggal_tagihan" => $request->tanggal_tagihan,
-                "tagihan" => $data_penghuni[0]->harga,
-            ];
-            $query = Pembayaran::insert($data);
-            if(!$query)
+            if(!$is_lunas && $request->jml_bayar <= $data_penghuni[0]->harga)
             {
-                return response()->json(["status" => "failed", "msg" => "Transaksi Gagal"]);
+                $data = [
+                    "kode_bayar" => $this->getCustomCode(),
+                    "NIK" => $request->NIK,
+                    "jml_bayar" => $request->jml_bayar,
+                    "metode_bayar" => $request->metode_bayar,
+                    "tanggal_tagihan" => $request->tanggal_tagihan,
+                    "tagihan" => $data_penghuni[0]->harga,
+                ];
+                $query = Pembayaran::insert($data);
+                if(!$query)
+                {
+                    return response()->json(["status" => "failed", "msg" => "Transaksi Gagal"]);
+                } else {
+                    return response()->json(["status" => "success", "msg"=>"Berhasil menambah data transaksi"]);
+                }
+                
+            } elseif($request->jml_bayar >= $data_penghuni[0]->harga){
+                return response()->json(["status" => "failed", "msg" => "Transaksi Gagal nominal melebihi harga"]);
             } else {
-                return response()->json(["status" => "success", "msg"=>"Berhasil menambah data transaksi"]);
+                return response()->json(["status" => "failed", "msg" => "Maaf pembayaran pada tanggal ".$request->tanggal_tagihan." telah lunas"]);
             }
-            
-        } elseif($request->jml_bayar >= $data_penghuni[0]->harga){
-            return response()->json(["status" => "failed", "msg" => "Transaksi Gagal nominal melebihi harga"]);
-        } else {
-            return response()->json(["status" => "failed", "msg" => "Maaf pembayaran pada tanggal ".$request->tanggal_tagihan." telah lunas"]);
+        } catch (\Throwable $th) {
+            return response()->json(["Error" => $th]);
         }
     }
     public function getDataPembayaran($nik)

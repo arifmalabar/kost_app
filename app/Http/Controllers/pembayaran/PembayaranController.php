@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pembayaran;
 use App\Models\Penghuni;
 use Illuminate\Http\Request;
+use App\Models\Gedung;
 
 class PembayaranController extends Controller
 {
@@ -35,5 +36,23 @@ class PembayaranController extends Controller
             $i++;
         }
         echo json_encode($data);
+    }
+    public function getDataGedung()
+    {
+        $data = [];
+        $gedung = Gedung::all();
+        foreach ($gedung as $key) {
+            array_push($data, $key);
+        }
+        return response()->json($data);
+    }
+    public function getGedungById($id)
+    {
+        try {
+            $penghuni = Penghuni::selectRaw("NIK, nama, tb_kamar.nama_ruang as ruangan, tb_gedung.nama_gedung as gedung")->join("tb_kamar", "tb_biodata_penghuni.kode_kamar", "=", "tb_kamar.kode_kamar")->join("tb_gedung", "tb_kamar.kode_gedung", "=", "tb_gedung.kode_gedung")->where("tb_gedung.kode_gedung", "=", $id);
+            return response()->json($penghuni->get());
+        } catch (\Throwable $th) {
+            return response()->json(["error" => $th], 500);
+        }
     }
 }

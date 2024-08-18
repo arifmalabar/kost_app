@@ -91,7 +91,7 @@
                                 <label for="inputEmail3" class="col-sm-4 col-form-label">Metode Pembayaran</label>
                                 <div class="col-sm-8">
                                   <input type="radio" name="transfer"  id="transfer"> <label for="transfer">Transfer/Non Tunai/Jenis Lain</label>&nbsp;
-                                  <input type="radio" name="transfer"  id="tunai"> <label for="tunai">Tunai</label>
+                                  <input type="radio" name="transfer" checked  id="tunai"> <label for="tunai">Tunai</label>
                                 </div>
                             </div>
                         </div>

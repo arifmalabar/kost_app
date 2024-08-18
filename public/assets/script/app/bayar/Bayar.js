@@ -69,17 +69,27 @@ async function bayarTagihan() {
     let tahun = field_tahun.value;
     let bulan = field_bulan.value;
     let total = field_total.value;
-    //let bukti = field_bukti.files[0];
     let date = new Date(tgl_bergabung);
     let tanggal = `${tahun}-${bulan}-${date.getDate()}`;
-    
-    const data = {
-        NIK : nik,
-        jml_bayar: total,
-        metode_bayar: (is_tranfer) ? "transfer" : "tunai",
-        tanggal_tagihan : tanggal,
-        //bukti : bukti,
-    };
+    let data = {};
+
+    if(!field_bukti){
+        let bukti = field_bukti.files[0];
+        data = {
+            NIK : nik,
+            jml_bayar: total,
+            metode_bayar: (is_tranfer) ? "transfer" : "tunai",
+            tanggal_tagihan : tanggal,
+            bukti : bukti,
+        };
+    } else {
+        data = {
+            NIK : nik,
+            jml_bayar: total,
+            metode_bayar: (is_tranfer) ? "transfer" : "tunai",
+            tanggal_tagihan : tanggal,
+        };
+    }
     if(total.length != 0)
     {
         await fetch(bayar_tagihan, {
@@ -94,9 +104,11 @@ async function bayarTagihan() {
         }).then(data => {
             if(data.status == 'failed'){
                 errorMsg('Transaksi Gagal', data.msg);
-            } else{
+            } else if(data.status == 'success'){
                 successMsg('Transaksi Sukses', data.msg);
                 fecthDataPembayaran();
+            } else {
+                errorMsg('Transaksi Gagal', data);
             }
         }).catch(err => {
             errorMsg(err);

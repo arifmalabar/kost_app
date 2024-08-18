@@ -1,3 +1,5 @@
-import getPenghuni from "./Pembayaran.js";
+import { getPenghuni, getGedung, initData } from "./Pembayaran.js";
 
+initData()
 getPenghuni();
+getGedung();

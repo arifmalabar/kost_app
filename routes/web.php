@@ -35,6 +35,8 @@ Route::get("/setting_ruangan", function () {
 
 Route::controller(PembayaranController::class)->group(function() {
     Route::get('/pembayaran', 'index');
+    Route::get('/get_gedung', 'getDataGedung');
+    Route::get('/get_gedung_byid/{id}', 'getGedungById');
     Route::get('/get_penghuni', 'getDataPenghuni');
 });
 
