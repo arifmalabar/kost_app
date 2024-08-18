@@ -51,7 +51,7 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-4 col-form-label">Tahun</label>
                                 <div class="col-sm-8">
-                                    <select name="" id="" class="form-control field-tahun select2">
+                                    <select name="" id="" class="form-control field-tahun select2bs4">
                                         
                                     </select>
                                 </div>
@@ -82,7 +82,8 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-4 col-form-label">Total Bayar</label>
                                 <div class="col-sm-8">
-                                  <input type="number" class="form-control field-total" id="" placeholder="Masukan Total Bayar">
+                                    <p style="position: absolute; top:10px; left: 20px;">Rp.</p>
+                                    <input type="number" style="text-align: right" class="form-control field-total" id="" placeholder="0" value="0">
                                 </div>
                             </div>
                         </div>
@@ -153,7 +154,10 @@
 @section('jscript')
 <script>
     $(function () {
-        $('.select2').select2()
+        $('.select2').select2();
+        $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
       $("#example1").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
