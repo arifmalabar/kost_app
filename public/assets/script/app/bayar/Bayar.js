@@ -108,7 +108,7 @@ async function bayarTagihan() {
                 successMsg('Transaksi Sukses', data.msg);
                 fecthDataPembayaran();
             } else {
-                errorMsg('Transaksi Gagal', data);
+                errorMsg('Transaksi Gagal', data.Error.errorInfo[2]);
             }
         }).catch(err => {
             errorMsg(err);
