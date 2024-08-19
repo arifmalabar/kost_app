@@ -90,7 +90,6 @@ class PenghuniController extends Controller
             'alamat' => $alamat,
             'kode_kamar' => $kode_kamar
         ];
-
         $update = DB::table('tb_biodata_penghuni')->where('NIK', $NIK)->update($data);
         if ($update) {
             return Redirect::back()->with(['success' => 'Data Berhasil Diupdate!']);

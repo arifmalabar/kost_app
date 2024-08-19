@@ -181,7 +181,7 @@
                 title: 'Success',
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 3000
             });
         @endif
 

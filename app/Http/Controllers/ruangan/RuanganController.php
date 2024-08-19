@@ -17,6 +17,7 @@ class RuanganController extends Controller
     $data = array(
         "nama"=> "setting ruangan",
         "data" => Kamar::all(),
+        "gedung"=>Gedung::all()
     );
     return view('setting_ruangan.setting_ruangan', $data);
 }
