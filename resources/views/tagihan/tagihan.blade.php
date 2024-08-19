@@ -22,11 +22,12 @@
                                         <th>Gedung</th>
                                         <th>Ruang</th>
                                         <th>Total Tagihan</th>
+                                        <th>Status</th>
                                         <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <!--<tr>
                                         <td>1</td>
                                         <td>Zaidan S</td>
                                         <td>Gedung1</td>
@@ -41,7 +42,7 @@
                                                     Hubungi</a>
                                             </center>
                                         </td>
-                                    </tr>
+                                    </tr>-->
                                 </tbody>
                             </table>
                         </div>
@@ -53,6 +54,7 @@
     </section>
 @endsection
 @section('jscript')
+    <script src="{{ asset('assets/script/app/tagihan/index.js') }}" type="module"></script>
     <script>
         $(function() {
             $("#example1").DataTable({
@@ -61,15 +63,7 @@
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+            
         });
     </script>
 @endsection
