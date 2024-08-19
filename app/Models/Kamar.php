@@ -11,6 +11,8 @@ class Kamar extends Model
     protected $table = "tb_kamar";
     protected $primaryKey = "kode_kamar";
 
+    public $incrementing = false;
+
     public function penghuni()
     {
         return $this->belongsTo(Penghuni::class, 'kode_kamar', 'kode_kamar');

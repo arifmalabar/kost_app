@@ -66,12 +66,12 @@
                 <div class="modal-body">
                     <form id="formTambahRuang" action="{{ url('/setting_ruangan/store') }}" method="POST">
                         @csrf
-                        <div class="input-group mb-3">
+                        <!--<div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
                             <input type="text" class="form-control" placeholder="Kode Kamar" name="kode_kamar" required>
-                        </div>
+                        </div>-->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>

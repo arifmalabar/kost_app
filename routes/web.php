@@ -2,17 +2,14 @@
 
 
 use App\Models\Penghuni;
-<<<<<<< HEAD
-=======
-use App\Http\Controllers\penghuni\PenghuniController;
-use App\Http\Controllers\tagihan\TagihanController;
->>>>>>> 5b220f2d73d1978f415a22e64c3c8072cefb3d6b
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pembayaran\Bayar;
 use App\Http\Controllers\gedung\GedungController;
 use App\Http\Controllers\ruangan\RuanganController;
 use App\Http\Controllers\penghuni\PenghuniController;
 use App\Http\Controllers\pembayaran\PembayaranController;
+use App\Http\Controllers\tagihan\TagihanController;
+
 
 /*
 |--------------------------------------------------------------------------

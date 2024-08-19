@@ -30,18 +30,34 @@ class RuanganController extends Controller
         $kapasitas = $request->kapasitas;
 
         $data=[
-            'kode_kamar' => Kode::getCustomCode(new Kamar(), "K", 'kode_kamar'),
+            'kode_kamar' => $this->getCustomCode(),
             'kode_gedung' => $kode_gedung,
             'nama_ruang' => $nama_ruang,
             'no_ruang' => $no_ruang,
             'kapasitas' => $kapasitas
         ];
-        $simpan = DB::table('tb_kamar')->insert($data);
+        try {
+            $simpan = DB::table('tb_kamar')->insert($data);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
         if ($simpan) {
             return Redirect::back()->with(['success' => 'Data Berhasil Disimpan!']);
         } else {
             return Redirect::back()->with(['warning' => 'Data Gagal Disimpan!']);
         }
+    }
+    private function getCustomCode()
+    {
+        $newcode = "";
+        $lastcode = Kamar::latest('kode_kamar')->first();
+        if(Kamar::count() == 0) {
+            $newcode = "K"."001";
+        } else {
+            $number = intval(substr($lastcode->kode_kamar, 1)) + 1;
+            $newcode = "K" . str_pad($number, 3, '0', STR_PAD_LEFT);
+        }
+        return $newcode;
     }
     public function edit($kode_kamar)
     {
