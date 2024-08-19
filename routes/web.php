@@ -6,6 +6,7 @@ use App\Http\Controllers\pembayaran\Bayar;
 use App\Http\Controllers\pembayaran\PembayaranController;
 use App\Models\Penghuni;
 use App\Http\Controllers\penghuni\PenghuniController;
+use App\Http\Controllers\tagihan\TagihanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,8 +52,9 @@ Route::controller(PembayaranController::class)->group(function() {
     Route::get('/get_penghuni', 'getDataPenghuni');
 });
 
-Route::get("/tagihan", function () {
-    return view ("tagihan.tagihan", ["nama"=> "tagihan"]);
+Route::controller(TagihanController::class)->group(function(){
+    Route::get("/tagihan", 'index');
+    Route::get("/data_tagihan", 'getDataTagihan');
 });
 
 Route::controller(Bayar::class)->group(function () {
