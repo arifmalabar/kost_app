@@ -1,12 +1,13 @@
 <?php
 
 
-use App\Http\Controllers\gedung\GedungController;
-use App\Http\Controllers\pembayaran\Bayar;
-use App\Http\Controllers\pembayaran\PembayaranController;
 use App\Models\Penghuni;
-use App\Http\Controllers\penghuni\PenghuniController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\pembayaran\Bayar;
+use App\Http\Controllers\gedung\GedungController;
+use App\Http\Controllers\ruangan\RuanganController;
+use App\Http\Controllers\penghuni\PenghuniController;
+use App\Http\Controllers\pembayaran\PembayaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,14 @@ Route::controller(GedungController::class)->group(function () {
     Route::delete('/setting_gedung/{kode_gedung}/delete', 'delete')->name('gedung.delete');
 });
 
+Route::controller(RuanganController::class)->group(function () {
+    Route::get('/setting_ruangan', 'index')->name('ruangan.index');
+    Route::post('/setting_ruangan/store', 'store')->name('ruangan.store');
+    Route::get('/setting_ruangan/{kode_kamar}/edit', 'edit')->name('ruangan.edit');
+    Route::put('/setting_ruangan/{kode_kamar}/update', 'update')->name('ruangan.update');
+    Route::delete('/setting_ruangan/{kode_kamar}/delete', 'delete')->name('ruangan.delete');
+});
+
 Route::controller(PenghuniController::class)->group(function () {
     Route::get('/penghuni_ruang', 'index')->name('penghuni.index');
     Route::post('/penghuni_ruang/store', 'store')->name('penghuni.store');
@@ -38,10 +47,6 @@ Route::controller(PenghuniController::class)->group(function () {
     Route::put('/penghuni_ruang/{NIK}/update', 'update')->name('penghuni.update');
     Route::delete('/penghuni_ruang/{NIK}/delete', 'delete')->name('penghuni.delete');
 
-});
-
-Route::get("/setting_ruangan", function () {
-    return view("setting_ruangan/setting_ruangan", ["nama"=> "setting ruangan"]);
 });
 
 Route::controller(PembayaranController::class)->group(function() {
