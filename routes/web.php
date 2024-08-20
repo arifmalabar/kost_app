@@ -84,9 +84,9 @@ Route::get("/profile", function(){
 //     return view("penghuni/penghuni", ["nama"=> "penghuni ruang"]);
 // });
 
-Route::get("/pindah_ruang", function () {
-    return view("pindah_ruang/pindahruang", ["nama"=> "pindah ruang"]);
-});
+// Route::get("/pindah_ruang", function () {
+//     return view("pindah_ruang/pindahruang", ["nama"=> "pindah ruang"]);
+// });
 
 Route::get("/laporan_pendapatan", function(){
     return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"]);

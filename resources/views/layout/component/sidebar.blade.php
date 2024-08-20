@@ -51,12 +51,12 @@
                         <p>Penghuni</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="pindah_ruang" class="nav-link {{ $nama == 'pindah ruang' ? 'active' : '' }}">
                         <i class="far nav-icon fas fa-solid fa-door-open"></i>
                         <p>Pindah Ruangan</p>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="pembayaran" class="nav-link {{ $nama == 'pembayaran' ? 'active' : '' }}">
                         <i class="fas nav-icon fa-money-bill-wave-alt"></i>
