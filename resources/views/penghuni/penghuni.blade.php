@@ -164,11 +164,16 @@ Tambah Penghuni
                         <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
                     </div>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <select class="form-control" name="kode_kamar" required>
+                                <option value="" disabled selected>Pilih No Kamar</option>
+                                @foreach ($kode as $d)
+                                    <option value="{{ $d->kode_kamar }}">{{ $d->kode_kamar }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <input type="text" class="form-control" name="kode_kamar" placeholder="Kode Kamar" required>
-                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -254,11 +259,16 @@ Tambah Penghuni
                         <input type="text" class="form-control" id="editAlamat" name="alamat" required>
                     </div>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-door-closed "></i></span>
+                            </div>
+                            <select class="form-control" id="editKodeKamar" name="kode_kamar" required>
+                                <option value="" disabled>Pilih Nomer Kamar</option>
+                                @foreach ($kode as $d)
+                                    <option value="{{ $d->kode_kamar}}">{{ $d->kode_kamar }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <input type="text" class="form-control" id="editKodeKamar" name="kode_kamar" required>
-                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

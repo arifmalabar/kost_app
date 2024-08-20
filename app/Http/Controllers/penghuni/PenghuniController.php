@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Helper\Kode;
+use App\Models\Kamar;
 
 class PenghuniController extends Controller
 {
@@ -16,8 +17,9 @@ class PenghuniController extends Controller
 
         $data = array(
             "nama"=> "setting penghuni",
-            "data" => Penghuni::all()
-        );
+            "data" => Penghuni::all(),
+            "kode"=>Kamar::all()
+            );
         return view('penghuni.penghuni', $data);
     }
 
