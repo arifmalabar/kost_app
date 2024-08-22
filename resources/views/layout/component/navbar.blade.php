@@ -20,7 +20,7 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                 <div class="dropdown-divider"></div>
                 <a href="{{ route('profile') }}" class="dropdown-item logout-item">
-                    <i class="fa-solid fa-user"></i> Profile
+                    <i class="fas fa-user"></i> Profile
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="{{ route('logout') }}" class="dropdown-item logout-item">
