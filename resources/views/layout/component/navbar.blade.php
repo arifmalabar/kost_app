@@ -14,13 +14,16 @@
     <ul class="navbar-nav ml-auto" style="padding-right: 20px">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                <img style="width: 30px; height: 30px;" src="assets/dist/img/user.jpg" class="img-circle elevation-1"
-                    alt="User Image">
+                <img style="width: 30px; height: 30px;" src="assets/dist/img/user2-160x160.jpg" class="img-circle elevation-1"
+                    alt="User Image">Welcome back, {{ auth()->user()->name }}
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-                <span class="dropdown-item dropdown-header">Ahmad Bahrul Ilmi</span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item logout-item">
+                <a href="{{ route('profile') }}" class="dropdown-item logout-item">
+                    <i class="fa-solid fa-user"></i> Profile
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{ route('logout') }}" class="dropdown-item logout-item">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
