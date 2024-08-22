@@ -48,7 +48,12 @@ Route::controller(RuanganController::class)->group(function () {
 });
 
 Route::controller(PenghuniController::class)->group(function () {
+<<<<<<< HEAD
     Route::get('/penghuni_ruang', 'index')->name('penghuni.index')->middleware('auth');
+=======
+    Route::get('/penghuni_ruang', 'index')->name('penghuni.index');
+    Route::get('/penghuni_ruang/tambah_penghuni', 'halamanTambah')->name('penghuni.halamanTambah');
+>>>>>>> bc9e10252b3cbc368c80e27b71f698ae2c9a87fb
     Route::post('/penghuni_ruang/store', 'store')->name('penghuni.store');
     Route::get('/penghuni_ruang/{NIK}/edit', 'edit')->name('penghuni.edit');
     Route::put('/penghuni_ruang/{NIK}/update', 'update')->name('penghuni.update');
