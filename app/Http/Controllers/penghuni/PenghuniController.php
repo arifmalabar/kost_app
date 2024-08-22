@@ -23,6 +23,16 @@ class PenghuniController extends Controller
         return view('penghuni.penghuni', $data);
     }
 
+    public function getRuanganKosong($kode_gedung)
+    {
+        try {
+            $query = Kamar::selectRaw("tb_kamar.kode_kamar, tb_kamar.nama_ruang, tb_gedung.nama_gedung, IF(NIK IS NULL, 'tersedia', 'terisi') as status")->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_gedung.kode_gedung")->leftJoin("tb_biodata_penghuni", "tb_biodata_penghuni.kode_kamar", "=", "tb_kamar.kode_kamar")->where("tb_kamar.kode_gedung", "=", $kode_gedung)->groupBy("tb_kamar.kode_kamar")->get();
+            return response()->json($query);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+    }
+
     public function halamanTambah()
     {
         $data = array(

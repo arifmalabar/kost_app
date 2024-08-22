@@ -45,6 +45,7 @@ Route::controller(RuanganController::class)->group(function () {
 Route::controller(PenghuniController::class)->group(function () {
     Route::get('/penghuni_ruang', 'index')->name('penghuni.index');
     Route::get('/penghuni_ruang/tambah_penghuni', 'halamanTambah')->name('penghuni.halamanTambah');
+    Route::get('/penghuni_ruang/status_ruangan/{kode_gedung}', 'getRuanganKosong')->name('penghuni.getRuanganKosong');
     Route::post('/penghuni_ruang/store', 'store')->name('penghuni.store');
     Route::get('/penghuni_ruang/{NIK}/edit', 'edit')->name('penghuni.edit');
     Route::put('/penghuni_ruang/{NIK}/update', 'update')->name('penghuni.update');

@@ -13,15 +13,14 @@ use Illuminate\Support\Facades\Redirect;
 class RuanganController extends Controller
 {
     public function index()
-{
+    {
     $data = array(
         "nama"=> "setting ruangan",
         "data" => Kamar::all(),
         "gedung"=>Gedung::all()
     );
     return view('setting_ruangan.setting_ruangan', $data);
-}
-
+    }
 
     public function store(Request $request)
     {

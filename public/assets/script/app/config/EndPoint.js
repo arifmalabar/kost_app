@@ -6,3 +6,4 @@ export let bayar_tagihan = `${host}/bayar_tagihan`;
 export let get_gedung = `${host}/get_gedung`;
 export let get_gedung_byid = `${host}/get_gedung_byid`;
 export let get_tagihan = `${host}/data_tagihan`;
+export let informasi_ruangan = `${host}/penghuni_ruang/status_ruangan`;
