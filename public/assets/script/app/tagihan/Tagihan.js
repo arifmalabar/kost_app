@@ -18,6 +18,7 @@ export async function fecth_tagihan()
 function showTables(dt)
 {
     var no = 1;
+    var bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
     $('#example2').DataTable({
         "paging": true,
         "lengthChange": false,
@@ -43,6 +44,13 @@ function showTables(dt)
             },
             {
                 data : 'nama_ruang'
+            },
+            {
+                data : null,
+                render : function (data, type, row) {
+                    let tgl = new Date(row.tanggal_bergabung);
+                    return `${tgl.getDay()} ${bulan[tgl.getMonth()]} ${new Date().getFullYear()}`
+                }
             },
             {
                 data: null,
@@ -73,18 +81,13 @@ function showTables(dt)
             {
                 data : null,
                 render: function (data, type, row) {
-                    var date_now = new Date();
-                    var tgl_tagihan = new Date(row.tanggal_bergabung);
-                    if((tgl_tagihan.getMonth() == date_now.getMonth()) && tgl_tagihan.getDate() == date_now.getDate()){
-                        if(row.total != 0)
-                        {  
-                            return showButtonAksi();
-                        } else {
-                            return `<i>Pembayaran Sudah Lunas</i>`;
-                        }
+                    if(row.total != 0)
+                    {
+                        return showButtonAksi();
                     } else {
-                        return ``;
+                        return `<i style='font-size: 12px'>Pembayaran Sdh Lunas</i>`
                     }
+                    
                 }
             }
         ]

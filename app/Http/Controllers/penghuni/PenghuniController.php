@@ -23,6 +23,13 @@ class PenghuniController extends Controller
         return view('penghuni.penghuni', $data);
     }
 
+    public function halamanTambah()
+    {
+        $data = array(
+            "nama"=> "setting penghuni",
+        );
+        return view('penghuni.tambah', $data);
+    }
     public function store(Request $request)
     {
         $NIK= $request->NIK;

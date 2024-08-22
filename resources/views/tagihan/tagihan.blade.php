@@ -21,6 +21,7 @@
                                         <th>Nama Penghuni</th>
                                         <th>Gedung</th>
                                         <th>Ruang</th>
+                                        <th>Tanggal Tagihan</th>
                                         <th>Total Tagihan</th>
                                         <th>Status</th>
                                         <th>Opsi</th>

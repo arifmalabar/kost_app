@@ -12,30 +12,20 @@ Tambah Penghuni
                 <h4 class="card-title">Informasi Penghuni</h4>
             </div>
             <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahPenghuniModal">
-                            <i class="fa fa-plus"></i>&nbsp;Tambah Penghuni Baru
-                        </button>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example2" class="table table-bordered table-hover">
+                        <button class="btn btn-success btn-sm position-absolute" style="z-index: 10px;" data-toggle="modal" data-target="#tambahPenghuniModal">
+                            <i class="fa fa-plus"></i>&nbsp;Tambah Penghuni Baru
+                        </button>
+                        <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th style="width: 30px">NIK</th>
-                                    <th style="width: 30px">Nama</th>
-                                    <th style="width: 20px">Email</th>
-                                    <th style="width: 30px">Harga</th>
-                                    <th style="width: 30px">No Telepon</th>
-                                    <th style="width: 30px">Nama Wali</th>
-                                    <th style="width: 30px">Nama Kampus</th>
-                                    <th style="width: 30px">Alamat Kampus</th>
-                                    <th style="width: 30px">Status</th>
-                                    <th style="width: 30px">Alamat</th>
-                                    <th style="width: 30px">Kode Kamar</th>
-                                    <th style="text-align: center">Opsi</th>
+                                    <th>NIK</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>No Telepon</th>
+                                    
+                                    <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,14 +34,8 @@ Tambah Penghuni
                                     <td>{{ $d->NIK }}</td>
                                     <td>{{ $d->nama }}</td>
                                     <td>{{ $d->email }}</td>
-                                    <td>{{ $d->harga }}</td>
                                     <td>{{ $d->no_telp }}</td>
-                                    <td>{{ $d->nama_wali }}</td>
-                                    <td>{{ $d->nama_kampus_kantor }}</td>
-                                    <td>{{ $d->alamat_kampus_kantor }}</td>
-                                    <td>{{ $d->status }}</td>
-                                    <td>{{ $d->alamat }}</td>
-                                    <td>{{ $d->kode_kamar }}</td>
+                                    
                                     <td>
                                         <center>
                                             <button class="btn btn-outline-info btn-sm" data-toggle="modal"
@@ -103,7 +87,7 @@ Tambah Penghuni
             <div class="modal-body">
                 <form id="formTambahPenghuni" action="{{ url('/penghuni_ruang/store') }}" method="POST">
                     @csrf
-                    <div class="input-group mb-3">
+                    <!--<div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                         </div>
@@ -173,7 +157,7 @@ Tambah Penghuni
                                     <option value="{{ $d->kode_kamar }}">{{ $d->kode_kamar }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div>-->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
