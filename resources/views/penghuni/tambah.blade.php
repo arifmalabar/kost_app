@@ -15,11 +15,20 @@ Tambah Penghuni
 @section('content')
     <section class="content">
         <div class="container-fluid">
-            <div class="card card-success">
-                <div class="card-header">
-                    <h3 class="card-title">Tambah Data Penghuni Baru</h3>
+            <div class="card card-primary card-outline card-outline-tabs">
+                <div class="card-header p-0 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                        <li class="nav-item" >
+                            <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fa fa-user"></i>&nbsp;Biodata Penghuni</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fa fa-home"></i>Pilih Kamar</a>
+                        </li>
+                        
+                    </ul>
                 </div>
                 <div class="card-body">
+                    
                     <div class="row">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <div class="col-md-6">
