@@ -28,7 +28,7 @@
                 <li class="nav-header">Menu Utama</li>
 
                 <li class="nav-item">
-                    <a href="/" class="nav-link {{ $nama == 'dashboard' ? 'active' : '' }}">
+                    <a href="/dashboard" class="nav-link {{ $nama == 'dashboard' ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
