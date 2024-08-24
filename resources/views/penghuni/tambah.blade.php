@@ -15,21 +15,33 @@ Tambah Penghuni
 @section('content')
     <section class="content">
         <div class="container-fluid">
-            <div class="card card-primary card-outline card-outline-tabs">
-                <div class="card-header p-0 border-bottom-0">
-                    <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                        <li class="nav-item" >
-                            <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true"><i class="fa fa-user"></i>&nbsp;Biodata Penghuni</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false"><i class="fa fa-home"></i>Pilih Kamar</a>
-                        </li>
-                        
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <div class="tab-content" id="custom-tabs-two-tabContent">
-                        <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="card card-default">
+                    <div class="card-header">
+                      <h3 class="card-title">Input Data Penghuni</h3>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="bs-stepper">
+                        <div class="bs-stepper-header" role="tablist">
+                          <!-- your steps here -->
+                          <div class="step" data-target="#logins-part">
+                            <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
+                              <span class="bs-stepper-circle"><i class="fa fa-user"></i></span>
+                              <span class="bs-stepper-label">Biodata Penghuni</span>
+                            </button>
+                          </div>
+                          <div class="line"></div>
+                          <div class="step" data-target="#information-part">
+                            <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
+                              <span class="bs-stepper-circle"><i class="fas fa-solid fa-building"></i></span>
+                              <span class="bs-stepper-label">Pilih Kamar</span>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="bs-stepper-content">
+                          <!-- your steps content here -->
+                          <div id="logins-part" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
                             <div class="row">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <div class="col-md-6">
@@ -109,48 +121,8 @@ Tambah Penghuni
                                         </div>
                                     </div>
                                 </div>
+                               
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Pilih Ruang<sup>*</sup>: </label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                            </div>
-                                            <select class="form-control" name="kode_kamar" required>
-                                                <option value="" disabled selected>Pilih No Kamar</option>
-                                            </select>
-                                        </div>
-                                    </div> 
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Nama Kampus<sup>*</sup>: </label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                            </div>
-                                            <select class="form-control" name="kode_kamar" required>
-                                                <option value="" disabled selected>Pilih No Kamar</option>
-                                                
-                                            </select>
-                                        </div>
-                                    </div> 
-                                </div> 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Pilih Kamar<sup>*</sup>: </label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                            </div>
-                                            <select class="form-control" name="kode_kamar" required>
-                                                <option value="" disabled selected>Pilih No Kamar</option>
-                                                
-                                            </select>
-                                        </div> 
-                                    </div>
-                                </div> 
-                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="">Upload KTP<sup>*</sup>: </label>
                                         <input type="file" name="" id="" class="form-control">
@@ -161,7 +133,7 @@ Tambah Penghuni
                                         <label for="">Alamat Kampus<sup>*</sup>: </label>
                                         <div class="input-group mb-3">
                                             
-                                            <textarea class="form-control" name="alamat" id="" cols="30" rows="10" placeholder="Masukan Alamat"></textarea>
+                                            <textarea class="form-control" name="alamat" id="" cols="15" rows="4" placeholder="Masukan Alamat"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -169,18 +141,18 @@ Tambah Penghuni
                                     <div class="form-group">
                                         <label for="">Alamat Rumah<sup>*</sup>: </label>
                                         <div class="input-group mb-3">
-                                            <textarea class="form-control" name="alamat" id="" cols="30" rows="10" placeholder="Masukan Alamat"></textarea>
+                                            <textarea class="form-control" name="alamat" id="" cols="15" rows="4" placeholder="Masukan Alamat"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <button class="btn btn-success" style="width: 100%"><i class="fa fa-plus"></i> Tambah Pelanggan</button>
+                                    <button class="btn btn-success" onclick="stepper.next()"  id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false">Next&nbsp;<i class="fa fa-arrow-right"></i></button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+                          </div>
+                          <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-11">
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-4 col-form-label">Gedung</label>
                                         <div class="col-sm-8">
@@ -190,7 +162,10 @@ Tambah Penghuni
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-1">
+                                    <button class="btn btn-success btn-cari" style="width: 100%">Cari</button>
+                                </div>
+                                <!--<div class="col-md-12">
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-4 col-form-label">Ruangan</label>
                                         <div class="col-sm-8">
@@ -199,14 +174,52 @@ Tambah Penghuni
                                             </select>
                                         </div>
                                     </div>
+                                </div>-->
+                                <div class="col-md-12">
+                                    <hr>
+                                    <h3>Informasi Ketersediaan Ruang</h3>
+                                    <label for="" class="change-ruang">Ruangan Dipilih : </label>
+                                    <table id="example2" style="text-align: center" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Ruang</th>
+                                                <th>Gedung</th>
+                                                <th>Status</th>
+                                                <th>Opsi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                
+                                <div class="col-md-6">
+                                    <button class="btn btn-info text-white" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i>&nbsp;Previous</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-success text-white btn-simpan" style="position: absolute; right: 10px"><i class="fa fa-save"></i>&nbsp;Simpan</button>
+                                </div>
                             </div>
+                          </div>
                         </div>
+                      </div>
                     </div>
-                    
+                    <!-- /.card-body -->
+                    <!--<div class="card-footer">
+                      Visit <a href="https://github.com/Johann-S/bs-stepper/#how-to-use-it">bs-stepper documentation</a> for more examples and information about the plugin.
+                    </div>-->
+                  </div>
+                  <!-- /.card -->
                 </div>
-            </div>
+              </div>
+              <!-- /.row -->
         </div>
     </section>
 @endsection
@@ -215,12 +228,18 @@ Tambah Penghuni
 @endsection
 @section('jscript')
     <script>
+        let field_gedung = document.getElementById("input-gedung");
+        
         $(function () {
             $('.select2').select2();
             $('.select2bs4').select2({
                 theme: 'bootstrap4'
             })
         });
+        // BS-Stepper Init
+        document.addEventListener('DOMContentLoaded', function () {
+            window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        })
     </script>
     
 @endsection

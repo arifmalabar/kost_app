@@ -14,8 +14,8 @@
     <ul class="navbar-nav ml-auto" style="padding-right: 20px">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                <img style="width: 30px; height: 30px;" src="assets/dist/img/user2-160x160.jpg" class="img-circle elevation-1"
-                    alt="User Image">Welcome back, {{ auth()->user()->name }}
+                <img style="width: 30px; height: 30px;" src="{{ asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-1"
+                    alt="User Image">Welcome back, 
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                 <div class="dropdown-divider"></div>

@@ -32,7 +32,8 @@ Route::get('/dashboard', function () {
 })->name('dashboard')->middleware('auth');
 
 Route::controller(GedungController::class)->group(function () {
-    Route::get('/setting_gedung', 'index')->name('admin.gedung.index')->middleware('auth');
+    //Route::get('/setting_gedung', 'index')->name('admin.gedung.index')->middleware('auth');
+    Route::get('/setting_gedung', 'index')->name('admin.gedung.index');
     Route::post('/setting_gedung/store', 'store')->name('gedung.store');
     Route::get('/setting_gedung/{kode_gedung}/edit', 'edit')->name('gedung.edit');
     Route::put('/setting_gedung/{kode_gedung}/update', 'update')->name('gedung.update');
@@ -40,7 +41,7 @@ Route::controller(GedungController::class)->group(function () {
 });
 
 Route::controller(RuanganController::class)->group(function () {
-    Route::get('/setting_ruangan', 'index')->name('ruangan.index')->middleware('auth');
+    Route::get('/setting_ruangan', 'index')->name('ruangan.index');
     Route::post('/setting_ruangan/store', 'store')->name('ruangan.store');
     Route::get('/setting_ruangan/{kode_kamar}/edit', 'edit')->name('ruangan.edit');
     Route::put('/setting_ruangan/{kode_kamar}/update', 'update')->name('ruangan.update');
@@ -48,7 +49,9 @@ Route::controller(RuanganController::class)->group(function () {
 });
 
 Route::controller(PenghuniController::class)->group(function () {
-    Route::get('/penghuni_ruang', 'index')->name('penghuni.index')->middleware('auth');
+    Route::get('/penghuni_ruang', 'index')->name('penghuni.index');
+    Route::get('/penghuni_ruang/status_ruangan/{id}', 'getRuanganKosong')->name('penghuni.getRuanganKosong');
+    Route::get('/penghuni_ruang/tambah_penghuni', 'halamanTambah')->name('penghuni.halamanTambah');
     Route::post('/penghuni_ruang/store', 'store')->name('penghuni.store');
     Route::get('/penghuni_ruang/{NIK}/edit', 'edit')->name('penghuni.edit');
     Route::put('/penghuni_ruang/{NIK}/update', 'update')->name('penghuni.update');
@@ -57,19 +60,19 @@ Route::controller(PenghuniController::class)->group(function () {
 });
 
 Route::controller(PembayaranController::class)->group(function() {
-    Route::get('/pembayaran', 'index')->middleware('auth');
+    Route::get('/pembayaran', 'index');
     Route::get('/get_gedung', 'getDataGedung');
     Route::get('/get_gedung_byid/{id}', 'getGedungById');
     Route::get('/get_penghuni', 'getDataPenghuni');
 });
 
 Route::controller(TagihanController::class)->group(function(){
-    Route::get("/tagihan", 'index')->middleware('auth');
+    Route::get("/tagihan", 'index');
     Route::get("/data_tagihan", 'getDataTagihan');
 });
 
 Route::controller(Bayar::class)->group(function () {
-    Route::get("/bayar/{id}", 'index')->middleware('auth');
+    Route::get("/bayar/{id}", 'index');
     Route::get("/get_bayar/{nik}", 'getDataPembayaran');
     Route::post("/bayar_tagihan", "bayarTagihan");
 });
