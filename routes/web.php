@@ -29,7 +29,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', function () {
     return view('dashboard/dashboard', ["nama" => "dashboard"]);
-})->name('dashboard')->middleware('auth');
+})->name('dashboard');
 
 Route::controller(GedungController::class)->group(function () {
     //Route::get('/setting_gedung', 'index')->name('admin.gedung.index')->middleware('auth');
@@ -52,6 +52,9 @@ Route::controller(PenghuniController::class)->group(function () {
     Route::get('/penghuni_ruang', 'index')->name('penghuni.index');
     Route::get('/penghuni_ruang/status_ruangan/{id}', 'getRuanganKosong')->name('penghuni.getRuanganKosong');
     Route::get('/penghuni_ruang/tambah_penghuni', 'halamanTambah')->name('penghuni.halamanTambah');
+    Route::get('/penghuni_ruang/detail_penghuni/{id}', 'detailPenghuni')->name('penghuni.detailPenghuni');
+    Route::get('/penghuni_ruang/getDetailPenghuniData/{id}', 'getDetailPenghuniData')->name('penghuni.getDetailPenghuniData');
+    Route::get('/penghuni_ruang/update_penghuni', 'halamanTambah')->name('penghuni.halamanTambah');
     Route::post('/penghuni_ruang/store', 'store')->name('penghuni.store');
     Route::get('/penghuni_ruang/{NIK}/edit', 'edit')->name('penghuni.edit');
     Route::put('/penghuni_ruang/{NIK}/update', 'update')->name('penghuni.update');

@@ -1,4 +1,10 @@
-import { get_gedung, informasi_ruangan } from "../config/EndPoint.js";
+import {
+  get_gedung,
+  host,
+  informasi_ruangan,
+  tambah_penghuni,
+} from "../../config/EndPoint.js";
+import { successMsg } from "../../message/Message.js";
 let btn_cari = document.querySelector(".btn-cari");
 let field_gedung = document.querySelector(".input-gedung");
 let field_ruang = document.querySelector(".input-ruang");
@@ -10,20 +16,15 @@ export function init() {
     const button = $(event.target); // The button that was clicked
     const id = button.data("id"); // Get data-id attribute from button
     change_ruang.innerHTML = `Ruangan dipilih : ${id}-${button.val()}`;
+    $(".field-ruangan").val(id);
   });
   $(".btn-cari").click(function () {
     getStatusRuangan($(".input-gedung").val());
   });
   $(".btn-simpan").click(function () {
-    Swal.fire({
-      icon: "question",
-      title: "Konfirmasi",
-      text: "Apakah data yang diinput sudah benar",
-      showCancelButton: true,
-      confirmButtonText: "Data Sudah Benar",
-      cancelButtonText: "Batal!",
-    }).then((res) => {});
+    simpanPenghuni();
   });
+  // Format harga dengan Rp. di form tambah
 }
 
 export async function getStatusRuangan(id) {
@@ -56,6 +57,83 @@ export async function getGedung() {
     .catch((err) => {
       console.log(err);
     });
+}
+async function simpanPenghuni() {
+  try {
+    const NIK = document.querySelector('input[name="NIK"]').value;
+    const nama = document.querySelector('input[name="nama"]').value;
+    const email = document.querySelector('input[name="email"]').value;
+    const harga = document.querySelector('input[name="harga"]').value;
+    const notelp = document.querySelector('input[name="no_telp"]').value;
+    const nm_wali = document.querySelector('input[name="nama_wali"]').value;
+    const nm_kampus = document.querySelector(
+      'input[name="nama_kampus_kantor"]'
+    ).value;
+    const uploadktp = document.querySelector('input[name="files"]').files[0];
+    const alamat_kampus = document.querySelector(".alamat_kampus").value;
+    const alamat_rumah = document.querySelector(".alamat_rumah").value;
+    const token = document.querySelector(".token").value;
+    const kd_kamar = document.querySelector('input[name="kode_kamar"]').value;
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadktp);
+    reader.onload = async function () {
+      const base64file = reader.result.split(",")[1];
+      const data = {
+        NIK: NIK,
+        nama: nama,
+        email: email,
+        harga: harga,
+        no_telp: notelp,
+        nama_wali: nm_wali,
+        nama_kampus_kantor: nm_kampus,
+        alamat_kampus_kantor: alamat_kampus,
+        alamat: alamat_rumah,
+        kode_kamar: kd_kamar,
+        file: base64file,
+        token: $(".token").val(),
+      };
+      await fetch(tambah_penghuni, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": token,
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (data.status === "success") {
+            successMsg("Berhasil", "Data berhasil disimpan");
+            window.location.href = `${host}/penghuni_ruang`;
+          } else {
+            throw new Error("Gagal menginput data");
+          }
+        })
+        .catch((er) => {
+          console.log(`Errror : ${er}`);
+        });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+
+  /*try {
+    const response = await fetch(tambah_penghuni, {
+      method: "POST",
+      body: form_data,
+      headers: {
+        "X-CSRF-TOKEN": $(".token").val(),
+      },
+    });
+    //const res = await response.json();
+    if (response.ok) {
+      console.log(res);
+    }
+  } catch (error) {
+    alert(error);
+  }*/
 }
 function showListGedung(dt) {
   let opsi = ``;

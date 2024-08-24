@@ -16,7 +16,7 @@ class PenghuniController extends Controller
     {
 
         $data = array(
-            "nama"=> "setting penghuni",
+            "nama"=> "penghuni",
             "data" => Penghuni::all(),
             "kode"=>Kamar::all()
             );
@@ -32,11 +32,29 @@ class PenghuniController extends Controller
             return response()->json($th);
         }
     }
+    public function detailPenghuni($id)
+    {
+        $data = array(
+            "nama"=> "penghuni",
+        );
+        return view('penghuni.edit', $data);
+    }
+    public function getDetailPenghuniData($id)
+    {
+        try {
+            $query = Penghuni::selectRaw("NIK, nama, email, harga, no_telp, tanggal_bergabung, nama_wali, nama_kampus_kantor, alamat_kampus_kantor, alamat, tb_kamar.kode_kamar, tb_kamar.nama_ruang")->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_kamar.kode_gedung")->where("tb_biodata_penghuni.NIK", "=", $id)->limit(1)->first();
+            $query_ktp = Penghuni::selectRaw("file_ktp")->where("tb_biodata_penghuni.NIK", "=", $id)->limit(1)->first();
+            $ktp = base64_encode($query_ktp->file_ktp);
+            return response()->json(["biodata" => $query, "foto_ktp" => $ktp]);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+    }
 
     public function halamanTambah()
     {
         $data = array(
-            "nama"=> "setting penghuni",
+            "nama"=> "penghuni",
         );
         return view('penghuni.tambah', $data);
     }
@@ -53,6 +71,7 @@ class PenghuniController extends Controller
         $status= $request->status;
         $alamat = $request->alamat;
         $kode_kamar= $request->kode_kamar;
+        $ktpFileBinary = base64_decode($request->file);
         $data = [
             'NIK' => $NIK,
             'nama' => $nama,
@@ -64,14 +83,21 @@ class PenghuniController extends Controller
             'alamat_kampus_kantor' => $alamat_kampus_kantor,
             'status' => $status,
             'alamat' => $alamat,
-            'kode_kamar' => $kode_kamar
-
+            'kode_kamar' => $kode_kamar,
+            'status' => 1,
+            'file_ktp' => $ktpFileBinary
         ];
-        $simpan = DB::table('tb_biodata_penghuni')->insert($data);
-        if ($simpan) {
-            return Redirect::back()->with(['success' => 'Data Berhasil Disimpan!']);
-        } else {
-            return Redirect::back()->with(['warning' => 'Data Gagal Disimpan!']);
+        //return response()->json(["data" => $data]);
+        //$simpan = DB::table('tb_biodata_penghuni')->insert($data);
+        try {
+            $simpan = Penghuni::insert($data);
+            if ($simpan) {
+                return response()->json(['status' => 'success']);
+            } else {
+                return response()->json(['status' => 'failed']);
+            }
+        } catch (\Throwable $th) {
+            return response()->json($th);
         }
     }
     public function edit(Request $request)

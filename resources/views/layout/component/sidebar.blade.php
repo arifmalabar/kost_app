@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="penghuni_ruang" class="nav-link {{ $nama == 'penghuni ruang' ? 'active' : '' }}">
+                    <a href="penghuni_ruang" class="nav-link {{ $nama == 'penghuni' ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon fas fa-users"></i>
                         <p>Penghuni</p>
                     </a>
