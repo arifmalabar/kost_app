@@ -111,36 +111,45 @@ class PenghuniController extends Controller
     }
     public function update($NIK, Request $request)
     {
-        $NIK= $request->NIK;
-        $nama = $request->nama;
-        $email= $request->email;
-        $harga = $request->harga ;
-        $no_telp= $request->no_telp;
-        $nama_wali = $request->nama_wali;
-        $nama_kampus_kantor= $request->nama_kampus_kantor;
-        $alamat_kampus_kantor = $request->alamat_kampus_kantor;
-        $status= $request->status;
-        $alamat = $request->alamat;
-        $kode_kamar= $request->kode_kamar;
-        $data = [
-            'NIK' => $NIK,
-            'nama' => $nama,
-            'email' => $email,
-            'harga' => $harga,
-            'no_telp' => $no_telp,
-            'nama_wali' => $nama_wali,
-            'nama_kampus_kantor' => $nama_kampus_kantor,
-            'alamat_kampus_kantor' => $alamat_kampus_kantor,
-            'status' => $status,
-            'alamat' => $alamat,
-            'kode_kamar' => $kode_kamar
-        ];
-        $update = DB::table('tb_biodata_penghuni')->where('NIK', $NIK)->update($data);
+        try {
+            $NIK= $request->NIK;
+            $nama = $request->nama;
+            $email= $request->email;
+            $harga = $request->harga ;
+            $no_telp= $request->no_telp;
+            $nama_wali = $request->nama_wali;
+            $nama_kampus_kantor= $request->nama_kampus_kantor;
+            $alamat_kampus_kantor = $request->alamat_kampus_kantor;
+            $status= $request->status;
+            $alamat = $request->alamat;
+            $kode_kamar= $request->kode_kamar;
+            $ktpFileBinary = base64_decode($request->file);
+            $data = [
+                'NIK' => $NIK,
+                'nama' => $nama,
+                'email' => $email,
+                'harga' => $harga,
+                'no_telp' => $no_telp,
+                'nama_wali' => $nama_wali,
+                'nama_kampus_kantor' => $nama_kampus_kantor,
+                'alamat_kampus_kantor' => $alamat_kampus_kantor,
+                'status' => $status,
+                'alamat' => $alamat,
+                'kode_kamar' => $kode_kamar,
+                'file_ktp' => $ktpFileBinary
+            ];
+            return response()->json($request->file);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+        
+        /*$update = DB::table('tb_biodata_penghuni')->where('NIK', $NIK)->update($data);
         if ($update) {
             return Redirect::back()->with(['success' => 'Data Berhasil Diupdate!']);
         } else {
             return Redirect::back()->with(['warning' => 'Data Gagal Diupdate!']);
-        }
+        }*/
+        
     }
 
     public function delete($NIK)

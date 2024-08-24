@@ -2,6 +2,7 @@ import {
   get_detail_penghuni,
   host,
   informasi_ruangan,
+  update_penghuni,
 } from "../../config/EndPoint.js";
 
 let old_kdruang = "";
@@ -48,12 +49,8 @@ async function updateData() {
   const alamat_kampus = document.querySelector(".alamat_kampus").value;
   const alamat_rumah = document.querySelector(".alamat_rumah").value;
   const token = document.querySelector(".token").value;
-  const reader = new FileReader();
-  console.log(uploadktp);
-  reader.readAsDataURL(uploadktp);
-  reader.onload = async function () {
-    const base64file = reader.result.split(",")[1];
-    const data = {
+  if (uploadktp == undefined) {
+    let data = {
       NIK: NIK,
       nama: nama,
       email: email,
@@ -63,34 +60,51 @@ async function updateData() {
       nama_kampus_kantor: nm_kampus,
       alamat_kampus_kantor: alamat_kampus,
       alamat: alamat_rumah,
-      kode_kamar: kd_kamar,
-      file: base64file,
+      kode_kamar: last_kdruang === "" ? old_kdruang : last_kdruang,
       token: $(".token").val(),
     };
-    console.log(data);
-    /*await fetch(tambah_penghuni, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-TOKEN": token,
-      },
-      body: JSON.stringify(data),
+    fecthEditPenghuni(data);
+  } else {
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadktp);
+    reader.onload = async function () {
+      const base64file = reader.result.split(",")[1];
+      let data = {
+        NIK: NIK,
+        nama: nama,
+        email: email,
+        harga: harga,
+        no_telp: notelp,
+        nama_wali: nm_wali,
+        nama_kampus_kantor: nm_kampus,
+        alamat_kampus_kantor: alamat_kampus,
+        alamat: alamat_rumah,
+        kode_kamar: last_kdruang === "" ? old_kdruang : last_kdruang,
+        file: base64file,
+        token: $(".token").val(),
+      };
+      fecthEditPenghuni(data);
+    };
+  }
+}
+async function fecthEditPenghuni(data) {
+  await fetch(update_penghuni, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": $(".token").val(),
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      return response.json();
     })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.status === "success") {
-          successMsg("Berhasil", "Data berhasil disimpan");
-          window.location.href = `${host}/penghuni_ruang`;
-        } else {
-          throw new Error("Gagal menginput data");
-        }
-      })
-      .catch((er) => {
-        console.log(`Errror : ${er}`);
-      });*/
-  };
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((er) => {
+      console.log(`Errror : ${er}`);
+    });
 }
 function showDetailPenghuni(data) {
   document.querySelector('input[name="NIK"]').value = data.NIK;
@@ -106,7 +120,7 @@ function showDetailPenghuni(data) {
   document.querySelector(
     ".old-ruang"
   ).innerHTML = `Ruangan Sebelumnya : ${data.kode_kamar} - ${data.nama_ruang}`;
-  old_kdruang = data.kode_ruang;
+  old_kdruang = data.kode_kamar;
 }
 function showKtp(data) {
   document.querySelector(".foto-ktp").src = `data:image/png;base64, ${data}`;
