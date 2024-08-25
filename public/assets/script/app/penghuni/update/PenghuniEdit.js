@@ -2,11 +2,13 @@ import {
   get_detail_penghuni,
   host,
   informasi_ruangan,
+  tambah_penghuni,
   update_penghuni,
 } from "../../config/EndPoint.js";
 
 let old_kdruang = "";
 let last_kdruang = "";
+let old_nik = "";
 let change_ruang = document.querySelector(".change-ruang");
 
 export function init() {
@@ -71,6 +73,7 @@ async function updateData() {
       const base64file = reader.result.split(",")[1];
       let data = {
         NIK: NIK,
+        oldNIK: old_nik,
         nama: nama,
         email: email,
         harga: harga,
@@ -86,6 +89,65 @@ async function updateData() {
       fecthEditPenghuni(data);
     };
   }
+  /*try {
+    const NIK = document.querySelector('input[name="NIK"]').value;
+    const nama = document.querySelector('input[name="nama"]').value;
+    const email = document.querySelector('input[name="email"]').value;
+    const harga = document.querySelector('input[name="harga"]').value;
+    const notelp = document.querySelector('input[name="no_telp"]').value;
+    const nm_wali = document.querySelector('input[name="nama_wali"]').value;
+    const nm_kampus = document.querySelector(
+      'input[name="nama_kampus_kantor"]'
+    ).value;
+    const uploadktp = document.querySelector('input[name="files"]').files[0];
+    const alamat_kampus = document.querySelector(".alamat_kampus").value;
+    const alamat_rumah = document.querySelector(".alamat_rumah").value;
+    const token = document.querySelector(".token").value;
+    //const kd_kamar = document.querySelector('input[name="kode_kamar"]').value;
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadktp);
+    reader.onload = async function () {
+      const base64file = reader.result.split(",")[1];
+      const data = {
+        NIK: NIK,
+        nama: nama,
+        email: email,
+        harga: harga,
+        no_telp: notelp,
+        nama_wali: nm_wali,
+        nama_kampus_kantor: nm_kampus,
+        alamat_kampus_kantor: alamat_kampus,
+        alamat: alamat_rumah,
+        kode_kamar: old_kdruang,
+        file: base64file,
+        token: $(".token").val(),
+      };
+      await fetch(tambah_penghuni, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": token,
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (data.status === "success") {
+            successMsg("Berhasil", "Data berhasil disimpan");
+            window.location.href = `${host}/penghuni_ruang`;
+          } else {
+            throw new Error("Gagal menginput data");
+          }
+        })
+        .catch((er) => {
+          console.log(`Errror : ${er}`);
+        });
+    };
+  } catch (error) {
+    console.log(error);
+  }*/
 }
 async function fecthEditPenghuni(data) {
   await fetch(update_penghuni, {
@@ -121,6 +183,7 @@ function showDetailPenghuni(data) {
     ".old-ruang"
   ).innerHTML = `Ruangan Sebelumnya : ${data.kode_kamar} - ${data.nama_ruang}`;
   old_kdruang = data.kode_kamar;
+  old_nik = data.NIK;
 }
 function showKtp(data) {
   document.querySelector(".foto-ktp").src = `data:image/png;base64, ${data}`;

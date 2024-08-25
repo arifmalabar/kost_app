@@ -13,6 +13,7 @@ Tambah Penghuni
 @endsection
 
 @section('content')
+    <div class="debug"></div>
     <section class="content">
         <div class="container-fluid">
             <div class="row">

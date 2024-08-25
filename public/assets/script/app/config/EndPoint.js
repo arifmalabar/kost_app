@@ -9,4 +9,4 @@ export let get_tagihan = `${host}/data_tagihan`;
 export let informasi_ruangan = `${host}/penghuni_ruang/status_ruangan`;
 export let tambah_penghuni = `${host}/penghuni_ruang/store`;
 export let get_detail_penghuni = `${host}/penghuni_ruang/getDetailPenghuniData/${path[3]}`;
-export let update_penghuni = `${host}/penghuni_ruang/${path[3]}/update`;
+export let update_penghuni = `${host}/penghuni_ruang/update`;

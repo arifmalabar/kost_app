@@ -57,7 +57,7 @@ Route::controller(PenghuniController::class)->group(function () {
     Route::get('/penghuni_ruang/update_penghuni', 'halamanTambah')->name('penghuni.halamanTambah');
     Route::post('/penghuni_ruang/store', 'store')->name('penghuni.store');
     Route::get('/penghuni_ruang/{NIK}/edit', 'edit')->name('penghuni.edit');
-    Route::post('/penghuni_ruang/{NIK}/update', 'update')->name('penghuni.update');
+    Route::post('/penghuni_ruang/update', 'update')->name('penghuni.update');
     Route::delete('/penghuni_ruang/{NIK}/delete', 'delete')->name('penghuni.delete');
 
 });

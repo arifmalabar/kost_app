@@ -90,7 +90,8 @@ async function simpanPenghuni() {
         alamat: alamat_rumah,
         kode_kamar: kd_kamar,
         file: base64file,
-        token: $(".token").val(),
+        token: token,
+        status: 1,
       };
       await fetch(tambah_penghuni, {
         method: "POST",
@@ -104,6 +105,7 @@ async function simpanPenghuni() {
           return response.json();
         })
         .then((data) => {
+          console.log(data);
           if (data.status === "success") {
             successMsg("Berhasil", "Data berhasil disimpan");
             window.location.href = `${host}/penghuni_ruang`;

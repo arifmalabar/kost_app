@@ -71,7 +71,7 @@ class PenghuniController extends Controller
         $status= $request->status;
         $alamat = $request->alamat;
         $kode_kamar= $request->kode_kamar;
-        $ktpFileBinary = base64_decode($request->file);
+        $ktpFileBinary = base64_encode($request->file);
         $data = [
             'NIK' => $NIK,
             'nama' => $nama,
@@ -109,10 +109,11 @@ class PenghuniController extends Controller
         );
         return view('penghuni_ruang.edit', $data);
     }
-    public function update($NIK, Request $request)
+    public function update(Request $request)
     {
-        try {
+        try {/*
             $NIK= $request->NIK;
+            $oldNIK = $request->oldNIK;
             $nama = $request->nama;
             $email= $request->email;
             $harga = $request->harga ;
@@ -123,7 +124,7 @@ class PenghuniController extends Controller
             $status= $request->status;
             $alamat = $request->alamat;
             $kode_kamar= $request->kode_kamar;
-            $ktpFileBinary = base64_decode($request->file);
+            $ktpFileBinary = base64_encode($request->file);
             $data = [
                 'NIK' => $NIK,
                 'nama' => $nama,
@@ -137,8 +138,35 @@ class PenghuniController extends Controller
                 'alamat' => $alamat,
                 'kode_kamar' => $kode_kamar,
                 'file_ktp' => $ktpFileBinary
-            ];
-            return response()->json($request->file);
+            ];*/
+        $NIK= $request->NIK;
+        $nama = $request->nama;
+        $email= $request->email;
+        $harga = $request->harga ;
+        $no_telp= $request->no_telp;
+        $nama_wali = $request->nama_wali;
+        $nama_kampus_kantor= $request->nama_kampus_kantor;
+        $alamat_kampus_kantor = $request->alamat_kampus_kantor;
+        $status= $request->status;
+        $alamat = $request->alamat;
+        $kode_kamar= $request->kode_kamar;
+        $ktpFileBinary = base64_encode($request->file);
+        $data = [
+            'NIK' => $NIK,
+            'nama' => $nama,
+            'email' => $email,
+            'harga' => $harga,
+            'no_telp' => $no_telp,
+            'nama_wali' => $nama_wali,
+            'nama_kampus_kantor' => $nama_kampus_kantor,
+            'alamat_kampus_kantor' => $alamat_kampus_kantor,
+            'status' => $status,
+            'alamat' => $alamat,
+            'kode_kamar' => $kode_kamar,
+            'status' => 1,
+            'file_ktp' => $ktpFileBinary
+        ];
+            return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json($th);
         }
