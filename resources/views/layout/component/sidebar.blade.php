@@ -73,13 +73,13 @@
                 <li class="nav-item">
                     <a href="rekap_pembayaran" class="nav-link">
                         <i class="fas nav-icon fa-calculator"></i>
-                        <p>Rekap Pembayaran</p>
+                        <p>Grafik Penghuni</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="faktur" class="nav-link">
                         <i class="fas nav-icon fa-university"></i>
-                        <p>Faktur</p>
+                        <p>Tingkat Hunian</p>
                     </a>
                 </li>
                 <li class="nav-item">

@@ -85,10 +85,9 @@ class PenghuniController extends Controller
             'alamat' => $alamat,
             'kode_kamar' => $kode_kamar,
             'status' => 1,
-            'file_ktp' => $ktpFileBinary
+            'file_ktp' => $ktpFileBinary,
+            "tanggal_bergabung" => date("Y-m-d")
         ];
-        //return response()->json(["data" => $data]);
-        //$simpan = DB::table('tb_biodata_penghuni')->insert($data);
         try {
             $simpan = Penghuni::insert($data);
             if ($simpan) {

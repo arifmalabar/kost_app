@@ -70,12 +70,12 @@ Route::controller(PembayaranController::class)->group(function() {
 });
 
 Route::controller(TagihanController::class)->group(function(){
-    Route::get("/tagihan", 'index');
+    Route::get("/tagihan", 'index')->name('tagihan.index');
     Route::get("/data_tagihan", 'getDataTagihan');
 });
 
 Route::controller(Bayar::class)->group(function () {
-    Route::get("/bayar/{id}", 'index');
+    Route::get("/bayar/{id}", 'index')->name('bayar.index');
     Route::get("/get_bayar/{nik}", 'getDataPembayaran');
     Route::post("/bayar_tagihan", "bayarTagihan");
 });

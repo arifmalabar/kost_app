@@ -1,6 +1,19 @@
 import { get_tagihan } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
-
+var bulan = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "Nopember",
+  "Desember",
+];
 export async function fecth_tagihan() {
   await fetch(get_tagihan)
     .then((response) => {
@@ -16,20 +29,7 @@ export async function fecth_tagihan() {
 
 function showTables(dt) {
   var no = 1;
-  var bulan = [
-    "Januari",
-    "Februari",
-    "Maret",
-    "April",
-    "Mei",
-    "Juni",
-    "Juli",
-    "Agustus",
-    "September",
-    "Oktober",
-    "Nopember",
-    "Desember",
-  ];
+
   $("#example2").DataTable({
     paging: true,
     lengthChange: false,
@@ -59,24 +59,13 @@ function showTables(dt) {
       {
         data: null,
         render: function (data, type, row) {
-          let tgl = new Date(row.tanggal_bergabung);
-          return `${tgl.getDate()} ${
-            bulan[tgl.getMonth()]
-          } ${new Date().getFullYear()}`;
+          return getTglTagihan(row);
         },
       },
       {
         data: null,
         render: function (data, type, row) {
-          try {
-            if (row.tagihan === null) {
-              return getRupiah(row.harga);
-            } else {
-              return getRupiah(row.tagihan);
-            }
-          } catch (error) {
-            return error;
-          }
+          return getJmlTagihan(row);
         },
       },
       {
@@ -93,7 +82,7 @@ function showTables(dt) {
         data: null,
         render: function (data, type, row) {
           if (row.total != 0) {
-            return showButtonAksi();
+            return showButtonAksi(row);
           } else {
             return `<i style='font-size: 12px'>Pembayaran Sdh Lunas</i>`;
           }
@@ -102,12 +91,38 @@ function showTables(dt) {
     ],
   });
 }
-function showButtonAksi() {
+function covertIntNum(num) {
+  return `+62${num.slice(1)}`;
+}
+function showButtonAksi(dt) {
   return `<center>
             <a href="/bayar" class="btn btn-outline-info btn-sm"><i
                     class="fas fa-dollar-sign"></i>&nbsp;Bayar</a>
-            <a href="https://wa.me/+6283192962102?text=*Pembayaran Kost A.N Ridho Belum Lunas* Segera lunasi pembayaran"
+            <a target="_blank" href="https://wa.me/${covertIntNum(
+              dt.no_telp
+            )}?text=*Pembayaran Kost A.N ${
+    dt.nama
+  }* total tagihan ${getJmlTagihan(dt)} dengan tanggal tagihan ${getTglTagihan(
+    dt
+  )} Segera lunasi pembayaran"
                 class="btn btn-sm btn-outline-success"><i class="fa fa-phone"></i>
                 Hubungi</a>
         </center>`;
+}
+function getJmlTagihan(row) {
+  try {
+    if (row.tagihan === null) {
+      return getRupiah(row.harga);
+    } else {
+      return getRupiah(row.tagihan);
+    }
+  } catch (error) {
+    return error;
+  }
+}
+function getTglTagihan(row) {
+  let tgl = new Date(row.tanggal_bergabung);
+  return `${tgl.getDate()} ${
+    bulan[tgl.getMonth()]
+  } ${new Date().getFullYear()}`;
 }
