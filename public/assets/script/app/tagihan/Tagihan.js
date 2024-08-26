@@ -1,102 +1,109 @@
 import { get_tagihan } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
 
-export async function fecth_tagihan()
-{
-    await fetch(get_tagihan)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            showTables(data);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-}
-
-function showTables(dt)
-{
-    var no = 1;
-    var bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"];
-    $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-        "bDestroy" : true,
-        data : dt,
-        columns: [
-            { 
-                data : null,
-                render: function (data, type, row ){
-                    return no++;
-                }
-            },
-            {
-                data : 'nama'
-            },
-            {
-                data : 'nama_gedung'
-            },
-            {
-                data : 'nama_ruang'
-            },
-            {
-                data : null,
-                render : function (data, type, row) {
-                    let tgl = new Date(row.tanggal_bergabung);
-                    return `${tgl.getDay()} ${bulan[tgl.getMonth()]} ${new Date().getFullYear()}`
-                }
-            },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    try {
-                        if(row.tagihan === null)
-                        {
-                            return getRupiah(row.harga);
-                        } else {
-                            return getRupiah(row.tagihan);
-                        }
-                    } catch (error) {
-                        return error;                        
-                    }
-                }
-            },
-            {
-                data : null,
-                render: function (data, type, row) {
-                    if(row.total != 0)
-                    {
-                        return `<span class="badge badge-danger">Terhutang</span>`
-                    } else {
-                        return `<span class="badge badge-success">Lunas</span>`
-                    }
-                }
-            },
-            {
-                data : null,
-                render: function (data, type, row) {
-                    if(row.total != 0)
-                    {
-                        return showButtonAksi();
-                    } else {
-                        return `<i style='font-size: 12px'>Pembayaran Sdh Lunas</i>`
-                    }
-                    
-                }
-            }
-        ]
-
+export async function fecth_tagihan() {
+  await fetch(get_tagihan)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      showTables(data);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
-function showButtonAksi()
-{
-    return `<center>
+
+function showTables(dt) {
+  var no = 1;
+  var bulan = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "Nopember",
+    "Desember",
+  ];
+  $("#example2").DataTable({
+    paging: true,
+    lengthChange: false,
+    searching: true,
+    ordering: true,
+    info: true,
+    autoWidth: false,
+    responsive: true,
+    bDestroy: true,
+    data: dt,
+    columns: [
+      {
+        data: null,
+        render: function (data, type, row) {
+          return no++;
+        },
+      },
+      {
+        data: "nama",
+      },
+      {
+        data: "nama_gedung",
+      },
+      {
+        data: "nama_ruang",
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          let tgl = new Date(row.tanggal_bergabung);
+          return `${tgl.getDate()} ${
+            bulan[tgl.getMonth()]
+          } ${new Date().getFullYear()}`;
+        },
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          try {
+            if (row.tagihan === null) {
+              return getRupiah(row.harga);
+            } else {
+              return getRupiah(row.tagihan);
+            }
+          } catch (error) {
+            return error;
+          }
+        },
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          if (row.total != 0) {
+            return `<span class="badge badge-danger">Terhutang</span>`;
+          } else {
+            return `<span class="badge badge-success">Lunas</span>`;
+          }
+        },
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          if (row.total != 0) {
+            return showButtonAksi();
+          } else {
+            return `<i style='font-size: 12px'>Pembayaran Sdh Lunas</i>`;
+          }
+        },
+      },
+    ],
+  });
+}
+function showButtonAksi() {
+  return `<center>
             <a href="/bayar" class="btn btn-outline-info btn-sm"><i
                     class="fas fa-dollar-sign"></i>&nbsp;Bayar</a>
             <a href="https://wa.me/+6283192962102?text=*Pembayaran Kost A.N Ridho Belum Lunas* Segera lunasi pembayaran"

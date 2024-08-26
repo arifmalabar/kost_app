@@ -12,6 +12,7 @@ class Penghuni extends Model
     use HasFactory;
     protected $table = "tb_biodata_penghuni";
     protected $primaryKey = "NIK";
+    public $timestamps = false;
 
     public function ruangan()
     {
