@@ -1,5 +1,11 @@
 @extends('layout.layout')
-
+@section('css')
+    <style>
+        sup{
+            color: red;
+        }
+    </style>
+@endsection
 @section('judul')
     Setting Gedung
 @endsection
@@ -18,24 +24,26 @@
                                 data-target="#tambahGedungModal">
                                 <i class="fa fa-plus"></i>&nbsp;Tambah Gedung
                             </button>
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th style="width: 120px">Kode Gedung</th>
-                                        <th style="width: 120px">Nama Gedung</th>
-                                        <th style="width: 120px">Alamat Gedung</th>
-                                        <th style="text-align: center">Opsi</th>
+                                        <th>No</th>
+                                        <th>Kode Gedung</th>
+                                        <th>Nama Gedung</th>
+                                        <th>Alamat Gedung</th>
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($data as $d)
                                         <tr>
+                                            <td>1</td>
                                             <td>{{ $d->kode_gedung }}</td>
                                             <td>{{ $d->nama_gedung }}</td>
                                             <td>{{ $d->alamat_gedung }}</td>
                                             <td>
                                                 <center>
-                                                    <button class="btn btn-outline-info btn-sm" data-toggle="modal"
+                                                    <button class="btn btn-outline-warning btn-sm" data-toggle="modal"
                                                         data-target="#editGedungModal" data-kode="{{ $d->kode_gedung }}"
                                                         data-nama="{{ $d->nama_gedung }}"
                                                         data-alamat="{{ $d->alamat_gedung }}">
@@ -57,6 +65,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            
                         </div>
                     </div>
                 </div>
@@ -67,7 +76,7 @@
     <!-- Modal Tambah Gedung -->
     <div class="modal fade" id="tambahGedungModal" tabindex="-1" role="dialog" aria-labelledby="tambahGedungModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" role="document" style="position: absolute; left: 30%; top: 20%; width: 70%">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tambahGedungModalLabel">Tambah Gedung</h5>
@@ -78,18 +87,21 @@
                 <div class="modal-body">
                     <form id="formTambahGedung" action="{{ url('/setting_gedung/store') }}" method="POST">
                         @csrf
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                            </div>
-                            <input type="text" class="form-control" name="nama_gedung" placeholder="Nama Gedung"
-                                required>
+                        <div class="form-group">
+                            <label for="">Nama Gedung <sup>*</sup></label> 
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="nama_gedung" placeholder="Masukan Nama Gedung"
+                                        required>
+                                </div>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        <div class="form-group">
+                            <label for="">Alamat gedung <sup>*</sup></label> 
+                            <div class="input-group mb-3">
+                                <textarea name="alamat_gedung" placeholder="Masukan Alamat Gedung" id="" cols="30" rows="5" class="form-control"></textarea>
                             </div>
-                            <input type="text" class="form-control" name="alamat_gedung" placeholder="Alamat" required>
                         </div>
                     </form>
                 </div>
@@ -116,30 +128,35 @@
                     <form id="formEditGedung" action="" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <div class="form-group">
+                            <label for="">Kode Gedung <sup>*</sup></label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editKodeGedung" name="kode_gedung" readonly>
                             </div>
-                            <input type="text" class="form-control" id="editKodeGedung" name="kode_gedung" readonly>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        <div class="form-group">
+                            <label for="">Nama Gedung <sup>*</sup></label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editNamaGedung" name="nama_gedung" required>
                             </div>
-                            <input type="text" class="form-control" id="editNamaGedung" name="nama_gedung" required>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        <div class="form-group">
+                            <label for="">Alamat Gedung <sup>*</sup></label>
+                            <div class="input-group mb-3">
+                                <textarea id="editAlamatGedung" name="alamat_gedung" id="" cols="30" rows="5" class="form-control"></textarea>
                             </div>
-                            <input type="text" class="form-control" id="editAlamatGedung" name="alamat_gedung"
-                                required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary" form="formEditGedung">Simpan</button>
+                    <button type="submit" class="btn btn-warning text-white" form="formEditGedung">Edit</button>
                 </div>
             </div>
         </div>
@@ -157,7 +174,7 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-            });
+                });
         });
 
         $('#editGedungModal').on('show.bs.modal', function(event) {

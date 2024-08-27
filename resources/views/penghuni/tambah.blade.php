@@ -48,7 +48,7 @@ Tambah Penghuni
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="">NIK <sup>*</sup></label>
+                                            <label for="">NIK <sup>*</sup></label> 
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-id-card"></i></span>

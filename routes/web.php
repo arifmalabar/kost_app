@@ -5,6 +5,7 @@ use App\Models\Penghuni;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pembayaran\Bayar;
 use App\Http\Controllers\gedung\GedungController;
+use App\Http\Controllers\grafik_penghuni\GrafikPenghuni;
 use App\Http\Controllers\ruangan\RuanganController;
 use App\Http\Controllers\penghuni\PenghuniController;
 use App\Http\Controllers\pembayaran\PembayaranController;
@@ -80,6 +81,9 @@ Route::controller(Bayar::class)->group(function () {
     Route::post("/bayar_tagihan", "bayarTagihan");
 });
 
+Route::controller(GrafikPenghuni::class)->group(function () {
+    Route::get("/grafik_penghuni", "index")->name("GrafikPenghuni.index");
+});
 
 
 // Route::get("/login", function() {

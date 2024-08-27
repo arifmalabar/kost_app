@@ -71,7 +71,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="rekap_pembayaran" class="nav-link">
+                    <a href="/grafik_penghuni" class="nav-link {{ $nama == "grafik penghuni" ? "active" : "" }}">
                         <i class="fas nav-icon fa-calculator"></i>
                         <p>Grafik Penghuni</p>
                     </a>
