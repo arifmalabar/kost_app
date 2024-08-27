@@ -119,7 +119,7 @@ Edit Penghuni
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Nama Kampus<sup>*</sup>: </label>
                                             <div class="input-group mb-3">
