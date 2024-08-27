@@ -81,36 +81,49 @@
                 <div class="modal-body">
                     <form id="formTambahRuang" action="{{ url('/setting_ruangan/store') }}" method="POST">
                         @csrf
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <div class="mb-3">
+                            <label for="">Gedung<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <select class="form-control" name="kode_gedung" id="kode_gedung" required>
+                                    <option value="" disabled selected>Pilih Gedung</option>
+                                    @foreach ($gedung as $d)
+                                        <option value="{{ $d->kode_gedung }}">{{ $d->nama_gedung }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <select class="form-control" name="kode_gedung" required>
-                                <option value="" disabled selected>Pilih Gedung</option>
-                                @foreach ($gedung as $d)
-                                    <option value="{{ $d->kode_gedung }}">{{ $d->nama_gedung }}</option>
-                                @endforeach
-                            </select>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        <div class="mb-3">
+                            <label for="">Nama Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Nama Ruangan" name="nama_ruang"
+                                    id="nama_ruang" required>
                             </div>
-                            <input type="text" class="form-control" placeholder="Nama Ruangan" name="nama_ruang"
-                                required>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
+                        <div class="mb-3">
+                            <label for="">Nomor Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Nomor Ruangan" name="no_ruang"
+                                    id="no_ruang" required>
                             </div>
-                            <input type="text" class="form-control" placeholder="Nomor Ruangan" name="no_ruang" required>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
+                        <div class="mb-3">
+                            <label for="">Kapasitas Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-users"></i></span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Kapasitas Ruangan"
+                                    name="kapasitas" id="kapasitas" required>
                             </div>
-                            <input type="text" class="form-control" placeholder="Kapasitas Ruangan" name="kapasitas"
-                                required>
                         </div>
                     </form>
                 </div>
@@ -121,6 +134,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Modal Edit Ruangan -->
     <div class="modal fade" id="editRuanganModal" tabindex="-1" role="dialog" aria-labelledby="editRuanganModalLabel"
@@ -137,41 +151,58 @@
                     <form id="formEditRuangan" action="" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <div class="mb-3">
+                            <label for="">Kode Kamar<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editKodeKamar" name="kode_kamar"
+                                    readonly>
                             </div>
-                            <input type="text" class="form-control" id="editKodeKamar" name="kode_kamar" readonly>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        <div class="mb-3">
+                            <label for="">Gedung<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                </div>
+                                <select class="form-control" id="editKodeGedung" name="kode_gedung" required>
+                                    <option value="" disabled>Pilih Gedung</option>
+                                    @foreach ($gedung as $g)
+                                        <option value="{{ $g->kode_gedung }}">{{ $g->nama_gedung }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <select class="form-control" id="editKodeGedung" name="kode_gedung" required>
-                                <option value="" disabled>Pilih Gedung</option>
-                                @foreach ($gedung as $g)
-                                    <option value="{{ $g->kode_gedung }}">{{ $g->nama_gedung }}</option>
-                                @endforeach
-                            </select>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        <div class="mb-3">
+                            <label for="">Nama Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editNamaRuang" name="nama_ruang"
+                                    required>
                             </div>
-                            <input type="text" class="form-control" id="editNamaRuang" name="nama_ruang" required>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        <div class="mb-3">
+                            <label for="">Nomor Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editNoRuang" name="no_ruang" required>
                             </div>
-                            <input type="text" class="form-control" id="editNoRuang" name="no_ruang" required>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        <div class="mb-3">
+                            <label for="">Kapasitas Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-users"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editKapasitasRuang" name="kapasitas"
+                                    required>
                             </div>
-                            <input type="text" class="form-control" id="editKapasitasRuang" name="kapasitas"
-                                required>
                         </div>
                     </form>
                 </div>
@@ -228,7 +259,7 @@
                 title: 'Success',
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
-                timer: 3000
+                timer: 2000
             });
         @endif
 

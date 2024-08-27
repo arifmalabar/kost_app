@@ -6,7 +6,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
+            <a href="/dashboard" class="nav-link">Home</a>
         </li>
     </ul>
 
@@ -14,8 +14,8 @@
     <ul class="navbar-nav ml-auto" style="padding-right: 20px">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                <img style="width: 30px; height: 30px;" src="{{ asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-1"
-                    alt="User Image">Welcome back, 
+                <img style="width: 30px; height: 30px;" src="{{ asset('assets/dist/img/user2-160x160.jpg') }}"
+                    class="img-circle elevation-1" alt="User Image">Welcome back,
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                 <div class="dropdown-divider"></div>
