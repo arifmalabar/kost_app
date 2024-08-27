@@ -18,7 +18,7 @@ class TagihanController extends Controller
     public function getDataTagihan()
     {
         try {
-            $data = Penghuni::selectRaw("tb_biodata_penghuni.NIK, nama, email,harga, tanggal_bergabung,SUM(jml_bayar) as jml_bayar, tagihan - SUM(jml_bayar) as total, nama_ruang, nama_gedung, tagihan")
+            $data = Penghuni::selectRaw("tb_biodata_penghuni.NIK, nama, no_telp, email,harga, tanggal_bergabung,SUM(jml_bayar) as jml_bayar, tagihan - SUM(jml_bayar) as total, nama_ruang, nama_gedung, tagihan")
             ->leftJoin("tb_pembayaran", function($join) {
                 $join->on("tb_biodata_penghuni.NIK", "=", "tb_pembayaran.NIK")->whereMonth("tb_pembayaran.tanggal_tagihan", date('m'))->whereYear("tb_pembayaran.tanggal_tagihan", date('Y'));
             })

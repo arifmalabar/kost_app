@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="penghuni_ruang" class="nav-link {{ $nama == 'penghuni ruang' ? 'active' : '' }}">
+                    <a href="penghuni_ruang" class="nav-link {{ $nama == 'penghuni' ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon fas fa-users"></i>
                         <p>Penghuni</p>
                     </a>
@@ -71,15 +71,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="rekap_pembayaran" class="nav-link">
+                    <a href="/grafik_penghuni" class="nav-link {{ $nama == "grafik penghuni" ? "active" : "" }}">
                         <i class="fas nav-icon fa-calculator"></i>
-                        <p>Rekap Pembayaran</p>
+                        <p>Grafik Penghuni</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="faktur" class="nav-link">
                         <i class="fas nav-icon fa-university"></i>
-                        <p>Faktur</p>
+                        <p>Tingkat Hunian</p>
                     </a>
                 </li>
                 <li class="nav-item">

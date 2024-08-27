@@ -16,17 +16,45 @@ class PenghuniController extends Controller
     {
 
         $data = array(
-            "nama"=> "setting penghuni",
+            "nama"=> "penghuni",
             "data" => Penghuni::all(),
             "kode"=>Kamar::all()
             );
         return view('penghuni.penghuni', $data);
     }
 
+    public function getRuanganKosong($kode_gedung)
+    {
+        try {
+            $query = Kamar::selectRaw("tb_kamar.kode_kamar, tb_kamar.nama_ruang, tb_gedung.nama_gedung, IF(NIK IS NULL, 'tersedia', 'terisi') as status")->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_gedung.kode_gedung")->leftJoin("tb_biodata_penghuni", "tb_biodata_penghuni.kode_kamar", "=", "tb_kamar.kode_kamar")->where("tb_kamar.kode_gedung", "=", $kode_gedung)->groupBy("tb_kamar.kode_kamar")->get();
+            return response()->json($query);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+    }
+    public function detailPenghuni($id)
+    {
+        $data = array(
+            "nama"=> "penghuni",
+        );
+        return view('penghuni.edit', $data);
+    }
+    public function getDetailPenghuniData($id)
+    {
+        try {
+            $query = Penghuni::selectRaw("NIK, nama, email, harga, no_telp, tanggal_bergabung, nama_wali, nama_kampus_kantor, alamat_kampus_kantor, alamat, tb_kamar.kode_kamar, tb_kamar.nama_ruang")->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_kamar.kode_gedung")->where("tb_biodata_penghuni.NIK", "=", $id)->limit(1)->first();
+            $query_ktp = Penghuni::selectRaw("file_ktp")->where("tb_biodata_penghuni.NIK", "=", $id)->limit(1)->first();
+            $ktp = base64_encode($query_ktp->file_ktp);
+            return response()->json(["biodata" => $query, "foto_ktp" => $ktp]);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+    }
+
     public function halamanTambah()
     {
         $data = array(
-            "nama"=> "setting penghuni",
+            "nama"=> "penghuni",
         );
         return view('penghuni.tambah', $data);
     }
@@ -43,6 +71,7 @@ class PenghuniController extends Controller
         $status= $request->status;
         $alamat = $request->alamat;
         $kode_kamar= $request->kode_kamar;
+        $ktpFileBinary = base64_encode($request->file);
         $data = [
             'NIK' => $NIK,
             'nama' => $nama,
@@ -54,14 +83,20 @@ class PenghuniController extends Controller
             'alamat_kampus_kantor' => $alamat_kampus_kantor,
             'status' => $status,
             'alamat' => $alamat,
-            'kode_kamar' => $kode_kamar
-
+            'kode_kamar' => $kode_kamar,
+            'status' => 1,
+            'file_ktp' => $ktpFileBinary,
+            "tanggal_bergabung" => date("Y-m-d")
         ];
-        $simpan = DB::table('tb_biodata_penghuni')->insert($data);
-        if ($simpan) {
-            return Redirect::back()->with(['success' => 'Data Berhasil Disimpan!']);
-        } else {
-            return Redirect::back()->with(['warning' => 'Data Gagal Disimpan!']);
+        try {
+            $simpan = Penghuni::insert($data);
+            if ($simpan) {
+                return response()->json(['status' => 'success']);
+            } else {
+                return response()->json(['status' => 'failed']);
+            }
+        } catch (\Throwable $th) {
+            return response()->json($th);
         }
     }
     public function edit(Request $request)
@@ -73,9 +108,40 @@ class PenghuniController extends Controller
         );
         return view('penghuni_ruang.edit', $data);
     }
-    public function update($NIK, Request $request)
+    public function update(Request $request)
     {
+        try {
+        $data = [];
+            /*
+            $NIK= $request->NIK;
+            $oldNIK = $request->oldNIK;
+            $nama = $request->nama;
+            $email= $request->email;
+            $harga = $request->harga ;
+            $no_telp= $request->no_telp;
+            $nama_wali = $request->nama_wali;
+            $nama_kampus_kantor= $request->nama_kampus_kantor;
+            $alamat_kampus_kantor = $request->alamat_kampus_kantor;
+            $status= $request->status;
+            $alamat = $request->alamat;
+            $kode_kamar= $request->kode_kamar;
+            $ktpFileBinary = base64_encode($request->file);
+            $data = [
+                'NIK' => $NIK,
+                'nama' => $nama,
+                'email' => $email,
+                'harga' => $harga,
+                'no_telp' => $no_telp,
+                'nama_wali' => $nama_wali,
+                'nama_kampus_kantor' => $nama_kampus_kantor,
+                'alamat_kampus_kantor' => $alamat_kampus_kantor,
+                'status' => $status,
+                'alamat' => $alamat,
+                'kode_kamar' => $kode_kamar,
+                'file_ktp' => $ktpFileBinary
+            ];*/
         $NIK= $request->NIK;
+        $old_nik = $request->old_nik;
         $nama = $request->nama;
         $email= $request->email;
         $harga = $request->harga ;
@@ -86,24 +152,48 @@ class PenghuniController extends Controller
         $status= $request->status;
         $alamat = $request->alamat;
         $kode_kamar= $request->kode_kamar;
-        $data = [
-            'NIK' => $NIK,
-            'nama' => $nama,
-            'email' => $email,
-            'harga' => $harga,
-            'no_telp' => $no_telp,
-            'nama_wali' => $nama_wali,
-            'nama_kampus_kantor' => $nama_kampus_kantor,
-            'alamat_kampus_kantor' => $alamat_kampus_kantor,
-            'status' => $status,
-            'alamat' => $alamat,
-            'kode_kamar' => $kode_kamar
-        ];
-        $update = DB::table('tb_biodata_penghuni')->where('NIK', $NIK)->update($data);
-        if ($update) {
-            return Redirect::back()->with(['success' => 'Data Berhasil Diupdate!']);
+        $ktpFileBinary = base64_encode($request->file);
+        if($ktpFileBinary != "")
+        {
+            $data = [
+                'NIK' => $NIK,
+                'nama' => $nama,
+                'email' => $email,
+                'harga' => $harga,
+                'no_telp' => $no_telp,
+                'nama_wali' => $nama_wali,
+                'nama_kampus_kantor' => $nama_kampus_kantor,
+                'alamat_kampus_kantor' => $alamat_kampus_kantor,
+                'status' => $status,
+                'alamat' => $alamat,
+                'kode_kamar' => $kode_kamar,
+                'status' => 1,
+                'file_ktp' => $ktpFileBinary
+            ];
         } else {
-            return Redirect::back()->with(['warning' => 'Data Gagal Diupdate!']);
+            $data = [
+                'NIK' => $NIK,
+                'nama' => $nama,
+                'email' => $email,
+                'harga' => $harga,
+                'no_telp' => $no_telp,
+                'nama_wali' => $nama_wali,
+                'nama_kampus_kantor' => $nama_kampus_kantor,
+                'alamat_kampus_kantor' => $alamat_kampus_kantor,
+                'status' => $status,
+                'alamat' => $alamat,
+                'kode_kamar' => $kode_kamar,
+                'status' => 1,
+            ];
+        }
+            $update = Penghuni::where('NIK', $old_nik)->update($data);
+            if($update){
+                return response()->json(["status" => "success", "msg" => "berhasil menambah mengubah data"]);
+            }else{
+                return response()->json(["status"=> "error", "msg" => "terjadi kesalahan"]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json($th);
         }
     }
 

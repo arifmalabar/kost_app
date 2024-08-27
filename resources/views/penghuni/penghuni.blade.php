@@ -14,9 +14,9 @@ Tambah Penghuni
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-success btn-sm position-absolute" style="z-index: 10px;" data-toggle="modal" data-target="#tambahPenghuniModal">
+                        <a href="/penghuni_ruang/tambah_penghuni" class="btn btn-success btn-sm position-absolute" style="z-index: 10;">
                             <i class="fa fa-plus"></i>&nbsp;Tambah Penghuni Baru
-                        </button>
+                        </a>
                         <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -38,21 +38,9 @@ Tambah Penghuni
                                     
                                     <td>
                                         <center>
-                                            <button class="btn btn-outline-info btn-sm" data-toggle="modal"
-                                                data-target="#editPenghuniModal"
-                                                data-nik="{{ $d->NIK }}"
-                                                data-nama="{{ $d->nama }}"
-                                                data-email="{{ $d->email }}"
-                                                data-harga="{{ $d->harga }}"
-                                                data-no_telp="{{ $d->no_telp }}"
-                                                data-nama_wali="{{ $d->nama_wali }}"
-                                                data-nama_kampus_kantor="{{ $d->nama_kampus_kantor }}"
-                                                data-alamat_kampus_kantor="{{ $d->alamat_kampus_kantor }}"
-                                                data-status="{{ $d->status }}"
-                                                data-alamat="{{ $d->alamat }}"
-                                                data-kode_kamar="{{ $d->kode_kamar }}">
+                                            <a href="/penghuni_ruang/detail_penghuni/{{ $d->NIK }}" class="btn btn-outline-info btn-sm">
                                                 <i class="fas fa-pencil-alt"></i>&nbsp;Ubah
-                                            </button>
+                                            </a>
                                             <!-- Form Hapus -->
                                             <form action="{{ route('penghuni.delete', $d->NIK) }}" method="POST" id="delete-form-{{ $d->NIK }}" style="display:inline;">
                                                 @csrf

@@ -18,7 +18,7 @@ class PembayaranController extends Controller
     public function index()
     {
         $data = array(
-            "nama"=> "setting ruangan",
+            "nama"=> "pembayaran",
             "data" => Penghuni::all()
         );
         return view('pembayaran/pembayaran', $data);

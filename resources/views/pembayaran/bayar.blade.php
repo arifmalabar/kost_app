@@ -41,7 +41,7 @@
                                 <div class="col-md-12">
                                     <br>
                                     <br>
-                                    <a href="" class="btn btn-outline-warning btn-sm" style="width: 100%"><i class="fa fa-edit"></i>Ubah Akun</a>
+                                    <a href="" class="btn btn-outline-warning btn-sm btn-edit" style="width: 100%"><i class="fa fa-edit"></i>Ubah Akun</a>
                                 </div>
                             </div>
                         </div>
@@ -62,10 +62,10 @@
                                 <label for="inputEmail3" class="col-sm-4 col-form-label">Bulan</label>
                                 <div class="col-sm-8">
                                     <select name="" id="" class="form-control field-bulan">
-                                        <option value="01">Januari(Sdh Bayar)</option>
-                                        <option value="02">Februari(Sdh Bayar)</option>
-                                        <option value="03">Maret(Sdh Bayar)</option>
-                                        <option value="04">April(Sdh Bayar)</option>
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
                                         <option value="05">Mei</option>
                                         <option value="06">Juni</option>
                                         <option value="07">Juli</option>
