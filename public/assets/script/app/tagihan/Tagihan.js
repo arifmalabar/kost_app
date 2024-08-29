@@ -1,5 +1,6 @@
-import { get_tagihan } from "../config/EndPoint.js";
+import { get_gedung, get_tagihan, tambah_tagihan } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
+import { errorMsg } from "../message/Message.js";
 var bulan = [
   "Januari",
   "Februari",
@@ -14,6 +15,13 @@ var bulan = [
   "Nopember",
   "Desember",
 ];
+export function init() {
+  $("#field-tahun").val(new Date().getFullYear());
+  $(".btn-buattagihan").on("click", function (params) {
+    buatTagihan();
+  });
+  showBulan();
+}
 export async function fecth_tagihan() {
   await fetch(get_tagihan)
     .then((response) => {
@@ -26,7 +34,31 @@ export async function fecth_tagihan() {
       console.log(err);
     });
 }
+export async function getGedung() {
+  try {
+    let response = await fetch(get_gedung);
+    let data = await response.json();
+    let gedung_opt = `<option value="">Pilih Gedung</option>`;
+    data.forEach((e) => {
+      gedung_opt =
+        gedung_opt +
+        `<option value="${e.kode_gedung}">${e.nama_gedung}</option>`;
+    });
+    $("#field-gedung").html(gedung_opt);
+  } catch (error) {
+    errorMsg("Error", error);
+  }
+}
 
+function showBulan() {
+  let opt_bulan = `<option value="">Pilih Bulan</option>`;
+  let valbln = 1;
+  bulan.forEach((e) => {
+    opt_bulan = opt_bulan + `<option value="${valbln}">${e}</option>`;
+    valbln++;
+  });
+  $("#field-bulan").html(opt_bulan);
+}
 function showTables(dt) {
   var no = 1;
 
@@ -125,4 +157,25 @@ function getTglTagihan(row) {
   return `${tgl.getDate()} ${
     bulan[tgl.getMonth()]
   } ${new Date().getFullYear()}`;
+}
+async function buatTagihan() {
+  let data_tagihan = {
+    tahun: $("#field-tahun").val(),
+    bulan: $("#field-bulan").val(),
+    gedung: $("#field-gedung").val(),
+  };
+  try {
+    let response = await fetch(tambah_tagihan, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": $("#csrf").val(),
+      },
+      body: JSON.stringify(data_tagihan),
+    });
+    let data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
 }

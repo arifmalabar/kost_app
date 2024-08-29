@@ -1,7 +1,15 @@
 @extends('layout.layout')
+@section('css')
+    <style>
+        sup {
+            color: red;
+        }
+    </style>
+@endsection
 @section('judul')
     Tagihan
 @endsection
+
 @section('content')
     <section class="content">
         <div class="container-fluid">
@@ -12,8 +20,17 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="" class="btn btn-success btn-sm position-absolute" style="top:1px"><i
-                                    class="fa fa-sort"></i>&nbsp; Shorting</a>
+                           <div class="row" style="top:1px; z-index: 10;">
+                                <div class="col-md-1" style="width: 6.5%">
+                                    <a href="" style="z-index: 10" class="btn btn-success btn-sm position-absolute"><i
+                                        class="fa fa-sort"></i>&nbsp; Shorting</a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="#" style="z-index: 10" data-toggle="modal" data-target="#modal-lg" class="btn btn-info text-white btn-sm position-absolute"><i
+                                        class="fa fa-plus"></i>&nbsp; Generate Tagihan</a>
+                                        
+                                </div>
+                           </div>
                             <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -48,6 +65,67 @@
                             </table>
                         </div>
                     </div>
+                    <div class="modal fade" id="modal-lg">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Buat Tagihan</h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Tahun <sup>*</sup></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                              </div>
+                                            <input type="number" placeholder="Masukan Tahun" name="field-tahun" id="field-tahun" class="form-control">
+                                              <input type="hidden" name="" id="csrf" value="{{ csrf_token() }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Bulan <sup>*</sup></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <select name="" id="field-bulan" class="form-control">
+                                                <option value="">Pilih Bulan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Gedung <sup>*</sup></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <select name="" id="field-gedung" class="form-control">
+                                                <option value="">Pilih Gedung</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-success btn-buattagihan"><i class="fa fa-plus"></i>&nbsp;Buat Tagihan</button>
+                            </div>
+                          </div>
+                          <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                      </div>
+                      <!-- /.modal -->
                 </div>
             </div>
 
@@ -57,7 +135,14 @@
 @section('jscript')
     <script src="{{ asset('assets/script/app/tagihan/index.js') }}" type="module"></script>
     <script>
+        
         $(function() {
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+            theme: 'bootstrap4'
+            })
             $("#example1").DataTable({
                 "responsive": true,
                 "lengthChange": false,
