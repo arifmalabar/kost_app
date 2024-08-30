@@ -5,6 +5,7 @@ namespace App\Http\Controllers\tagihan;
 use App\Http\Controllers\Controller;
 use App\Models\Penghuni;
 use Illuminate\Http\Request;
+use App\Models\Pembayaran;
 
 class TagihanController extends Controller
 {
@@ -41,7 +42,7 @@ class TagihanController extends Controller
         ];
         $data_penghuni = [];
         try {
-            $query_penghuni = Penghuni::selectRaw("NIK, nama, harga, DAY(tanggal_bergabung) AS tgl, tb_gedung.kode_gedung")
+            $query_penghuni = Penghuni::selectRaw("NIK, nama, harga, DAY(tanggal_bergabung) AS tgl, tb_gedung.kode_gedung, tb_kamar.kode_kamar")
                                     ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
                                     ->join("tb_gedung","tb_kamar.kode_gedung", "=","tb_gedung.kode_gedung")
                                     ->where("tb_gedung.kode_gedung", "=", $req_data["gedung"])
@@ -53,14 +54,39 @@ class TagihanController extends Controller
         $data_tagihan = [];
         $idx = 0;
         foreach ($data_penghuni as $key) {
+            $no_transaksi = $req_data["tahun"]."-".$req_data["bulan"]."/".$key->kode_gedung."/".$key->kode_kamar."/".$key->NIK;
+            $kode_bayar  = "P".$key->NIK."".$req_data["tahun"]."".$req_data["bulan"]."".$key->kode_kamar;
             $data_tagihan[$idx] = [
+                "kode_bayar" => $kode_bayar,
+                "no_transaksi" => $no_transaksi,
                 "NIK" => $key->NIK,
                 "tagihan" => $key->harga,
                 "tanggal_tagihan" => $req_data["tahun"]."-".$req_data["bulan"]."-".$key->tgl
             ];
             $idx++;
         }
-        return response()->json($data_tagihan);
-        //bagian insert data
+        try {
+            $query_insert = Pembayaran::insert($data_tagihan);
+            if($query_insert){
+                return response()->json(["status" => "success"]);
+            } else {
+                return response()->json(["status" => "failed"]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+    }
+
+    private function getCustomCode()
+    {
+        $newcode = "";
+        $lastcode = Pembayaran::latest('kode_bayar')->first();
+        if(Pembayaran::count() == 0) {
+            $newcode = "P"."001";
+        } else {
+            $number = intval(substr($lastcode->kode_bayar, 1)) + 1;
+            $newcode = "P" . str_pad($number, 3, '0', STR_PAD_LEFT);
+        }
+        return $newcode;
     }
 }

@@ -79,6 +79,8 @@ Route::controller(TagihanController::class)->group(function(){
 Route::controller(Bayar::class)->group(function () {
     Route::get("/bayar/{id}", 'index')->name('bayar.index');
     Route::get("/get_bayar/{nik}", 'getDataPembayaran');
+    Route::get('/get_tahun/{nik}', 'getTahunTagihan');
+    Route::get('/get_bulan/{nik}/{tahun}', 'getBulanTagihan');
     Route::post("/bayar_tagihan", "bayarTagihan");
 });
 

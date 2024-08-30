@@ -1,4 +1,5 @@
-import {fecthDataPembayaran, initData } from "./Bayar.js";
+import { fecthDataPembayaran, getTahun, initData } from "./Bayar.js";
 
 fecthDataPembayaran();
+getTahun();
 initData();

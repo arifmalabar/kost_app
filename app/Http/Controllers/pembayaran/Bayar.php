@@ -101,6 +101,7 @@ class Bayar extends Controller
             $i = 0;
             $dt = $this->queryTagihan($nik)->get();
             foreach ($dt as $key) {
+                $this->data["list_pembayaran"][$i]['kode_bayar'] = $key->kode_bayar;
                 $this->data["list_pembayaran"][$i]['jml_bayar'] = $key->total;
                 $this->data["list_pembayaran"][$i]['sisa_bayar'] = $this->getSisaByr($key->tagihan, $key->total);
                 $this->data["list_pembayaran"][$i]['status'] = $this->getStatus($this->data["list_pembayaran"][$i]['sisa_bayar']);
@@ -113,6 +114,19 @@ class Bayar extends Controller
             echo json_encode(0);
         }
         //return response()->json(["st" => $nik]);
+    }
+    public function getTahunTagihan($nik)
+    {
+        $tahun = Pembayaran::selectRaw("YEAR(tanggal_tagihan) AS tahun")->where('NIK', '=', $nik)->groupByRaw('YEAR(tanggal_tagihan)')->get();
+        return response()->json($tahun);
+    }
+    public function getBulanTagihan($nik, $tahun)
+    {
+        $bulan = Pembayaran::selectRaw("MONTHNAME(tanggal_tagihan) AS nmbulan, MONTH(tanggal_tagihan) AS bulan")
+                            ->where('NIK', '=', $nik)
+                            ->whereYear('tanggal_tagihan', $tahun)
+                            ->get();
+        return response()->json($bulan);
     }
     private function queryTagihan($nik)
     {

@@ -4,6 +4,8 @@ import {
   host,
   halaman_update_penghuni,
   path,
+  get_tahuntagihan,
+  get_blntagihan,
 } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
 import { errorMsg, successMsg } from "../message/Message.js";
@@ -43,6 +45,14 @@ export function initData() {
     is_tranfer = false;
     showUploadBukti();
   });
+  $(".field-tahun").on("change", function (params) {
+    getBulan();
+  });
+  $(document).on("click", ".btn-pilihtagihan", function (params) {
+    const button = $(params.target); // The button that was clicked
+    const id = button.data("id"); // Get data-id attribute from button
+    alert(id);
+  });
   btn_edit.href = `${halaman_update_penghuni}/${path[2]}`;
 }
 
@@ -67,6 +77,31 @@ export async function fecthDataPembayaran() {
     .catch((err) => {
       console.log(err);
     });
+}
+export async function getTahun() {
+  try {
+    let response = await fetch(get_tahuntagihan);
+    let data = await response.json();
+    let opttahun = `<option value="">Pilih Tahun</option>`;
+    data.forEach((element) => {
+      opttahun += `<option value="${element.tahun}">${element.tahun}</option>`;
+    });
+    $(".field-tahun").html(opttahun);
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function getBulan() {
+  try {
+    const tahun = field_tahun.value;
+    let response = await fetch(`${get_blntagihan}/${tahun}`);
+    let data = await response.json();
+    let optbln = `<option value="">Pilih Tahun</option>`;
+    data.forEach((element) => {
+      optbln += `<option value="${element.bulan}">${element.nmbulan}</option>`;
+    });
+    $(".field-bulan").html(optbln);
+  } catch (error) {}
 }
 async function bayarTagihan() {
   let tahun = field_tahun.value;
@@ -205,7 +240,7 @@ function setTabel(dt) {
       {
         data: null,
         render: function (data, type, row) {
-          return tombolCetak(row.status);
+          return tombolCetak(row);
         },
         orderable: false,
         searchable: false,
@@ -260,13 +295,13 @@ function statusBayar(sts) {
 }
 function tombolCetak(sts) {
   let rd = "";
-  switch (sts) {
+  switch (sts.status) {
     case "lunas":
       rd =
         '<center><a href="" class="btn btn-primary btn-sm"><i class="fa fa-print"></i>&nbsp;Cetak Struk</a></center>';
       break;
     case "terhutang":
-      rd = `<i style="font-size: 13px">Pembayaran Belum Lunas</i>`;
+      rd = `<center><a href="#" class="btn btn-success btn-sm btn-pilihtagihan" data-id="${sts.kode_bayar}"><i class="fas fa-dollar-sign"></i>&nbsp;Bayar Tagihan</a></center>`;
       break;
     default:
       rd = ``;
