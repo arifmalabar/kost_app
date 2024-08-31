@@ -41,7 +41,7 @@ class Bayar extends Controller
         }
         return $newcode;
     }
-    public function bayarTagihan(Request $request)
+    /*public function bayarTagihan(Request $request)
     {
         try {
             $data_penghuni = Penghuni::where("NIK", $request->NIK)->get();
@@ -88,6 +88,18 @@ class Bayar extends Controller
             return response()->json(["Error" => $th]);
         }
         //$this->doUploadBukti($request);
+    }*/
+    public function bayarTagihan(Request $request)
+    {
+        try {
+            $query_tagihan = Pembayaran::where('kode_bayar', $request->kode_bayar)->first();
+            $query_tagihan->jml_bayar += $request->tagihan;
+            $query_tagihan->tgl_bayar = date("Y-m-d H:i:s");
+            $query_tagihan->save();
+            return response()->json($query_tagihan);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
     }
     private function doUploadBukti($request)
     {
@@ -114,6 +126,16 @@ class Bayar extends Controller
             echo json_encode(0);
         }
         //return response()->json(["st" => $nik]);
+    }
+    public function getDataBayarTagihan($kode_bayar)
+    {
+        try {
+            $data_pembayaran = Pembayaran::selectRaw("YEAR(tanggal_tagihan) AS tahun, MONTHNAME(tanggal_tagihan) AS bulan")->where("kode_bayar", $kode_bayar)->first();
+            
+            return response()->json($data_pembayaran);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
     }
     public function getTahunTagihan($nik)
     {

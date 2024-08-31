@@ -6,6 +6,7 @@ import {
   path,
   get_tahuntagihan,
   get_blntagihan,
+  get_pembayaran_tagihan,
 } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
 import { errorMsg, successMsg } from "../message/Message.js";
@@ -32,26 +33,25 @@ let btn_edit = document.querySelector(".btn-edit");
 let is_tranfer = false;
 let tgl_bergabung = "";
 let nik = 0;
+let kode_bayar = "";
 
 export function initData() {
   btn_proses.addEventListener("click", function (params) {
     bayarTagihan();
   });
-  jt_transfer.addEventListener("click", function (params) {
+  /*jt_transfer.addEventListener("click", function (params) {
     is_tranfer = true;
     showUploadBukti();
   });
   jt_tunai.addEventListener("click", function (params) {
     is_tranfer = false;
     showUploadBukti();
-  });
+  });*/
   $(".field-tahun").on("change", function (params) {
     getBulan();
   });
   $(document).on("click", ".btn-pilihtagihan", function (params) {
-    const button = $(params.target); // The button that was clicked
-    const id = button.data("id"); // Get data-id attribute from button
-    alert(id);
+    getDataBayarTagihan(params);
   });
   btn_edit.href = `${halaman_update_penghuni}/${path[2]}`;
 }
@@ -65,7 +65,7 @@ export async function fecthDataPembayaran() {
       if (response != 0) {
         setData(response.penghuni_detail);
         setTabel(response.list_pembayaran);
-        setTahun();
+        //setTahun();
       } else {
         errorMsg("Error", "NIK Tidak terdaftar di sistem").then((res) => {
           if (res.isConfirmed) {
@@ -77,6 +77,19 @@ export async function fecthDataPembayaran() {
     .catch((err) => {
       console.log(err);
     });
+}
+async function getDataBayarTagihan(params) {
+  const button = $(params.target); // The button that was clicked
+  const id = button.data("id"); // Get data-id attribute from button
+  kode_bayar = id;
+  try {
+    let response = await fetch(`${get_pembayaran_tagihan}/${id}`);
+    let data = await response.json();
+    $(".field-tahun-modal").val(data.tahun);
+    $(".field-bulan-modal").val(data.bulan);
+  } catch (error) {
+    alert(error);
+  }
 }
 export async function getTahun() {
   try {
@@ -101,9 +114,40 @@ export async function getBulan() {
       optbln += `<option value="${element.bulan}">${element.nmbulan}</option>`;
     });
     $(".field-bulan").html(optbln);
-  } catch (error) {}
+  } catch (error) {
+    errorMsg("error", error);
+  }
 }
 async function bayarTagihan() {
+  let tahun = $(".field-tahun-modal").val();
+  let bulan = $(".field-bulan-modal").val();
+  let tagihan = $(".field-tagihan-modal").val();
+  let token = $(".csrf_modal").val();
+
+  let data = {
+    kode_bayar: kode_bayar,
+    tahun: tahun,
+    bulan: bulan,
+    tagihan: tagihan,
+    token: token,
+  };
+  try {
+    let response = await fetch(bayar_tagihan, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": token,
+      },
+      body: JSON.stringify(data),
+    });
+    let dt = await response.json();
+    successMsg("Berhasil", "Transaksi Berhasil");
+    fecthDataPembayaran();
+  } catch (error) {
+    errorMsg("Error Client", error);
+  }
+}
+/*async function bayarTagihan() {
   let tahun = field_tahun.value;
   let bulan = field_bulan.value;
   let total = field_total.value;
@@ -148,7 +192,7 @@ async function bayarTagihan() {
     errorMsg("Error", "Total transaksi belum diisi");
   }
 }
-function setTahun() {
+/*function setTahun() {
   let bulan = [
     "Januari",
     "Februari",
@@ -172,7 +216,7 @@ function setTahun() {
     i++;
   }
   field_tahun.innerHTML = opt;
-}
+}*/
 function showUploadBukti() {
   if (is_tranfer) {
     view_inputbukti.style.display = "block";
@@ -301,7 +345,7 @@ function tombolCetak(sts) {
         '<center><a href="" class="btn btn-primary btn-sm"><i class="fa fa-print"></i>&nbsp;Cetak Struk</a></center>';
       break;
     case "terhutang":
-      rd = `<center><a href="#" class="btn btn-success btn-sm btn-pilihtagihan" data-id="${sts.kode_bayar}"><i class="fas fa-dollar-sign"></i>&nbsp;Bayar Tagihan</a></center>`;
+      rd = `<center><a href="#" data-toggle="modal" data-target="#modal-lg" class="btn btn-success btn-sm btn-pilihtagihan" data-id="${sts.kode_bayar}"><i class="fas fa-dollar-sign"></i>&nbsp;Bayar Tagihan</a></center>`;
       break;
     default:
       rd = ``;

@@ -123,8 +123,18 @@ Tambah Penghuni
                                             </div>
                                         </div>
                                     </div>
-                                
                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Tanggal Bergabung</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="date" class="form-control tanggal_bergabung" value="{{ date('Y-m-d') }}" name="tanggal_bergabung" placeholder="Nama Kampus" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Upload KTP<sup>*</sup>: </label>
                                             <input type="file" name="files" id="" class="form-control">

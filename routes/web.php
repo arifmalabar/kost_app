@@ -64,7 +64,7 @@ Route::controller(PenghuniController::class)->group(function () {
 });
 
 Route::controller(PembayaranController::class)->group(function() {
-    Route::get('/pembayaran', 'index');
+    Route::get('/pembayaran', 'index')->name('pembayaran.index');
     Route::get('/get_gedung', 'getDataGedung');
     Route::get('/get_gedung_byid/{id}', 'getGedungById');
     Route::get('/get_penghuni', 'getDataPenghuni');
@@ -81,7 +81,8 @@ Route::controller(Bayar::class)->group(function () {
     Route::get("/get_bayar/{nik}", 'getDataPembayaran');
     Route::get('/get_tahun/{nik}', 'getTahunTagihan');
     Route::get('/get_bulan/{nik}/{tahun}', 'getBulanTagihan');
-    Route::post("/bayar_tagihan", "bayarTagihan");
+    Route::get('/get_pembayaran_tagihan/{kode_bayar}', 'getDataBayarTagihan');
+    Route::put("/bayar_tagihan", "bayarTagihan");
 });
 
 Route::controller(GrafikPenghuni::class)->group(function () {

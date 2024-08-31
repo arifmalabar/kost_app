@@ -153,7 +153,7 @@ function getJmlTagihan(row) {
   }
 }
 function getTglTagihan(row) {
-  let tgl = new Date(row.tanggal_bergabung);
+  let tgl = new Date(row.tanggal_tagihan);
   return `${tgl.getDate()} ${
     bulan[tgl.getMonth()]
   } ${new Date().getFullYear()}`;

@@ -74,10 +74,7 @@ async function simpanPenghuni() {
     const alamat_rumah = document.querySelector(".alamat_rumah").value;
     const token = document.querySelector(".token").value;
     const kd_kamar = document.querySelector('input[name="kode_kamar"]').value;
-    const reader = new FileReader();
-    reader.readAsDataURL(uploadktp);
-    reader.onload = async function () {
-      const base64file = reader.result.split(",")[1];
+    if (uploadktp === undefined) {
       const data = {
         NIK: NIK,
         nama: nama,
@@ -89,34 +86,35 @@ async function simpanPenghuni() {
         alamat_kampus_kantor: alamat_kampus,
         alamat: alamat_rumah,
         kode_kamar: kd_kamar,
-        file: base64file,
         token: token,
+        tanggal_bergabung: $(".tanggal_bergabung").val(),
         status: 1,
       };
-      await fetch(tambah_penghuni, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": token,
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          if (data.status === "success") {
-            successMsg("Berhasil", "Data berhasil disimpan");
-            window.location.href = `${host}/penghuni_ruang`;
-          } else {
-            throw new Error("Gagal menginput data");
-          }
-        })
-        .catch((er) => {
-          console.log(`Errror : ${er}`);
-        });
-    };
+      insertDataPenghuni(data, token);
+    } else {
+      const reader = new FileReader();
+      reader.readAsDataURL(uploadktp);
+      reader.onload = async function () {
+        const base64file = reader.result.split(",")[1];
+        const data = {
+          NIK: NIK,
+          nama: nama,
+          email: email,
+          harga: harga,
+          no_telp: notelp,
+          nama_wali: nm_wali,
+          nama_kampus_kantor: nm_kampus,
+          alamat_kampus_kantor: alamat_kampus,
+          alamat: alamat_rumah,
+          kode_kamar: kd_kamar,
+          file: base64file,
+          token: token,
+          tanggal_bergabung: $(".tanggal_bergabung").val(),
+          status: 1,
+        };
+        insertDataPenghuni(data, token);
+      };
+    }
   } catch (error) {
     console.log(error);
   }
@@ -136,6 +134,37 @@ async function simpanPenghuni() {
   } catch (error) {
     alert(error);
   }*/
+}
+async function insertDataPenghuni(data, token) {
+  await fetch(tambah_penghuni, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": token,
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      if (data.status === "success") {
+        successMsg(
+          "Berhasil",
+          "Data berhasil disimpan, proses pembayaran selanjutnya di entry pembayaran"
+        ).then((e) => {
+          if (e.isConfirmed) {
+            window.location.href = `${host}/penghuni_ruang`;
+          }
+        });
+      } else {
+        throw new Error("Gagal menginput data");
+      }
+    })
+    .catch((er) => {
+      console.log(`Errror : ${er}`);
+    });
 }
 function showListGedung(dt) {
   let opsi = ``;
