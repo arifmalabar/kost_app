@@ -10,13 +10,22 @@ Tambah Penghuni
         <div class="card card-default">
             <div class="card-header">
                 <h4 class="card-title">Informasi Penghuni</h4>
+                <div class="card-tools">
+                    <a href="/penghuni_ruang/tambah_penghuni" class="btn btn-success btn-sm">
+                        <i class="fa fa-plus"></i>&nbsp;Tambah Penghuni Baru
+                    </a>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="/penghuni_ruang/tambah_penghuni" class="btn btn-success btn-sm position-absolute" style="z-index: 10;">
-                            <i class="fa fa-plus"></i>&nbsp;Tambah Penghuni Baru
-                        </a>
+                        
+                        <div class="position-absolute" style="z-index: 10; width: 100%">
+                            <select name="" id="sort-gedung" title="Pilih" class="form-control select2bs4 col-md-3">
+                                <option value="0" hidden selected>Pilih Gedung</option>
+                            </select>
+                            
+                        </div>
                         <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -252,10 +261,18 @@ Tambah Penghuni
 </div>
 
 @endsection
-
+@section('js')
+    <script src="{{ asset("assets/script/app/penghuni/index.js") }}" type="module"></script>
+@endsection
 @section('jscript')
 <script>
     $(function() {
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+        theme: 'bootstrap4'
+        })
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,

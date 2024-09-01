@@ -19,7 +19,7 @@ class TagihanController extends Controller
     public function getDataTagihan()
     {
         try {
-            $data = Penghuni::selectRaw("tb_biodata_penghuni.NIK, nama, no_telp, email,harga, nama_ruang, nama_gedung, tagihan, tanggal_tagihan, (tagihan - jml_bayar) as total")
+            $data = Penghuni::selectRaw("tb_biodata_penghuni.NIK, nama, no_telp, email,harga, nama_ruang, tb_gedung.kode_gedung as kode_gedung, nama_gedung, tagihan, tanggal_tagihan, (tagihan - jml_bayar) as total")
             ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
             ->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_kamar.kode_gedung")
             ->join("tb_pembayaran", "tb_pembayaran.NIK","=","tb_biodata_penghuni.NIK")
@@ -39,6 +39,7 @@ class TagihanController extends Controller
             return response()->json($th);
         }
     }
+    
     public function tambahTagihan(Request $request)
     {
         $req_data = [
@@ -60,6 +61,8 @@ class TagihanController extends Controller
         $data_tagihan = [];
         $idx = 0;
         foreach ($data_penghuni as $key) {
+            $datestring  = $req_data["tahun"]."-".$req_data["bulan"]."-".$key->tgl;
+            $date = date('Y-m-d', strtotime($datestring));
             $no_transaksi = $req_data["tahun"]."-".$req_data["bulan"]."/".$key->kode_gedung."/".$key->kode_kamar."/".$key->NIK;
             $kode_bayar  = "P".$key->NIK."".$req_data["tahun"]."".$req_data["bulan"]."".$key->kode_kamar;
             $data_tagihan[$idx] = [
@@ -67,7 +70,7 @@ class TagihanController extends Controller
                 "no_transaksi" => $no_transaksi,
                 "NIK" => $key->NIK,
                 "tagihan" => $key->harga,
-                "tanggal_tagihan" => $req_data["tahun"]."-".$req_data["bulan"]."-".$key->tgl
+                "tanggal_tagihan" => $date
             ];
             $idx++;
         }

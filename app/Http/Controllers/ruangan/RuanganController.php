@@ -14,12 +14,21 @@ class RuanganController extends Controller
 {
     public function index()
     {
-    $data = array(
-        "nama"=> "setting ruangan",
-        "data" => Kamar::all(),
-        "gedung"=>Gedung::all()
-    );
-    return view('setting_ruangan.setting_ruangan', $data);
+        $data = array(
+            "nama"=> "setting ruangan",
+            "data" => Kamar::all(),
+            "gedung"=>Gedung::all()
+        );
+        return view('setting_ruangan.setting_ruangan', $data);
+    }
+    public function getRuanganByKode($kode_gedung)
+    {
+        try {
+            $query = Kamar::join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_kamar.kode_gedung")->where('tb_kamar.kode_gedung', $kode_gedung)->get();
+            return response()->json($query);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
     }
 
     public function store(Request $request)

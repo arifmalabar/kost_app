@@ -15,10 +15,14 @@ var bulan = [
   "Nopember",
   "Desember",
 ];
+let all_data = [];
 export function init() {
   $("#field-tahun").val(new Date().getFullYear());
   $(".btn-buattagihan").on("click", function (params) {
     buatTagihan();
+  });
+  $("#sort-gedung").on("change", function (params) {
+    sortByGedung();
   });
   showBulan();
 }
@@ -29,6 +33,7 @@ export async function fecth_tagihan() {
     })
     .then((data) => {
       showTables(data);
+      all_data = data;
     })
     .catch((err) => {
       console.log(err);
@@ -49,7 +54,17 @@ export async function getGedung() {
     errorMsg("Error", error);
   }
 }
-
+function sortByGedung() {
+  const kd_gedung = $("#sort-gedung").val();
+  if (kd_gedung != 0) {
+    const filteredData = all_data.filter(
+      (item) => item.kode_gedung === kd_gedung
+    );
+    showTables(filteredData);
+  } else {
+    fecth_tagihan();
+  }
+}
 function showBulan() {
   let opt_bulan = `<option value="">Pilih Bulan</option>`;
   let valbln = 1;
@@ -128,7 +143,7 @@ function covertIntNum(num) {
 }
 function showButtonAksi(dt) {
   return `<center>
-            <a href="/bayar" class="btn btn-outline-info btn-sm"><i
+            <a href="/bayar/${dt.NIK}" class="btn btn-outline-info btn-sm"><i
                     class="fas fa-dollar-sign"></i>&nbsp;Bayar</a>
             <a target="_blank" href="https://wa.me/${covertIntNum(
               dt.no_telp
@@ -174,7 +189,7 @@ async function buatTagihan() {
       body: JSON.stringify(data_tagihan),
     });
     let data = await response.json();
-    console.log(data);
+    fecth_tagihan();
   } catch (error) {
     console.log(error);
   }

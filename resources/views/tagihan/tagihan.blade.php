@@ -16,21 +16,20 @@
             <div class="card card-default">
                 <div class="card-header">
                     <h4 class="card-title">Tagihan Pembayaran Kost Bulan Ini</h4>
+                    <div class="card-tools">
+                        <a href="#" data-toggle="modal" data-target="#modal-lg" class="btn btn-info text-white btn-sm"><i
+                            class="fa fa-plus"></i>&nbsp; Generate Tagihan</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                           <div class="row" style="top:1px; z-index: 10;">
-                                <div class="col-md-1" style="width: 6.5%">
-                                    <a href="" style="z-index: 10" class="btn btn-success btn-sm position-absolute"><i
-                                        class="fa fa-sort"></i>&nbsp; Shorting</a>
-                                </div>
-                                <div class="col-md-2">
-                                    <a href="#" style="z-index: 10" data-toggle="modal" data-target="#modal-lg" class="btn btn-info text-white btn-sm position-absolute"><i
-                                        class="fa fa-plus"></i>&nbsp; Generate Tagihan</a>
-                                        
-                                </div>
-                           </div>
+                            <div class="position-absolute" style="z-index: 10; width: 100%">
+                                <select name="" id="sort-gedung" title="Pilih" class="form-control select2bs4 col-md-3">
+                                    <option value="0" hidden selected>Pilih Gedung</option>
+                                </select>
+                                
+                            </div>
                             <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -132,8 +131,11 @@
         </div>
     </section>
 @endsection
-@section('jscript')
+@section('js')
     <script src="{{ asset('assets/script/app/tagihan/index.js') }}" type="module"></script>
+@endsection
+@section('jscript')
+    
     <script>
         
         $(function() {
@@ -141,7 +143,7 @@
 
             //Initialize Select2 Elements
             $('.select2bs4').select2({
-            theme: 'bootstrap4'
+                theme: 'bootstrap4'
             })
             $("#example1").DataTable({
                 "responsive": true,

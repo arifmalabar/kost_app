@@ -43,6 +43,7 @@ Route::controller(GedungController::class)->group(function () {
 
 Route::controller(RuanganController::class)->group(function () {
     Route::get('/setting_ruangan', 'index')->name('ruangan.index');
+    Route::get('/setting_ruang/{kode_gedung}', 'getRuanganByKode');
     Route::post('/setting_ruangan/store', 'store')->name('ruangan.store');
     Route::get('/setting_ruangan/{kode_kamar}/edit', 'edit')->name('ruangan.edit');
     Route::put('/setting_ruangan/{kode_kamar}/update', 'update')->name('ruangan.update');
