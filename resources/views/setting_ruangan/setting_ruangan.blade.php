@@ -4,26 +4,30 @@
 @endsection
 @section('content')
     <section class="content">
-        
+
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
                     <h4 class="card-title">Informasi Ruangan</h4>
                     <div class="card-tools">
                         <button class="btn btn-success btn-sm" style="width: 100%" data-toggle="modal"
-                                    data-target="#tambahRuanganModal">
-                                        <i class="fa fa-plus"></i>&nbsp;Tambah Ruangan
-                                    </button>
+                            data-target="#tambahRuanganModal">
+                            <i class="fa fa-plus"></i>&nbsp;Tambah Ruangan
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="position-absolute" style="z-index: 10; width: 100%">
-                                <select name="" id="sort-gedung" title="Pilih" class="form-control select2bs4 col-md-3">
-                                    <option value="0" hidden selected>Pilih Gedung</option>
-                                </select>
-                                
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="position-absolute" style="z-index: 10; width: 100%">
+                                        <select name="" id="sort-gedung" title="Pilih"
+                                            class="form-control select2bs4 col-md-3">
+                                            <option value="0" hidden selected>Pilih Gedung</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
@@ -224,18 +228,18 @@
     </div>
 @endsection
 @section('js')
-    <script type="module" src="{{ asset("assets/script/app/ruangan/index.js") }}"></script>
+    <script type="module" src="{{ asset('assets/script/app/ruangan/index.js') }}"></script>
 @endsection
 @section('jscript')
     <script>
         $(function() {
-                    //Initialize Select2 Elements
+            //Initialize Select2 Elements
             $('.select2').select2()
 
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-        theme: 'bootstrap4'
-        })
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
 
             $('#example2').DataTable({
                 "paging": true,
