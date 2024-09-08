@@ -9,6 +9,10 @@ import {
   get_pembayaran_tagihan,
 } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
+import {
+  parseIntToRupiah,
+  parseRupiahToInt,
+} from "../helper/RupiahFormFormat.js";
 import { errorMsg, successMsg } from "../message/Message.js";
 
 let view_nik = document.querySelector(".view-nik");
@@ -54,6 +58,9 @@ export function initData() {
     getDataBayarTagihan(params);
   });
   btn_edit.href = `${halaman_update_penghuni}/${path[2]}`;
+  $(".field-tagihan-modal").on("keyup", function (params) {
+    this.value = parseIntToRupiah(this.value);
+  });
 }
 
 export async function fecthDataPembayaran() {
@@ -128,7 +135,7 @@ async function bayarTagihan() {
     kode_bayar: kode_bayar,
     tahun: tahun,
     bulan: bulan,
-    tagihan: tagihan,
+    tagihan: parseRupiahToInt(tagihan),
     token: token,
   };
   try {

@@ -174,7 +174,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="">Tagihan</label>
-                            <input type="number" name="" id="" value="0" class="form-control field-tagihan-modal" placeholder="Tagihan">
+                            <input type="text" name="" id="" value="" class="form-control field-tagihan-modal" placeholder="Tagihan">
                             <input type="hidden" name="" class="csrf_modal" value="{{ csrf_token() }}">
                         </div>
                     </div>

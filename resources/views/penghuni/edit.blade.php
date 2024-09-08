@@ -105,7 +105,7 @@
                                                                     class="fas fa-dollar-sign"></i></span>
                                                         </div>
                                                         <input type="text" id="hargaInput" class="form-control"
-                                                            name="harga" onkeyup="convertToRupiah(this)"
+                                                            name="harga"
                                                             placeholder="Harga" required>
                                                     </div>
                                                 </div>

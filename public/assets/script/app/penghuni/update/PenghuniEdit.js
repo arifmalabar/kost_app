@@ -7,6 +7,11 @@ import {
   update_penghuni,
 } from "../../config/EndPoint.js";
 import { errorMsg, successMsg } from "../../message/Message.js";
+import {
+  parseIntToRupiah,
+  parseRupiahToInt,
+} from "../../helper/RupiahFormFormat.js";
+import getRupiah from "../../helper/NumberFormat.js";
 
 let old_kdruang = "";
 let last_kdruang = "";
@@ -28,6 +33,9 @@ export function init() {
     updateData();
   });
   // Format harga dengan Rp. di form tambah
+  $("#hargaInput").on("keyup", function (e) {
+    this.value = parseIntToRupiah(this.value);
+  });
 }
 export async function getData() {
   try {
@@ -59,7 +67,7 @@ async function updateData() {
       old_nik: old_nik,
       nama: nama,
       email: email,
-      harga: harga,
+      harga: parseRupiahToInt(harga),
       no_telp: notelp,
       nama_wali: nm_wali,
       nama_kampus_kantor: nm_kampus,
@@ -79,7 +87,7 @@ async function updateData() {
         oldNIK: old_nik,
         nama: nama,
         email: email,
-        harga: harga,
+        harga: parseRupiahToInt(harga),
         no_telp: notelp,
         nama_wali: nm_wali,
         nama_kampus_kantor: nm_kampus,

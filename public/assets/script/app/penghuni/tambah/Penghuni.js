@@ -4,6 +4,11 @@ import {
   informasi_ruangan,
   tambah_penghuni,
 } from "../../config/EndPoint.js";
+import getRupiah from "../../helper/NumberFormat.js";
+import {
+  parseIntToRupiah,
+  parseRupiahToInt,
+} from "../../helper/RupiahFormFormat.js";
 import { successMsg } from "../../message/Message.js";
 let btn_cari = document.querySelector(".btn-cari");
 let field_gedung = document.querySelector(".input-gedung");
@@ -25,6 +30,12 @@ export function init() {
     simpanPenghuni();
   });
   // Format harga dengan Rp. di form tambah
+  $("#hargaInput").on("keyup", function (e) {
+    this.value = parseIntToRupiah(this.value);
+  });
+  $(".toUp").on("keyup", function (params) {
+    this.value = this.value.toUpperCase();
+  });
 }
 
 export async function getStatusRuangan(id) {
@@ -79,7 +90,7 @@ async function simpanPenghuni() {
         NIK: NIK,
         nama: nama,
         email: email,
-        harga: harga,
+        harga: parseRupiahToInt(harga),
         no_telp: notelp,
         nama_wali: nm_wali,
         nama_kampus_kantor: nm_kampus,
@@ -100,7 +111,7 @@ async function simpanPenghuni() {
           NIK: NIK,
           nama: nama,
           email: email,
-          harga: harga,
+          harga: parseRupiahToInt(harga),
           no_telp: notelp,
           nama_wali: nm_wali,
           nama_kampus_kantor: nm_kampus,

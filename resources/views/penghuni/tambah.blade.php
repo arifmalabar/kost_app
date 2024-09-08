@@ -70,7 +70,7 @@
                                                             <span class="input-group-text"><i
                                                                     class="fas fa-user"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control" name="nama"
+                                                        <input type="text" class="form-control toUp" name="nama"
                                                             placeholder="Nama" required>
                                                     </div>
                                                 </div>
@@ -97,8 +97,7 @@
                                                                     class="fas fa-dollar-sign"></i></span>
                                                         </div>
                                                         <input type="text" class="form-control" id="hargaInput"
-                                                            name="harga" placeholder="Harga"
-                                                            onkeyup="convertToRupiah(this)" required>
+                                                            name="harga" placeholder="Harga" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -123,7 +122,7 @@
                                                             <span class="input-group-text"><i
                                                                     class="fas fa-user-friends"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control" name="nama_wali"
+                                                        <input type="text" class="form-control toUp" name="nama_wali"
                                                             placeholder="Nama Wali" required>
                                                     </div>
                                                 </div>
@@ -136,7 +135,7 @@
                                                             <span class="input-group-text"><i
                                                                     class="fas fa-university"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control"
+                                                        <input type="text" class="form-control toUp"
                                                             name="nama_kampus_kantor" placeholder="Nama Kampus" required>
                                                     </div>
                                                 </div>

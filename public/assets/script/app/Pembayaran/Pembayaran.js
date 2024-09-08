@@ -66,6 +66,7 @@ function showListGedung(e) {
 }
 function showTables(dt) {
   //$('#example2').DataTable().clear().draw();
+  console.log(dt);
   $("#example2").DataTable({
     paging: true,
     lengthChange: false,
@@ -77,7 +78,12 @@ function showTables(dt) {
     bDestroy: true,
     data: dt,
     columns: [
-      { data: "NIK" },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return `${row.NIK.toString()}`;
+        },
+      },
       { data: "nama" },
       { data: "ruangan" },
       { data: "gedung" },

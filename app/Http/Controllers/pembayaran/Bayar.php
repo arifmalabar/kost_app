@@ -9,6 +9,7 @@ use ErrorException;
 use Illuminate\Http\Request;
 use App\Helper\Kode;
 use App\Models\Gedung;
+use App\Models\HistoryPembayaran;
 
 class Bayar extends Controller
 {
@@ -96,6 +97,12 @@ class Bayar extends Controller
             $query_tagihan->jml_bayar += $request->tagihan;
             $query_tagihan->tgl_bayar = date("Y-m-d H:i:s");
             $query_tagihan->save();
+            //buat riwayat transaksi
+            $data = [
+                "no_transaksi" => $query_tagihan->no_transaksi,
+                "total_transaksi" => $request->tagihan
+            ];
+            $query_riwayat = HistoryPembayaran::insert($data);
             return response()->json($query_tagihan);
         } catch (\Throwable $th) {
             return response()->json($th);
@@ -131,7 +138,6 @@ class Bayar extends Controller
     {
         try {
             $data_pembayaran = Pembayaran::selectRaw("YEAR(tanggal_tagihan) AS tahun, MONTHNAME(tanggal_tagihan) AS bulan")->where("kode_bayar", $kode_bayar)->first();
-            
             return response()->json($data_pembayaran);
         } catch (\Throwable $th) {
             return response()->json($th);

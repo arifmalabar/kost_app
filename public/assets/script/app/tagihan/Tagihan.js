@@ -76,7 +76,6 @@ function showBulan() {
 }
 function showTables(dt) {
   var no = 1;
-
   $("#example2").DataTable({
     paging: true,
     lengthChange: false,
