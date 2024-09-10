@@ -9,11 +9,22 @@ use App\Models\Pembayaran;
 class GrafikPendapatan extends Controller
 {
     public function index(){
+        $dataPembayaran = $this->getDataPembayaran();
+
+        $pendapatanSeharusnya = [];
+        $pendapatan = [];
+        
+        foreach ($dataPembayaran as $data){
+            $pendapatanSeharusnya[] = $data->tagihan_seharusnya;
+            $pendapatan[] = $data->total_tagihan;
+        }
+
         $data = [
-            "data_pembayaran" => $this->getDataPembayaran(),
-            "nama" => "tagihan"
+            'pendapatanSeharusnya' => $pendapatanSeharusnya,
+            'pendapatan' => $pendapatan,
+            "nama" => "laporan pendapatan"
         ];
-        return view("", $data);
+        return view("laporan_pendapatan.laporan_pendapatan", $data);
     }
     
     public function getDataPembayaran(){

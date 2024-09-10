@@ -5,6 +5,7 @@ use App\Models\Penghuni;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pembayaran\Bayar;
 use App\Http\Controllers\gedung\GedungController;
+use App\Http\Controllers\grafik_pendapatan\GrafikPendapatan;
 use App\Http\Controllers\grafik_penghuni\GrafikPenghuni;
 use App\Http\Controllers\ruangan\RuanganController;
 use App\Http\Controllers\penghuni\PenghuniController;
@@ -111,6 +112,10 @@ Route::get("/profile", function(){
 //     return view("pindah_ruang/pindahruang", ["nama"=> "pindah ruang"]);
 // });
 
+
+Route::controller(GrafikPendapatan::class)->group(function(){
+    Route::get("/grafik_pendapatan", 'index')->name('grafik_pendapatan.index');
+});
 Route::get("/laporan_pendapatan", function(){
     //return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"])->middleware('auth');
     return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"]);
