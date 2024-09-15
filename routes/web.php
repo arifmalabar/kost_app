@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\dashboard\DashboardController;
 use App\Models\Penghuni;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pembayaran\Bayar;
@@ -29,9 +29,14 @@ Route::get('/', [LoginController::class,'index'])->name('login')->middleware('gu
 Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard/dashboard', ["nama" => "dashboard"]);
-})->name('dashboard');
+})->name('dashboard');*/
+
+Route::controller(DashboardController::class)->group(function() {
+    Route::get('/dashboard', 'index')->name('dashboard');
+    Route::get('/informasikost', 'informasiKostJson');
+});
 
 Route::controller(GedungController::class)->group(function () {
     //Route::get('/setting_gedung', 'index')->name('admin.gedung.index')->middleware('auth');

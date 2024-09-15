@@ -17,7 +17,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Jumlah Penghuni Kost</span>
-                    <span class="info-box-number">20</span>
+                    <span class="info-box-number jml-penghuni">0</span>
                 </div>
                 <!-- /.info-box-content -->
                 </div>
@@ -29,7 +29,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Jumlah Rumah Kost</span>
-                    <span class="info-box-number">20</span>
+                    <span class="info-box-number jml-rumahkost">0</span>
                 </div>
                 <!-- /.info-box-content -->
                 </div>
@@ -41,7 +41,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Jumlah Kamar Kost</span>
-                    <span class="info-box-number">40</span>
+                    <span class="info-box-number jml-kamarkost">0</span>
                 </div>
                 <!-- /.info-box-content -->
                 </div>
@@ -55,8 +55,8 @@
                 <span class="info-box-icon"><i class="fas fa-tag"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Cicilan</span>
-                    <span class="info-box-number">Rp 4.5000</span>
+                    <span class="info-box-text">Hutang</span>
+                    <span class="info-box-number jml-cicilan">Rp 4.5000</span>
                 </div>
                 <!-- /.info-box-content -->
                 </div>
@@ -66,7 +66,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Lunas</span>
-                    <span class="info-box-number">Rp 109.000.000</span>
+                    <span class="info-box-number jml-lunas">Rp 109.000.000</span>
                 </div>
                 <!-- /.info-box-content -->
                 </div>
@@ -76,7 +76,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Sisa Bayar</span>
-                    <span class="info-box-number">Rp 9.000.000</span>
+                    <span class="info-box-number jml-sisa">Rp 9.000.000</span>
                 </div>
                 <!-- /.info-box-content -->
                 </div>
@@ -149,6 +149,7 @@
 </section>
 @endsection
 @section('js')
+<script src="{{ asset('assets/script/app/dashboard/index.js') }}" type="module"></script>
 <script>
     $(function() {
             $('#example2').DataTable({
