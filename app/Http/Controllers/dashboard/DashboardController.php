@@ -11,6 +11,12 @@ use App\Models\Pembayaran;
 
 class DashboardController extends Controller
 {
+    private $year;
+    private $month;
+    public function __construct() {
+        $this->year = date("Y");
+        $this->month = date("m");
+    }
     public function index()
     {
         return view('dashboard/dashboard', ["nama" => "dashboard"]);
@@ -22,7 +28,10 @@ class DashboardController extends Controller
             "informasi_penghuni"=> $this->getInformasiPenghuniBaru(),
             "cicilan" => $this->getTotalCicilan()->cicilan,
             "lunas" => $this->getTotalLunas()->lunas,
-            "sisa_bayar" => $this->getSisaBayar()
+            "sisa_bayar" => $this->getSisaBayar(), 
+            "grafik_lunas" => $this->grafikLunas(),
+            "grafik_terhutang" => $this->grafikTerhutang(),
+            "penghuni" => $this->getPenghuniBaru()
         ];
         return response()->json($data);
     }
@@ -73,6 +82,42 @@ class DashboardController extends Controller
         try {
             $query = Penghuni::whereMonth("tanggal_bergabung", date('m'))->get();
             //query ketersedian kamar
+            return $query;
+        } catch (\Throwable $th) {
+            return [];
+        }
+    }
+    private function grafikLunas()
+    {
+        try {
+            $query = Pembayaran::selectRaw("SUM(jml_bayar) as lunas, MONTHNAME(STR_TO_DATE(bulan, '%m')) as bulan")
+                                ->whereRaw("tahun = ".$this->year." AND jml_bayar >= tagihan")
+                                ->groupBy("bulan")
+                                ->get();
+            return $query;
+        } catch (\Throwable $th) {
+            return [];
+        }
+    }
+    private function grafikTerhutang()
+    {
+        try {
+            $query = Pembayaran::selectRaw("SUM(jml_bayar) as hutang, MONTHNAME(STR_TO_DATE(bulan, '%m')) as bulan")
+                                ->whereRaw("tahun = ".$this->year." AND jml_bayar <= tagihan")
+                                ->groupBy("bulan")
+                                ->get();
+            return $query;
+        } catch (\Throwable $th) {
+            return [];
+        }
+    }
+    private function getPenghuniBaru(){
+        try {
+            $query = Penghuni::selectRaw("NIK, nama, nama_ruang, nama_gedung, tanggal_bergabung")
+                                ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
+                                ->join("tb_gedung", "tb_kamar.kode_gedung", "=", "tb_gedung.kode_gedung")
+                                ->whereMonth("tanggal_bergabung", $this->month)
+                                ->get();
             return $query;
         } catch (\Throwable $th) {
             return [];

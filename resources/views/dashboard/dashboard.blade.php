@@ -8,7 +8,7 @@
 @section('content')
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
+    <div class="container-fluid"> 
     <!-- Info boxes -->
         <div class="row">
             <div class="col-12 col-sm-6 col-md-4">
@@ -118,13 +118,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Ridho Arif Wicaksono</td>
-                                    <td>DSST</td>
-                                    <td>1</td>
-                                    <td><span class="badge badge-info">2024-08-01</span></td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -152,93 +146,42 @@
 <script src="{{ asset('assets/script/app/dashboard/index.js') }}" type="module"></script>
 <script>
     $(function() {
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+            
         });
     /* ChartJS
      * -------
      * Here we will create a few charts using ChartJS
      */
 
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    var data_chart = {
-        labels: ['January', 'February', 'Mach', 'April', 'May', 'June', 'July'],
-        datasets: [{
-                label: 'Digital Goods',
-                backgroundColor: 'rgba(60,141,188,0.9)',
-                borderColor: 'rgba(60,141,188,0.8)',
-                pointRadius: false,
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [28, 48, 40, 19, 86, 27, 90]
-            },
-            {
-                label: 'Electronics',
-                backgroundColor: 'rgba(210, 214, 222, 1)',
-                borderColor: 'rgba(210, 214, 222, 1)',
-                pointRadius: false,
-                pointColor: 'rgba(210, 214, 222, 1)',
-                pointStrokeColor: '#c1c7d1',
-                pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(220,220,220,1)',
-                data: [65, 59, 80, 81, 56, 55, 40]
-            },
-        ]
-    }
-
-    var areaChartOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-            display: false
-        },
-        scales: {
-            xAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }],
-            yAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }]
-        }
-    }
-
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = $.extend(true, {}, data_chart)
-    var temp0 = data_chart.datasets[0]
-    var temp1 = data_chart.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
-
-    var barChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        datasetFill: false
-    }
-
-    new Chart(barChartCanvas, {
-        type: 'bar',
-        data: barChartData,
-        options: barChartOptions
-    })
+    
+     var data_chart = {
+    labels: ["January", "February", "Mach", "April", "May", "June", "July"],
+    datasets: [
+      {
+        label: "Terhutang",
+        backgroundColor: "rgba(60,141,188,0.9)",
+        borderColor: "rgba(60,141,188,0.8)",
+        pointRadius: false,
+        pointColor: "#3b8bba",
+        pointStrokeColor: "rgba(60,141,188,1)",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(60,141,188,1)",
+        data: [28, 48, 40, 19, 86, 27, 90],
+      },
+      {
+        label: "Lunas",
+        backgroundColor: "rgba(210, 214, 222, 1)",
+        borderColor: "rgba(210, 214, 222, 1)",
+        pointRadius: false,
+        pointColor: "rgba(210, 214, 222, 1)",
+        pointStrokeColor: "#c1c7d1",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(220,220,220,1)",
+        data: [65, 59, 80, 81, 56, 55, 40],
+      },
+    ],
+  };
+    
     //-------------
     //- DONUT CHART -
     //-------------
