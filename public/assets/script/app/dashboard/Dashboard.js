@@ -13,6 +13,7 @@ export async function fetchDataInformasi() {
     setSisaBayar(data.sisa_bayar);
     showGrafikHutangLunas(data.grafik_lunas, data.grafik_terhutang);
     showTabelPenghuni(data.penghuni);
+    showKetersediaanKamar(data.ketersediaan);
     console.log(data);
   } catch (error) {
     console.log(error);
@@ -153,5 +154,32 @@ function showTabelPenghuni(dt) {
         },
       },
     ],
+  });
+}
+function showKetersediaanKamar(dt) {
+  //-------------
+  //- DONUT CHART -
+  //-------------
+  // Get context with jQuery - using jQuery's .get() method.
+  var donutChartCanvas = $("#donutChart").get(0).getContext("2d");
+  var donutData = {
+    labels: ["Kosong", "Terisi"],
+    datasets: [
+      {
+        data: [dt.kosong, dt.terisi],
+        backgroundColor: ["#f56954", "#00a65a"],
+      },
+    ],
+  };
+  var donutOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+  };
+  //Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  new Chart(donutChartCanvas, {
+    type: "doughnut",
+    data: donutData,
+    options: donutOptions,
   });
 }

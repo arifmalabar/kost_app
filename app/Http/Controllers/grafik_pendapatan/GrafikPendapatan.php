@@ -8,20 +8,13 @@ use App\Models\Pembayaran;
 
 class GrafikPendapatan extends Controller
 {
+    private $tahun;
+    public function __construct() {
+        $this->tahun = date("Y");
+    }
     public function index(){
-        $dataPembayaran = $this->getDataPembayaran();
-
-        $pendapatanSeharusnya = [];
-        $pendapatan = [];
         
-        foreach ($dataPembayaran as $data){
-            $pendapatanSeharusnya[] = $data->tagihan_seharusnya;
-            $pendapatan[] = $data->total_tagihan;
-        }
-
         $data = [
-            'pendapatanSeharusnya' => $pendapatanSeharusnya,
-            'pendapatan' => $pendapatan,
             "nama" => "laporan pendapatan"
         ];
         return view("laporan_pendapatan.laporan_pendapatan", $data);
@@ -29,8 +22,8 @@ class GrafikPendapatan extends Controller
     
     public function getDataPembayaran(){
         try {
-            $query = Pembayaran::selectRaw("tahun, bulan, sum(jml_bayar) as total_tagihan, 	sum(tagihan) as tagihan_seharusnya")
-                                ->where("tahun", "=", 2024)
+            $query = Pembayaran::selectRaw("tahun, sum(jml_bayar) as pendapatan, sum(tagihan) as pendapatan_seharusnya, MONTHNAME(STR_TO_DATE(bulan, '%m')) as bulan, (sum(tagihan) - sum(jml_bayar)) as status")
+                                ->where("tahun", "=", $this->tahun)
                                 ->groupBy("bulan")
                                 ->get();
             return $query;

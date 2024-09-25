@@ -31,7 +31,8 @@ class DashboardController extends Controller
             "sisa_bayar" => $this->getSisaBayar(), 
             "grafik_lunas" => $this->grafikLunas(),
             "grafik_terhutang" => $this->grafikTerhutang(),
-            "penghuni" => $this->getPenghuniBaru()
+            "penghuni" => $this->getPenghuniBaru(),
+            "ketersediaan" => $this->getKetersediaanKamar(),
         ];
         return response()->json($data);
     }
@@ -119,6 +120,30 @@ class DashboardController extends Controller
                                 ->whereMonth("tanggal_bergabung", $this->month)
                                 ->get();
             return $query;
+        } catch (\Throwable $th) {
+            return [];
+        }
+    }
+    private function getKetersediaanKamar()
+    {
+        try {
+            $kosong = Penghuni::rightJoin('tb_kamar', 'tb_kamar.kode_kamar', '=', 'tb_biodata_penghuni.kode_kamar')
+                            ->leftJoin('tb_gedung', 'tb_kamar.kode_gedung', '=', 'tb_gedung.kode_gedung')
+                            ->whereNull('NIK')
+                            ->count();
+
+                            // Menghitung jumlah kamar terisi
+            $terisi = Penghuni::rightJoin('tb_kamar', 'tb_kamar.kode_kamar', '=', 'tb_biodata_penghuni.kode_kamar')
+                            ->leftJoin('tb_gedung', 'tb_kamar.kode_gedung', '=', 'tb_gedung.kode_gedung')
+                            ->whereNotNull('NIK')
+                            ->count();
+
+            // Menggabungkan hasil
+            $result = [
+                'kosong' => $kosong,
+                'terisi' => $terisi,
+            ];
+            return $result;
         } catch (\Throwable $th) {
             return [];
         }

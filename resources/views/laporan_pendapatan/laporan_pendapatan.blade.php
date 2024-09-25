@@ -41,14 +41,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Januari</td>
-                                        <td>2024</td>
-                                        <td>Rp 5.500.000</td>
-                                        <td>Rp 5.500.000</td>
-                                        <td><span class="badge badge-success">Sesuai</span></td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -66,15 +59,7 @@
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
           }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-          $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": true,
-            "responsive": true,
-          });
+          
         });
       </script>
 @endsection

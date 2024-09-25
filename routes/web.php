@@ -120,6 +120,7 @@ Route::get("/profile", function(){
 
 Route::controller(GrafikPendapatan::class)->group(function(){
     Route::get("/grafik_pendapatan", 'index')->name('grafik_pendapatan.index');
+    Route::get('/data_pendapatan', 'getDataPembayaran'); 
 });
 Route::get("/laporan_pendapatan", function(){
     //return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"])->middleware('auth');
