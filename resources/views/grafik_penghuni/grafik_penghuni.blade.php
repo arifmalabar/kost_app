@@ -11,7 +11,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Grafik Penghuni Setiap Gedung</h3>
                             <div class="card-tools">
-                                <button class="btn btn-success btn-sm"><i class="fa fa-sort"></i>Sorting</button>
+                                <!--<button class="btn btn-success btn-sm"><i class="fa fa-sort"></i>Sorting</button>-->
                             </div>  
                         </div>
                         <div class="card-body">
@@ -24,7 +24,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Data Penghuni Setiap Gedung</h3>
                             <div class="card-tools">
-                                <button class="btn btn-success btn-sm"><i class="fa fa-sort"></i>Sorting</button>
+                                <!--<button class="btn btn-success btn-sm"><i class="fa fa-sort"></i>Sorting</button>-->
                             </div>
                         </div>
                         <div class="card-body">
@@ -32,18 +32,14 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Bulan</th>
                                         <th>Gedung</th>
+                                        <th>Total Kamar</th>
+                                        <th>Kamar Kosong</th>
                                         <th>Total Penghuni</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Januari</td>
-                                        <td>BSST</td>
-                                        <td>200 Penghuni</td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>

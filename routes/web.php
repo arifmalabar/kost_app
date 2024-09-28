@@ -94,6 +94,7 @@ Route::controller(Bayar::class)->group(function () {
 
 Route::controller(GrafikPenghuni::class)->group(function () {
     Route::get("/grafik_penghuni", "index")->name("GrafikPenghuni.index");
+    Route::get('/data_grafik_penghuni', "getDataGrafikPenghuni");
 });
 
 
