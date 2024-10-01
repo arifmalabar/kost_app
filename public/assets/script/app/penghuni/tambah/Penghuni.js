@@ -14,6 +14,7 @@ let btn_cari = document.querySelector(".btn-cari");
 let field_gedung = document.querySelector(".input-gedung");
 let field_ruang = document.querySelector(".input-ruang");
 let change_ruang = document.querySelector(".change-ruang");
+//form
 
 export function init() {
   $(".input-gedung").change(function () {});
@@ -35,6 +36,9 @@ export function init() {
   });
   $(".toUp").on("keyup", function (params) {
     this.value = this.value.toUpperCase();
+  });
+  $(".next-btn").click(function () {
+    validateForm();
   });
 }
 
@@ -246,4 +250,36 @@ export function ketersediaanRuang(dt) {
       },
     ],
   });
+}
+function validateForm() {
+  const NIK = document.querySelector('input[name="NIK"]').value;
+  const nama = document.querySelector('input[name="nama"]').value;
+  const email = document.querySelector('input[name="email"]').value;
+  const harga = document.querySelector('input[name="harga"]').value;
+  const notelp = document.querySelector('input[name="no_telp"]').value;
+  const nm_wali = document.querySelector('input[name="nama_wali"]').value;
+  const nm_kampus = document.querySelector(
+    'input[name="nama_kampus_kantor"]'
+  ).value;
+  const uploadktp = document.querySelector('input[name="files"]').files[0];
+  const alamat_kampus = document.querySelector(".alamat_kampus").value;
+  const alamat_rumah = document.querySelector(".alamat_rumah").value;
+  const token = document.querySelector(".token").value;
+  const kd_kamar = document.querySelector('input[name="kode_kamar"]').value;
+
+  const data = [];
+
+  if (NIK === "") {
+    alert("NIK belum diisi");
+  } else if (nama === "") {
+    alert("Nama belum diisi");
+  } else if (email === "") {
+    alert("email belum diisi");
+  } else {
+    $(".is-invalid").removeClass("is-invalid");
+    stepper.next();
+  }
+}
+function ifInvalid(data) {
+  $(`input[name="${data}"]`).addClass("is-invalid");
 }

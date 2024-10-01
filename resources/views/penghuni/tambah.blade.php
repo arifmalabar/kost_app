@@ -50,20 +50,21 @@
                                         <div class="row">
                                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <div class="form-group NIK">
                                                     <label for="">NIK <sup>*</sup></label>
                                                     <div class="input-group mb-3">
-                                                        <div class="input-group-prepend">
+                                                        <div class="input-group-prepend ">
                                                             <span class="input-group-text"><i
                                                                     class="fas fa-id-card"></i></span>
                                                         </div>
-                                                        <input type="text" class="form-control" name="NIK"
+                                                        <input type="number" class="form-control" name="NIK"
                                                             placeholder="Masukan NIK" required>
                                                     </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <div class="form-group nama">
                                                     <label for="">Nama<sup>*</sup>: </label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -76,7 +77,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <div class="form-group email">
                                                     <label for="">Email<sup>*</sup>: </label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -89,7 +90,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <div class="form-group harga">
                                                     <label for="">Harga<sup>*</sup>: </label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -102,7 +103,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <div class="form-group no-telp">
                                                     <label for="">No Telepon<sup>*</sup>: </label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -180,7 +181,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <button class="btn btn-success" onclick="handleNextClick()"
+                                                <button class="btn btn-success next-btn" onclick="handleNextClick()"
                                                     id="custom-tabs-four-profile-tab" data-toggle="pill"
                                                     href="#custom-tabs-four-profile" role="tab"
                                                     aria-controls="custom-tabs-four-profile"
@@ -307,7 +308,7 @@
             // Panggil fungsi untuk menghapus format rupiah
             removeRupiahFormat();
             // Lanjutkan ke langkah berikutnya
-            stepper.next();
+            
         }
 
 
