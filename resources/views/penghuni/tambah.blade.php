@@ -228,8 +228,8 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Ruang</th>
                                                             <th>Gedung</th>
+                                                            <th>Ruang</th>
                                                             <th>Status</th>
                                                             <th>Opsi</th>
                                                         </tr>
