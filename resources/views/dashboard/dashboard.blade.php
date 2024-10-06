@@ -169,7 +169,7 @@
                         <form id="formShorting">
                             <div class="form-group">
                                 <label for="bulan">Bulan :</label>
-                                <select class="form-control" id="bulan" name="bulan">
+                                <select class="form-control field-bulan" id="bulan" name="bulan">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -186,14 +186,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="tahun">Tahun :</label>
-                                <input type="number" class="form-control" id="tahun" name="tahun"
+                                <input type="number" class="form-control field-tahun" id="tahun" name="tahun"
                                     placeholder="Masukkan tahun">
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-primary" id="submitShortingHutang">Submit</button>
+                        <button type="button" class="btn btn-primary btn-submit" id="submitShortingHutang">Submit</button>
                     </div>
                 </div>
             </div>

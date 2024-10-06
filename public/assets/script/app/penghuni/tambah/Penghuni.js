@@ -9,7 +9,7 @@ import {
   parseIntToRupiah,
   parseRupiahToInt,
 } from "../../helper/RupiahFormFormat.js";
-import { successMsg } from "../../message/Message.js";
+import { errorMsg, successMsg } from "../../message/Message.js";
 let btn_cari = document.querySelector(".btn-cari");
 let field_gedung = document.querySelector(".input-gedung");
 let field_ruang = document.querySelector(".input-ruang");
@@ -270,11 +270,23 @@ function validateForm() {
   const data = [];
 
   if (NIK === "") {
-    alert("NIK belum diisi");
+    ifValidError("NIK belum diisi");
   } else if (nama === "") {
-    alert("Nama belum diisi");
+    ifValidError("Nama belum diisi");
   } else if (email === "") {
-    alert("email belum diisi");
+    ifValidError("email belum diisi");
+  } else if (harga === "") {
+    ifValidError("Harga blum diisi");
+  } else if (notelp === "") {
+    ifValidError("notelp belum diisi");
+  } else if (nm_wali === "") {
+    ifValidError("Nama Wali belum diisi");
+  } else if (nm_kampus === "") {
+    ifValidError("Nama Kampus/instansi belum diisi");
+  } else if (alamat_kampus === "") {
+    ifValidError("Alamat Kampus/Instansi belum diisi");
+  } else if (alamat_rumah === "") {
+    ifValidError("Alamat Rumah belum diisi");
   } else {
     $(".is-invalid").removeClass("is-invalid");
     stepper.next();
@@ -282,4 +294,7 @@ function validateForm() {
 }
 function ifInvalid(data) {
   $(`input[name="${data}"]`).addClass("is-invalid");
+}
+function ifValidError(msg) {
+  errorMsg("Validiasi Error", msg);
 }

@@ -19,6 +19,9 @@
                     <div class="card-tools">
                         <a href="#" data-toggle="modal" data-target="#modal-lg" class="btn btn-info text-white btn-sm"><i
                             class="fa fa-plus"></i>&nbsp; Generate Tagihan</a>
+                             <!-- Modal -->
+                             <button class="btn btn-success btn-sm" data-toggle="modal"
+                             data-target="#modalShortingHutang"><i class="fa fa-sort"></i>&nbsp;Shorting</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -28,7 +31,51 @@
                                 <select name="" id="sort-gedung" title="Pilih" class="form-control select2bs4 col-md-3">
                                     <option value="0" hidden selected>Pilih Gedung</option>
                                 </select>
+                               
                                 
+                            </div>
+                            <div class="modal fade" id="modalShortingHutang" tabindex="-1" aria-labelledby="modalShortingHutangLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalShortingHutangLabel">Pilih Bulan dan Tahun</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="formShorting">
+                                                <div class="form-group">
+                                                    <label for="bulan">Bulan :</label>
+                                                    <select class="form-control" id="bulan" name="bulan">
+                                                        <option value="01">Januari</option>
+                                                        <option value="02">Februari</option>
+                                                        <option value="03">Maret</option>
+                                                        <option value="04">April</option>
+                                                        <option value="05">Mei</option>
+                                                        <option value="06">Juni</option>
+                                                        <option value="07">Juli</option>
+                                                        <option value="08">Agustus</option>
+                                                        <option value="09">September</option>
+                                                        <option value="10">Oktober</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">Desember</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="tahun">Tahun :</label>
+                                                    <input type="number" class="form-control" id="tahun" name="tahun"
+                                                        placeholder="Masukkan tahun">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                            <button type="button" class="btn btn-primary" id="submitShortingHutang">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                                 <thead>
