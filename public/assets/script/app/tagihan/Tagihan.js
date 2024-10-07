@@ -6,7 +6,7 @@ import {
 } from "../config/EndPoint.js";
 import { fecthDataSorting } from "../helper/ModalSorting.js";
 import getRupiah from "../helper/NumberFormat.js";
-import { errorMsg } from "../message/Message.js";
+import { errorMsg, successMsg } from "../message/Message.js";
 var bulan = [
   "Januari",
   "Februari",
@@ -198,10 +198,18 @@ async function buatTagihan() {
       },
       body: JSON.stringify(data_tagihan),
     });
-    let data = await response.json();
-    fecth_tagihan();
+    if (response.ok) {
+      let data = await response.json();
+      fecth_tagihan();
+      successMsg(
+        "Berhasil",
+        `Tambah tagihan bulan ${data_tagihan.bulan} tahun ${data_tagihan.tahun} berhasil, lakukan sorting`
+      );
+    } else {
+      throw new Error(response.statusText);
+    }
   } catch (error) {
-    console.log(error);
+    errorMsg("Terjadi Kesalahan", error);
   }
 }
 async function exportTagihan() {

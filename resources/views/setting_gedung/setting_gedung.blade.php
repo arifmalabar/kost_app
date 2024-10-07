@@ -52,7 +52,7 @@
                                     @foreach ($data as $d)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td><a href="http://" target="_blank" rel="noopener noreferrer">{{ $d->kode_gedung }}</a></td>
+                                            <td><a href="/setting_gedung/export_excel/<?= $d->kode_gedung ?>" target="_blank" rel="noopener noreferrer">{{ $d->kode_gedung }}</a></td>
                                             <td>{{ $d->nama_gedung }}</td>
                                             <td>{{ $d->alamat_gedung }}</td>
                                             <td>

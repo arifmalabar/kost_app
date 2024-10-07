@@ -41,6 +41,7 @@ Route::controller(DashboardController::class)->group(function() {
 Route::controller(GedungController::class)->group(function () {
     //Route::get('/setting_gedung', 'index')->name('admin.gedung.index')->middleware('auth');
     Route::get('/setting_gedung', 'index')->name('admin.gedung.index');
+    Route::get("/setting_gedung/export_excel/{kode_gedung}", "exportExcel");
     Route::post('/setting_gedung/store', 'store')->name('gedung.store');
     Route::get('/setting_gedung/{kode_gedung}/edit', 'edit')->name('gedung.edit');
     Route::put('/setting_gedung/{kode_gedung}/update', 'update')->name('gedung.update');
