@@ -1,9 +1,7 @@
 import { informasi_kost } from "../config/EndPoint.js";
 import getRupiah from "../helper/NumberFormat.js";
-import { init } from "../helper/ModalSorting.js";
 export function initData() {
   //showGrafikHutangLunas();
-  init();
 }
 export async function fetchDataInformasi() {
   try {

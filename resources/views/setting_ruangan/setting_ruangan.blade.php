@@ -29,14 +29,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <table id="example2" class="table table-bordered table-hover">
+                            <table id="example2" class="table table-bordered table-hover text-center">
                                 <thead>
                                     <tr>
                                         <th>Kode Kamar</th>
                                         <th>Nama Gedung</th>
                                         <th>Nama Kamar</th>
                                         <th>No Kamar</th>
-                                        <th>Kapasitas Kamar</th>
                                         <th style="text-align: center">Opsi</th>
                                     </tr>
                                 </thead>
@@ -47,7 +46,6 @@
                                             <td>{{ $d->gedung->nama_gedung }}</td>
                                             <td>{{ $d->nama_ruang }}</td>
                                             <td>{{ $d->no_ruang }}</td>
-                                            <td>{{ $d->kapasitas }}</td>
                                             <td>
                                                 <center>
                                                     <button class="btn btn-outline-info btn-sm" data-toggle="modal"

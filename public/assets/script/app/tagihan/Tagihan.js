@@ -1,4 +1,10 @@
-import { get_gedung, get_tagihan, tambah_tagihan } from "../config/EndPoint.js";
+import {
+  get_gedung,
+  get_tagihan,
+  sorting_tagihan,
+  tambah_tagihan,
+} from "../config/EndPoint.js";
+import { fecthDataSorting } from "../helper/ModalSorting.js";
 import getRupiah from "../helper/NumberFormat.js";
 import { errorMsg } from "../message/Message.js";
 var bulan = [
@@ -16,6 +22,7 @@ var bulan = [
   "Desember",
 ];
 let all_data = [];
+const submit = document.querySelector(".btn-sorting");
 export function init() {
   $("#field-tahun").val(new Date().getFullYear());
   $(".btn-buattagihan").on("click", function (params) {
@@ -25,6 +32,10 @@ export function init() {
     sortByGedung();
   });
   showBulan();
+
+  submit.addEventListener("click", function () {
+    exportTagihan();
+  });
 }
 export async function fecth_tagihan() {
   await fetch(get_tagihan)
@@ -191,5 +202,14 @@ async function buatTagihan() {
     fecth_tagihan();
   } catch (error) {
     console.log(error);
+  }
+}
+async function exportTagihan() {
+  const response = await fecthDataSorting(sorting_tagihan);
+  if (!response.iserror) {
+    showTables(response);
+    all_data = response;
+  } else {
+    errorMsg("Error", response.msg);
   }
 }

@@ -20,3 +20,4 @@ export let halaman_update_penghuni = `${host}/penghuni_ruang/detail_penghuni`;
 export let get_ruangan_bygedung = `${host}/setting_ruang`;
 export let get_data_pendapatan = `${host}/data_pendapatan`;
 export let get_grafik_penghuni = `${host}/data_grafik_penghuni`;
+export let sorting_tagihan = `${host}/sorting_tagihan`;

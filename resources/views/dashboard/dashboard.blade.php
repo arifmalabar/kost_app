@@ -188,6 +188,7 @@
                                 <label for="tahun">Tahun :</label>
                                 <input type="number" class="form-control field-tahun" id="tahun" name="tahun"
                                     placeholder="Masukkan tahun">
+                                    <input type="hidden" value="{{ csrf_token() }}" class="field-token">
                             </div>
                         </form>
                     </div>

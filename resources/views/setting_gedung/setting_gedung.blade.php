@@ -12,19 +12,32 @@
 
 @section('content')
     <section class="content">
+        
         <div class="container-fluid">
+            <div class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-info"></i> Petunjuk!</h5>
+                <ul>
+                    <li>Untuk melakukan export penghuni pergedung silahkan melakukan klik pada nama gedung</li>
+                    <li>Export hanya tersedia dengan format .xls (excel)</li>
+                    <li>Export excel hanya dapat menampilkan kamar dan penghuni namun tidak menampilkan kamar yang tersedia atau tidak</li>
+                </ul>
+              </div>
             <div class="card card-default">
                 <div class="card-header">
                     <h4 class="card-title">Informasi Gedung</h4>
+                    <div class="card-tools">
+                        <button class="btn btn-success btn-sm" data-toggle="modal"
+                                data-target="#tambahGedungModal">
+                                <i class="fa fa-plus"></i>&nbsp;Tambah Gedung
+                            </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-success btn-sm position-absolute" style="z-index: 10;" data-toggle="modal"
-                                data-target="#tambahGedungModal">
-                                <i class="fa fa-plus"></i>&nbsp;Tambah Gedung
-                            </button>
-                            <table id="example2" class="table table-bordered table-hover">
+                            
+                            <table id="example2" class="table table-bordered table-hover" style="text-align: center">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -35,10 +48,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php $no = 1;?>
                                     @foreach ($data as $d)
                                         <tr>
-                                            <td>1</td>
-                                            <td>{{ $d->kode_gedung }}</td>
+                                            <td>{{ $no++ }}</td>
+                                            <td><a href="http://" target="_blank" rel="noopener noreferrer">{{ $d->kode_gedung }}</a></td>
                                             <td>{{ $d->nama_gedung }}</td>
                                             <td>{{ $d->alamat_gedung }}</td>
                                             <td>

@@ -81,6 +81,7 @@ Route::controller(TagihanController::class)->group(function(){
     Route::get("/tagihan", 'index')->name('tagihan.index');
     Route::get("/data_tagihan", 'getDataTagihan');
     Route::post('/tambah_tagihan', 'tambahTagihan');
+    Route::post("/sorting_tagihan", "sortTagihan");
 });
 
 Route::controller(Bayar::class)->group(function () {
