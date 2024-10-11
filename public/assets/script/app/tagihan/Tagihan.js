@@ -200,6 +200,7 @@ async function buatTagihan() {
     });
     if (response.ok) {
       let data = await response.json();
+      console.log(data);
       fecth_tagihan();
       successMsg(
         "Berhasil",

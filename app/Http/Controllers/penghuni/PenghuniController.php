@@ -112,8 +112,8 @@ class PenghuniController extends Controller
         }
         try {
             $simpan = Penghuni::insert($data);
-            $tagihan = $this->buatTagihanBaru($NIK);
-            if ($simpan && $tagihan) {
+            //$tagihan = $this->buatTagihanBaru($NIK);
+            if ($simpan) {
                 return response()->json(['status' => 'success']);
             } else {
                 return response()->json(['status' => 'failed']);

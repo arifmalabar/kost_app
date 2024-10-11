@@ -31,4 +31,19 @@ class GrafikPendapatan extends Controller
             return [];
         }
     }
+    public function getDataPembayaranGedung()
+    {
+        try {
+            $query = Pembayaran::selectRaw("tb_gedung.kode_gedung as kd_gedung, nama_gedung, SUM(tb_pembayaran.jml_bayar) AS pendapatan_saat_ini, SUM(tb_pembayaran.tagihan) AS pendapatan_seharusnya")
+                                ->join("tb_biodata_penghuni", "tb_biodata_penghuni.NIK", "=", "tb_pembayaran.NIK")
+                                ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
+                                ->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_kamar.kode_gedung")
+                                ->where("tahun", "=", date('Y'))
+                                ->groupBy("tb_kamar.kode_gedung")
+                                ->get();
+            return response()->json($query);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+    }
 }

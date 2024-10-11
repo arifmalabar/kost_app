@@ -6,9 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Penghuni;
 use Illuminate\Http\Request;
 use App\Models\Pembayaran;
-
+use Illuminate\Support\Facades\DB;
 class TagihanController extends Controller
 {
+    private $bulan;
+    private $tahun;
+
+    public function __construct() {
+        $this->bulan = date("m");
+        $this->tahun = date("Y");
+    }
     public function index()
     {
         $data = [
@@ -53,11 +60,14 @@ class TagihanController extends Controller
                                     ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
                                     ->join("tb_gedung","tb_kamar.kode_gedung", "=","tb_gedung.kode_gedung")
                                     ->where("tb_gedung.kode_gedung", "=", $req_data["gedung"])
-                                    ->get();
-            $data_penghuni = $query_penghuni;
+                                    ->where("status", "!=", 0)
+                                    ->whereRaw("NOT EXISTS (SELECT NIK FROM tb_pembayaran WHERE NIK = tb_biodata_penghuni.NIK AND bulan = ".$req_data["bulan"]." AND tahun = ".$req_data["tahun"].")");
+
+            $data_penghuni = $query_penghuni->get();
         } catch (\Throwable $th) {
             return response()->json($th);
         }
+        
         $data_tagihan = [];
         $idx = 0;
         foreach ($data_penghuni as $key) {
