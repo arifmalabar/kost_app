@@ -13,7 +13,7 @@ use Exception;
 
 class GedungController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
 
         $data = array(
@@ -25,8 +25,6 @@ class GedungController extends Controller
 
     public function exportExcel($kode_gedung)
     {
-        
-        
         try {
             $query_gedung = Gedung::find($kode_gedung);
             $query_penghuni = Penghuni::selectRaw("NIK, nama, tb_kamar.nama_ruang, status")

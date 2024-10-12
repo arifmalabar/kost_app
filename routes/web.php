@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\dashboard\DashboardController;
 use App\Models\Penghuni;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pembayaran\Bayar;
-use App\Http\Controllers\gedung\GedungController;
-use App\Http\Controllers\grafik_pendapatan\GrafikPendapatan;
-use App\Http\Controllers\grafik_penghuni\GrafikPenghuni;
-use App\Http\Controllers\ruangan\RuanganController;
-use App\Http\Controllers\penghuni\PenghuniController;
-use App\Http\Controllers\pembayaran\PembayaranController;
-use App\Http\Controllers\tagihan\TagihanController;
 use App\Http\Controllers\Login\LoginController;
+use App\Http\Controllers\gedung\GedungController;
+use App\Http\Controllers\GedungPenghuniController;
+use App\Http\Controllers\ruangan\RuanganController;
+use App\Http\Controllers\tagihan\TagihanController;
+use App\Http\Controllers\penghuni\PenghuniController;
+use App\Http\Controllers\dashboard\DashboardController;
+use App\Http\Controllers\grafik_penghuni\GrafikPenghuni;
+use App\Http\Controllers\pembayaran\PembayaranController;
+use App\Http\Controllers\grafik_pendapatan\GrafikPendapatan;
 
 
 /*
@@ -99,6 +100,8 @@ Route::controller(GrafikPenghuni::class)->group(function () {
     Route::get('/data_grafik_penghuni', "getDataGrafikPenghuni");
 });
 
+
+Route::get('/gedung_penghuni/{kode_gedung}', [GedungPenghuniController::class, 'show']);
 
 // Route::get("/login", function() {
 //     return view("login/login", ["nama"=> "login"]);
