@@ -122,11 +122,8 @@ Route::get("/profile", function(){
 
 
 Route::controller(GrafikPendapatan::class)->group(function(){
-    Route::get("/grafik_pendapatan", 'index')->name('grafik_pendapatan.index');
+    Route::get("/laporan_pendapatan", 'index')->name('grafik_pendapatan.index');
     Route::get('/data_pendapatan', 'getDataPembayaran'); 
     Route::get("/data_pendapatan_gedung", "getDataPembayaranGedung");
-});
-Route::get("/laporan_pendapatan", function(){
-    //return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"])->middleware('auth');
-    return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"]);
+    Route::get("/laporan_pendapatan_gedung/{kode_gedung}/{tahun}", "getLaporanGedung");
 });
