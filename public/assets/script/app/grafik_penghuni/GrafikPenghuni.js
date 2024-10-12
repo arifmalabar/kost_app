@@ -1,21 +1,67 @@
+import { get_grafik_penghuni } from "../config/EndPoint.js";
+let nm_gedung = [];
+let terisi = [];
+let kosong = [];
 export function init() {
-  showChart();
-  showTabel();
+  fecthGrafikPenghuni();
 }
-function showTabel() {
+async function fecthGrafikPenghuni() {
+  try {
+    const response = await fetch(get_grafik_penghuni);
+    const data = await response.json();
+    showTabel(data);
+    data.forEach((element) => {
+      nm_gedung.push(element.nama_gedung);
+      terisi.push(element.total_penghuni);
+      kosong.push(element.total_kamar_kosong);
+    });
+    showChart(data);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+function showTabel(dt) {
+  let no = 1;
   $("#example2").DataTable({
     paging: true,
     lengthChange: false,
     searching: true,
     ordering: true,
     info: true,
-    autoWidth: true,
+    autoWidth: false,
     responsive: true,
+    bDestroy: true,
+    data: dt,
+    columns: [
+      {
+        data: null,
+        render: function (data, type, row) {
+          return no++;
+        },
+      },
+      {
+        data: "nama_gedung",
+      },
+      {
+        data: "total_kamar",
+      },
+      {
+        data: "total_kamar_kosong",
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return `<span class="badge badge-success">${row.total_penghuni} Penghuni</span>`;
+        },
+      },
+    ],
   });
 }
-function showChart() {
+function showChart(dt) {
+  console.log(nm_gedung);
   var areaChartData = {
-    labels: ["BSST", "Rogonoto", "Banjararum"],
+    labels: nm_gedung,
     datasets: [
       {
         label: "Terisi",
@@ -26,10 +72,10 @@ function showChart() {
         pointStrokeColor: "rgba(60,141,188,1)",
         pointHighlightFill: "#fff",
         pointHighlightStroke: "rgba(60,141,188,1)",
-        data: [28, 48, 40, 19, 86, 27, 90],
+        data: terisi,
       },
       {
-        label: "Penuh",
+        label: "Kosong",
         backgroundColor: "rgba(210, 214, 222, 1)",
         borderColor: "rgba(210, 214, 222, 1)",
         pointRadius: false,
@@ -37,7 +83,7 @@ function showChart() {
         pointStrokeColor: "#c1c7d1",
         pointHighlightFill: "#fff",
         pointHighlightStroke: "rgba(220,220,220,1)",
-        data: [65, 59, 80, 81, 56, 55, 40],
+        data: kosong,
       },
     ],
   };

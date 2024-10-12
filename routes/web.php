@@ -1,10 +1,11 @@
 <?php
 
-
+use App\Http\Controllers\dashboard\DashboardController;
 use App\Models\Penghuni;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pembayaran\Bayar;
 use App\Http\Controllers\gedung\GedungController;
+use App\Http\Controllers\grafik_pendapatan\GrafikPendapatan;
 use App\Http\Controllers\grafik_penghuni\GrafikPenghuni;
 use App\Http\Controllers\ruangan\RuanganController;
 use App\Http\Controllers\penghuni\PenghuniController;
@@ -28,13 +29,19 @@ Route::get('/', [LoginController::class,'index'])->name('login')->middleware('gu
 Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard/dashboard', ["nama" => "dashboard"]);
-})->name('dashboard');
+})->name('dashboard');*/
+
+Route::controller(DashboardController::class)->group(function() {
+    Route::get('/dashboard', 'index')->name('dashboard');
+    Route::get('/informasikost', 'informasiKostJson');
+});
 
 Route::controller(GedungController::class)->group(function () {
     //Route::get('/setting_gedung', 'index')->name('admin.gedung.index')->middleware('auth');
     Route::get('/setting_gedung', 'index')->name('admin.gedung.index');
+    Route::get("/setting_gedung/export_excel/{kode_gedung}", "exportExcel");
     Route::post('/setting_gedung/store', 'store')->name('gedung.store');
     Route::get('/setting_gedung/{kode_gedung}/edit', 'edit')->name('gedung.edit');
     Route::put('/setting_gedung/{kode_gedung}/update', 'update')->name('gedung.update');
@@ -43,6 +50,7 @@ Route::controller(GedungController::class)->group(function () {
 
 Route::controller(RuanganController::class)->group(function () {
     Route::get('/setting_ruangan', 'index')->name('ruangan.index');
+    Route::get('/setting_ruang/{kode_gedung}', 'getRuanganByKode');
     Route::post('/setting_ruangan/store', 'store')->name('ruangan.store');
     Route::get('/setting_ruangan/{kode_kamar}/edit', 'edit')->name('ruangan.edit');
     Route::put('/setting_ruangan/{kode_kamar}/update', 'update')->name('ruangan.update');
@@ -64,7 +72,7 @@ Route::controller(PenghuniController::class)->group(function () {
 });
 
 Route::controller(PembayaranController::class)->group(function() {
-    Route::get('/pembayaran', 'index');
+    Route::get('/pembayaran', 'index')->name('pembayaran.index');
     Route::get('/get_gedung', 'getDataGedung');
     Route::get('/get_gedung_byid/{id}', 'getGedungById');
     Route::get('/get_penghuni', 'getDataPenghuni');
@@ -73,16 +81,22 @@ Route::controller(PembayaranController::class)->group(function() {
 Route::controller(TagihanController::class)->group(function(){
     Route::get("/tagihan", 'index')->name('tagihan.index');
     Route::get("/data_tagihan", 'getDataTagihan');
+    Route::post('/tambah_tagihan', 'tambahTagihan');
+    Route::post("/sorting_tagihan", "sortTagihan");
 });
 
 Route::controller(Bayar::class)->group(function () {
     Route::get("/bayar/{id}", 'index')->name('bayar.index');
     Route::get("/get_bayar/{nik}", 'getDataPembayaran');
-    Route::post("/bayar_tagihan", "bayarTagihan");
+    Route::get('/get_tahun/{nik}', 'getTahunTagihan');
+    Route::get('/get_bulan/{nik}/{tahun}', 'getBulanTagihan');
+    Route::get('/get_pembayaran_tagihan/{kode_bayar}', 'getDataBayarTagihan');
+    Route::put("/bayar_tagihan", "bayarTagihan");
 });
 
 Route::controller(GrafikPenghuni::class)->group(function () {
     Route::get("/grafik_penghuni", "index")->name("GrafikPenghuni.index");
+    Route::get('/data_grafik_penghuni', "getDataGrafikPenghuni");
 });
 
 
@@ -106,6 +120,12 @@ Route::get("/profile", function(){
 //     return view("pindah_ruang/pindahruang", ["nama"=> "pindah ruang"]);
 // });
 
+
+Route::controller(GrafikPendapatan::class)->group(function(){
+    Route::get("/grafik_pendapatan", 'index')->name('grafik_pendapatan.index');
+    Route::get('/data_pendapatan', 'getDataPembayaran'); 
+    Route::get("/data_pendapatan_gedung", "getDataPembayaranGedung");
+});
 Route::get("/laporan_pendapatan", function(){
     //return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"])->middleware('auth');
     return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"]);

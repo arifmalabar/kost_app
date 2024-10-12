@@ -4,26 +4,38 @@
 @endsection
 @section('content')
     <section class="content">
+
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
                     <h4 class="card-title">Informasi Ruangan</h4>
+                    <div class="card-tools">
+                        <button class="btn btn-success btn-sm" style="width: 100%" data-toggle="modal"
+                            data-target="#tambahRuanganModal">
+                            <i class="fa fa-plus"></i>&nbsp;Tambah Ruangan
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-success btn-sm position-absolute" style="z-index: 10;" data-toggle="modal"
-                                data-target="#tambahRuanganModal">
-                                <i class="fa fa-plus"></i>&nbsp;Tambah Ruangan
-                            </button>
-                            <table id="example2" class="table table-bordered table-hover">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="position-absolute" style="z-index: 10; width: 100%">
+                                        <select name="" id="sort-gedung" title="Pilih"
+                                            class="form-control select2bs4 col-md-3">
+                                            <option value="0" hidden selected>Pilih Gedung</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="example2" class="table table-bordered table-hover text-center">
                                 <thead>
                                     <tr>
-                                        <th style="width: 100px">Kode Kamar</th>
-                                        <th style="width: 110px">Kode Gedung</th>
-                                        <th style="width: 110px">Nama Kamar</th>
-                                        <th style="width: 110px">No Kamar</th>
-                                        <th style="width: 130px">Kapasitas Kamar</th>
+                                        <th>Kode Kamar</th>
+                                        <th>Nama Gedung</th>
+                                        <th>Nama Kamar</th>
+                                        <th>No Kamar</th>
                                         <th style="text-align: center">Opsi</th>
                                     </tr>
                                 </thead>
@@ -34,7 +46,6 @@
                                             <td>{{ $d->gedung->nama_gedung }}</td>
                                             <td>{{ $d->nama_ruang }}</td>
                                             <td>{{ $d->no_ruang }}</td>
-                                            <td>{{ $d->kapasitas }}</td>
                                             <td>
                                                 <center>
                                                     <button class="btn btn-outline-info btn-sm" data-toggle="modal"
@@ -81,36 +92,49 @@
                 <div class="modal-body">
                     <form id="formTambahRuang" action="{{ url('/setting_ruangan/store') }}" method="POST">
                         @csrf
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <div class="mb-3">
+                            <label for="">Gedung<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <select class="form-control" name="kode_gedung" id="kode_gedung" required>
+                                    <option value="" disabled selected>Pilih Gedung</option>
+                                    @foreach ($gedung as $d)
+                                        <option value="{{ $d->kode_gedung }}">{{ $d->nama_gedung }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <select class="form-control" name="kode_gedung" required>
-                                <option value="" disabled selected>Pilih Gedung</option>
-                                @foreach ($gedung as $d)
-                                    <option value="{{ $d->kode_gedung }}">{{ $d->nama_gedung }}</option>
-                                @endforeach
-                            </select>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        <div class="mb-3">
+                            <label for="">Nama Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Nama Ruangan" name="nama_ruang"
+                                    id="nama_ruang" required>
                             </div>
-                            <input type="text" class="form-control" placeholder="Nama Ruangan" name="nama_ruang"
-                                required>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
+                        <div class="mb-3">
+                            <label for="">Nomor Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Nomor Ruangan" name="no_ruang"
+                                    id="no_ruang" required>
                             </div>
-                            <input type="text" class="form-control" placeholder="Nomor Ruangan" name="no_ruang" required>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
+                        <div class="mb-3">
+                            <label for="">Kapasitas Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-users"></i></span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Kapasitas Ruangan"
+                                    name="kapasitas" id="kapasitas" required>
                             </div>
-                            <input type="text" class="form-control" placeholder="Kapasitas Ruangan" name="kapasitas"
-                                required>
                         </div>
                     </form>
                 </div>
@@ -121,6 +145,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Modal Edit Ruangan -->
     <div class="modal fade" id="editRuanganModal" tabindex="-1" role="dialog" aria-labelledby="editRuanganModalLabel"
@@ -137,41 +162,58 @@
                     <form id="formEditRuangan" action="" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        <div class="mb-3">
+                            <label for="">Kode Kamar<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editKodeKamar" name="kode_kamar"
+                                    readonly>
                             </div>
-                            <input type="text" class="form-control" id="editKodeKamar" name="kode_kamar" readonly>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        <div class="mb-3">
+                            <label for="">Gedung<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                </div>
+                                <select class="form-control" id="editKodeGedung" name="kode_gedung" required>
+                                    <option value="" disabled>Pilih Gedung</option>
+                                    @foreach ($gedung as $g)
+                                        <option value="{{ $g->kode_gedung }}">{{ $g->nama_gedung }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <select class="form-control" id="editKodeGedung" name="kode_gedung" required>
-                                <option value="" disabled>Pilih Gedung</option>
-                                @foreach ($gedung as $g)
-                                    <option value="{{ $g->kode_gedung }}">{{ $g->nama_gedung }}</option>
-                                @endforeach
-                            </select>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        <div class="mb-3">
+                            <label for="">Nama Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editNamaRuang" name="nama_ruang"
+                                    required>
                             </div>
-                            <input type="text" class="form-control" id="editNamaRuang" name="nama_ruang" required>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        <div class="mb-3">
+                            <label for="">Nomor Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editNoRuang" name="no_ruang" required>
                             </div>
-                            <input type="text" class="form-control" id="editNoRuang" name="no_ruang" required>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-location-arrow"></i></span>
+                        <div class="mb-3">
+                            <label for="">Kapasitas Ruangan<sup>*</sup>:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-users"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="editKapasitasRuang" name="kapasitas"
+                                    required>
                             </div>
-                            <input type="text" class="form-control" id="editKapasitasRuang" name="kapasitas"
-                                required>
                         </div>
                     </form>
                 </div>
@@ -183,9 +225,20 @@
         </div>
     </div>
 @endsection
+@section('js')
+    <script type="module" src="{{ asset('assets/script/app/ruangan/index.js') }}"></script>
+@endsection
 @section('jscript')
     <script>
         $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
@@ -194,6 +247,8 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
+                bDestroy: true,
+
             });
         });
 
@@ -228,7 +283,7 @@
                 title: 'Success',
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
-                timer: 3000
+                timer: 2000
             });
         @endif
 

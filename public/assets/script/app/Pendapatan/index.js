@@ -1,2 +1,2 @@
-import showBarChart from "./Pendapatan.js";
-showBarChart();
+import fecthDataPendapatan from "./Pendapatan.js";
+fecthDataPendapatan();

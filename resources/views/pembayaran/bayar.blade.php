@@ -45,71 +45,73 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12"><br><h4>Bayar Tagihan</h4></div>
-                        <input type="hidden" class="csrf" value="{{ csrf_token() }}">
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-4 col-form-label">Tahun</label>
-                                <div class="col-sm-8">
-                                    <select name="" id="" class="form-control field-tahun select2bs4">
-                                        
-                                    </select>
+                        <!--<div class="container-bayar" style="display: none;">
+                            <div class="col-md-12"><br><h4>Bayar Tagihan</h4></div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">Tahun</label>
+                                    <div class="col-sm-8">
+                                        <input disabled type="number" name="" id="" placeholder="Tahun" class="form-control field-tahun">
+                                        <select name="" id="" class="form-control field-tahun select2bs4">
+                                            
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-4 col-form-label">Bulan</label>
-                                <div class="col-sm-8">
-                                    <select name="" id="" class="form-control field-bulan">
-                                        <option value="01">Januari</option>
-                                        <option value="02">Februari</option>
-                                        <option value="03">Maret</option>
-                                        <option value="04">April</option>
-                                        <option value="05">Mei</option>
-                                        <option value="06">Juni</option>
-                                        <option value="07">Juli</option>
-                                        <option value="08">Agustus</option>
-                                        <option value="09">September</option>
-                                        <option value="10">Oktober</option>
-                                        <option value="11">Nopember</option>
-                                        <option value="12">Desember</option>
-                                    </select>
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">Bulan</label>
+                                    <div class="col-sm-8">
+                                        <input disabled type="text" name="" id="" placeholder="Bulan" class="form-control field-bulan">
+                                        <select name="" id="" class="form-control field-bulan">
+                                            <option value="01">Januari</option>
+                                            <option value="02">Februari</option>
+                                            <option value="03">Maret</option>
+                                            <option value="04">April</option>
+                                            <option value="05">Mei</option>
+                                            <option value="06">Juni</option>
+                                            <option value="07">Juli</option>
+                                            <option value="08">Agustus</option>
+                                            <option value="09">September</option>
+                                            <option value="10">Oktober</option>
+                                            <option value="11">Nopember</option>
+                                            <option value="12">Desember</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-4 col-form-label">Total Bayar</label>
-                                <div class="col-sm-8">
-                                    <p style="position: absolute; top:10px; left: 20px;">Rp.</p>
-                                    <input type="number" style="text-align: right" class="form-control field-total" id="" placeholder="0" value="0">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">Total Bayar</label>
+                                    <div class="col-sm-8">
+                                        <p style="position: absolute; top:10px; left: 20px;">Rp.</p>
+                                        <input type="number" style="text-align: right" class="form-control field-total" id="" placeholder="0" value="0">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-4 col-form-label">Metode Pembayaran</label>
-                                <div class="col-sm-8">
-                                  <input type="radio" name="transfer"  id="transfer"> <label for="transfer">Transfer/Non Tunai/Jenis Lain</label>&nbsp;
-                                  <input type="radio" name="transfer" checked  id="tunai"> <label for="tunai">Tunai</label>
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">Metode Pembayaran</label>
+                                    <div class="col-sm-8">
+                                    <input type="radio" name="transfer"  id="transfer"> <label for="transfer">Transfer/Non Tunai/Jenis Lain</label>&nbsp;
+                                    <input type="radio" name="transfer" checked  id="tunai"> <label for="tunai">Tunai</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 input-bukti" style="display: none">
-                            <div class="form-group row" >
-                                <label for="inputEmail3" class="col-sm-4 col-form-label">Bukti Transfer</label>
-                                <div class="col-sm-8">
-                                  <input type="file" class="form-control field-bukti" id="">
+                            <div class="col-md-12 input-bukti" style="display: none">
+                                <div class="form-group row" >
+                                    <label for="inputEmail3" class="col-sm-4 col-form-label">Bukti Transfer</label>
+                                    <div class="col-sm-8">
+                                    <input type="file" class="form-control field-bukti" id="">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-11">
-                            <button class="btn btn-danger" style="position: absolute; right: 1px">Batal</button>
-                        </div>
-                        <div class="col-md-1">
-                            <button class="btn btn-success pull-right btn-proses"  style="justify-content: right">Bayar</button>
-                        </div>
+                            
+                            <div class="col-md-6">
+                                <button class="btn btn-success pull-left btn-proses">Bayar</button>
+                            </div>
+                        </div>-->
                     </div>
                     <br>
                     <div class="row">
@@ -146,6 +148,48 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modal-lg">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Bayar Tagihan</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">Tahun Tagihan</label>
+                            <input disabled type="number" name="" id="" class="form-control field-tahun-modal" placeholder="Tahun Tagihan">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">Bulan Tagihan</label>
+                            <input disabled ="text" name="" id="" class="form-control field-bulan-modal" placeholder="Bulan Tagihan">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">Tagihan</label>
+                            <input type="text" name="" id="" value="" class="form-control field-tagihan-modal" placeholder="Tagihan">
+                            <input type="hidden" name="" class="csrf_modal" value="{{ csrf_token() }}">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Batal</button>
+                  <button type="button" class="btn btn-success btn-proses">Proses</button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
     </section>
 @endsection
 @section('js')

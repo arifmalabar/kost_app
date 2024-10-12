@@ -11,6 +11,8 @@ class Pembayaran extends Model
     protected $primaryKey = "kode_bayar";
     public $incrementing = false;
 
+    public $timestamps = false;
+
     use HasFactory;
 
     public function penghuni()

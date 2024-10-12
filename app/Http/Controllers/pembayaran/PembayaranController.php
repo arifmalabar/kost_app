@@ -25,17 +25,24 @@ class PembayaranController extends Controller
     }
     public function getDataPenghuni()
     {
-        $penghuni = Penghuni::get();
-        $data = [];
-        $i = 0;
-        foreach ($penghuni as $key) {
-            $data[$i]['NIK'] = $key->NIK;
-            $data[$i]['nama'] = $key->nama;
-            $data[$i]['ruangan'] = $key->ruangan->nama_ruang;
-            $data[$i]['gedung'] = $key->ruangan->gedung->nama_gedung;
-            $i++;
+        try {
+            $penghuni = Penghuni::selectRaw("tb_biodata_penghuni.NIK as NIK, nama, nama_ruang as ruangan, nama_gedung as gedung")
+                                ->join("tb_kamar","tb_kamar.kode_kamar","=","tb_biodata_penghuni.kode_kamar")
+                                ->join("tb_gedung","tb_gedung.kode_gedung","=","tb_kamar.kode_gedung")
+                                ->get();
+            /*$data = [];
+            $i = 0;
+            foreach ($penghuni as $key) {
+                $data[$i]['NIK'] = $key->NIK;
+                $data[$i]['nama'] = $key->nama;
+                $data[$i]['ruangan'] = $key->ruangan->nama_ruang;
+                $data[$i]['gedung'] = $key->ruangan->gedung->nama_gedung;
+                $i++;
+            }*/
+            return response()->json($penghuni);
+        } catch (\Throwable $th) {
+            return response()->json($th);
         }
-        echo json_encode($data);
     }
     public function getDataGedung()
     {

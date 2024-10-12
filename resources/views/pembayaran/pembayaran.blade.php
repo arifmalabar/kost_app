@@ -18,7 +18,6 @@
                                 </select>
                                 
                             </div>
-                            <button class="position-absolute btn btn-success button-sort" style="z-index: 10; left: 325px">Sorting</button>
                             <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>

@@ -9,6 +9,7 @@ use ErrorException;
 use Illuminate\Http\Request;
 use App\Helper\Kode;
 use App\Models\Gedung;
+use App\Models\HistoryPembayaran;
 
 class Bayar extends Controller
 {
@@ -41,7 +42,7 @@ class Bayar extends Controller
         }
         return $newcode;
     }
-    public function bayarTagihan(Request $request)
+    /*public function bayarTagihan(Request $request)
     {
         try {
             $data_penghuni = Penghuni::where("NIK", $request->NIK)->get();
@@ -88,6 +89,24 @@ class Bayar extends Controller
             return response()->json(["Error" => $th]);
         }
         //$this->doUploadBukti($request);
+    }*/
+    public function bayarTagihan(Request $request)
+    {
+        try {
+            $query_tagihan = Pembayaran::where('kode_bayar', $request->kode_bayar)->first();
+            $query_tagihan->jml_bayar += $request->tagihan;
+            $query_tagihan->tgl_bayar = date("Y-m-d H:i:s");
+            $query_tagihan->save();
+            //buat riwayat transaksi
+            $data = [
+                "no_transaksi" => $query_tagihan->no_transaksi,
+                "total_transaksi" => $request->tagihan
+            ];
+            $query_riwayat = HistoryPembayaran::insert($data);
+            return response()->json($query_tagihan);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
     }
     private function doUploadBukti($request)
     {
@@ -101,6 +120,7 @@ class Bayar extends Controller
             $i = 0;
             $dt = $this->queryTagihan($nik)->get();
             foreach ($dt as $key) {
+                $this->data["list_pembayaran"][$i]['kode_bayar'] = $key->kode_bayar;
                 $this->data["list_pembayaran"][$i]['jml_bayar'] = $key->total;
                 $this->data["list_pembayaran"][$i]['sisa_bayar'] = $this->getSisaByr($key->tagihan, $key->total);
                 $this->data["list_pembayaran"][$i]['status'] = $this->getStatus($this->data["list_pembayaran"][$i]['sisa_bayar']);
@@ -113,6 +133,28 @@ class Bayar extends Controller
             echo json_encode(0);
         }
         //return response()->json(["st" => $nik]);
+    }
+    public function getDataBayarTagihan($kode_bayar)
+    {
+        try {
+            $data_pembayaran = Pembayaran::selectRaw("YEAR(tanggal_tagihan) AS tahun, MONTHNAME(tanggal_tagihan) AS bulan")->where("kode_bayar", $kode_bayar)->first();
+            return response()->json($data_pembayaran);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+    }
+    public function getTahunTagihan($nik)
+    {
+        $tahun = Pembayaran::selectRaw("YEAR(tanggal_tagihan) AS tahun")->where('NIK', '=', $nik)->groupByRaw('YEAR(tanggal_tagihan)')->get();
+        return response()->json($tahun);
+    }
+    public function getBulanTagihan($nik, $tahun)
+    {
+        $bulan = Pembayaran::selectRaw("MONTHNAME(tanggal_tagihan) AS nmbulan, MONTH(tanggal_tagihan) AS bulan")
+                            ->where('NIK', '=', $nik)
+                            ->whereYear('tanggal_tagihan', $tahun)
+                            ->get();
+        return response()->json($bulan);
     }
     private function queryTagihan($nik)
     {

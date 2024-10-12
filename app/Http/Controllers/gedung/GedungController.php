@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Helper\Kode;
+use App\Models\Penghuni;
+use Exception;
 
 class GedungController extends Controller
 {
@@ -19,6 +21,24 @@ class GedungController extends Controller
             "data" => Gedung::all()
         );
         return view('setting_gedung.setting_gedung', $data);
+    }
+
+    public function exportExcel($kode_gedung)
+    {
+        
+        
+        try {
+            $query_gedung = Gedung::find($kode_gedung);
+            $query_penghuni = Penghuni::selectRaw("NIK, nama, tb_kamar.nama_ruang, status")
+                                            ->join("tb_kamar", 'tb_kamar.kode_kamar', "=", "tb_biodata_penghuni.kode_kamar")
+                                            ->whereRaw("kode_gedung = '".$query_gedung->kode_gedung."'")
+                                            ->get();
+            header("Content-type: application/vnd-ms-excel");
+            header("Content-Disposition: attachment; filename=Data Penghuni Gedung ".$query_gedung->nama_gedung.".xls");
+            return view("export.penghuni_export", ["data_penghuni" => $query_penghuni, "data_gedung" => $query_gedung]);
+        } catch (\Throwable $th) {
+            return response()->json(["error" => true, "msg" => $th->getMessage()]);
+        }
     }
 
     public function store(Request $request)

@@ -6,11 +6,10 @@ import {
 import { errorMsg } from "../message/Message.js";
 
 let sort_gedung = document.querySelector("#sort-gedung");
-let btn_sort = document.querySelector(".button-sort");
 
 export function initData() {
-  btn_sort.addEventListener("click", function () {
-    sortGedung(sort_gedung.value);
+  $("#sort-gedung").on("change", function (params) {
+    sortGedung($("#sort-gedung").val());
   });
 }
 
@@ -57,16 +56,17 @@ async function sortGedung(id) {
   //console.log(`${get_gedung_byid}/${id}`);
 }
 function showListGedung(e) {
-  let data_gedung = ``;
+  let data_gedung = `<option value="0" selected>Pilih Gedung</option>`;
   e.forEach((element) => {
     data_gedung =
       data_gedung +
-      `<option value="${element.kode_gedung}" hidden selected>${element.nama_gedung}</option>`;
+      `<option value="${element.kode_gedung}" hidden>${element.nama_gedung}</option>`;
   });
   sort_gedung.innerHTML = data_gedung;
 }
 function showTables(dt) {
   //$('#example2').DataTable().clear().draw();
+  console.log(dt);
   $("#example2").DataTable({
     paging: true,
     lengthChange: false,
@@ -78,7 +78,12 @@ function showTables(dt) {
     bDestroy: true,
     data: dt,
     columns: [
-      { data: "NIK" },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return `${row.NIK.toString()}`;
+        },
+      },
       { data: "nama" },
       { data: "ruangan" },
       { data: "gedung" },

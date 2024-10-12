@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kamar extends Model
 {
-    use HasFactory;
+    use HasFactory; 
     protected $table = "tb_kamar";
     protected $primaryKey = "kode_kamar";
 

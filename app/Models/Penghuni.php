@@ -13,6 +13,7 @@ class Penghuni extends Model
     protected $table = "tb_biodata_penghuni";
     protected $primaryKey = "NIK";
     public $timestamps = false;
+    public $incrementing = false;
 
     public function ruangan()
     {

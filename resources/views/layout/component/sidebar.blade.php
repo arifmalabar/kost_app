@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar elevation-4 sidebar-light-success">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="/dashboard" class="brand-link">
         <img src="{{ asset('assets/dist/img/KOS.png') }}" alt="AdminLTE Logo" class="brand-image"
             style="width: 40px; height: auto;">
         <span class="brand-text font-weight-bold">NAMA KOST</span>
@@ -71,7 +71,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/grafik_penghuni" class="nav-link {{ $nama == "grafik penghuni" ? "active" : "" }}">
+                    <a href="/grafik_penghuni" class="nav-link {{ $nama == 'grafik penghuni' ? 'active' : '' }}">
                         <i class="fas nav-icon fa-calculator"></i>
                         <p>Grafik Penghuni</p>
                     </a>
