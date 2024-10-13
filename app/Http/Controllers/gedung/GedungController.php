@@ -23,6 +23,14 @@ class GedungController extends Controller
         return view('setting_gedung.setting_gedung', $data);
     }
 
+    public function GedungPenghuni()
+    {
+        $data = array(
+            "data" => Gedung::all()
+        );
+        return view('component.sidebar', $data);
+    }
+
     public function exportExcel($kode_gedung)
     {
         try {

@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pembayaran\Bayar;
 use App\Http\Controllers\Login\LoginController;
 use App\Http\Controllers\gedung\GedungController;
-use App\Http\Controllers\GedungPenghuniController;
 use App\Http\Controllers\ruangan\RuanganController;
 use App\Http\Controllers\tagihan\TagihanController;
 use App\Http\Controllers\penghuni\PenghuniController;
@@ -47,6 +46,7 @@ Route::controller(GedungController::class)->group(function () {
     Route::get('/setting_gedung/{kode_gedung}/edit', 'edit')->name('gedung.edit');
     Route::put('/setting_gedung/{kode_gedung}/update', 'update')->name('gedung.update');
     Route::delete('/setting_gedung/{kode_gedung}/delete', 'delete')->name('gedung.delete');
+    Route::get('/sidebar', 'GedungPenghuni')->name('gedung.GedungPenghuni');
 });
 
 Route::controller(RuanganController::class)->group(function () {
@@ -100,8 +100,6 @@ Route::controller(GrafikPenghuni::class)->group(function () {
     Route::get('/data_grafik_penghuni', "getDataGrafikPenghuni");
 });
 
-
-Route::get('/gedung_penghuni/{kode_gedung}', [GedungPenghuniController::class, 'show']);
 
 // Route::get("/login", function() {
 //     return view("login/login", ["nama"=> "login"]);

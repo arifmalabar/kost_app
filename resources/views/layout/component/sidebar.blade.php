@@ -85,18 +85,16 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @foreach ($gedung as $g)
+                        @foreach ($data as $d)
                             <li class="nav-item">
-                                <a href="/gedung_penghuni/{{ $g->kode_gedung }}"
-                                    class="nav-link {{ Request::is('gedung_penghuni/' . $g->kode_gedung) ? 'active' : '' }}">
+                                <a href="/gedung_penghuni/{{ $d->kode_gedung }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ $g->nama_gedung }}</p>
+                                    <p>{{ $d->nama_gedung }}</p>
                                 </a>
                             </li>
                         @endforeach
                     </ul>
                 </li>
-
                 <li class="nav-item">
                     <a href="faktur" class="nav-link">
                         <i class="fas nav-icon fa-university"></i>
