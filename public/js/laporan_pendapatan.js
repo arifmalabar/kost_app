@@ -39481,7 +39481,7 @@ function LaporanPendapatan() {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("a", {
           className: "btn btn-sm btn-primary",
-          href: "/lp/".concat(e.kd_gedung),
+          href: "/laporan_pendapatan_gedung/".concat(e.kd_gedung, "/").concat(new Date().getFullYear()),
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
             className: "fa fa-info"
           }), " Detail"]

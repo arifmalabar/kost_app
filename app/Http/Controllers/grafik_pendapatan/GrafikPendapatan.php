@@ -49,22 +49,31 @@ class GrafikPendapatan extends Controller
     public function getLaporanGedung($kode_gedung, $tahun = null)
     {
         try {
-            $query = Pembayaran::selectRaw("nama_gedung, SUM(tb_pembayaran.jml_bayar) AS pendapatan_saat_ini, SUM(tb_pembayaran.tagihan) AS pendapatan_seharusnya, bulan")
+            $query = Pembayaran::selectRaw("tb_gedung.kode_gedung, nama_gedung, SUM(tb_pembayaran.jml_bayar) AS pendapatan_saat_ini, SUM(tb_pembayaran.tagihan) AS pendapatan_seharusnya, MONTHNAME(STR_TO_DATE(bulan, '%m')) as bulan")
                                 ->join("tb_biodata_penghuni", "tb_biodata_penghuni.NIK", "=", "tb_pembayaran.NIK")
                                 ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
                                 ->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_kamar.kode_gedung")
-                                ->where("tb_gedung.kode_gedung", "=", $kode_gedung);
-            if($tahun == null){
-                $data_pendapatan_gedung = $query->where("tahun", "=", 2024)
-                                                ->groupBy("bulan")
-                                                ->get();
-                return response()->json($data_pendapatan_gedung);
-            } else {
-                $data_pendapatan_pertahun = $query->where("tahun", "=", $tahun)
-                                                ->groupBy("bulan")
-                                                ->get();
-                return response()->json($data_pendapatan_pertahun);
-            }
+                                ->where("tb_gedung.kode_gedung", "=", $kode_gedung)
+                                ->where("tahun", "=", date("Y"))
+                                ->groupBy("bulan");
+            return view("laporan_pendapatan/laporan_pendapatan_gedung", ["pendapatan" => $query->get(), "nama" => "laporan pendapatan", "detail_gedung" => $query->first()]);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+    }
+    public function cetakLaporanGedung($kode_gedung)
+    {
+        try {
+            $query = Pembayaran::selectRaw("tb_gedung.kode_gedung, nama_gedung, SUM(tb_pembayaran.jml_bayar) AS pendapatan_saat_ini, SUM(tb_pembayaran.tagihan) AS pendapatan_seharusnya, MONTHNAME(STR_TO_DATE(bulan, '%m')) as bulan")
+                                ->join("tb_biodata_penghuni", "tb_biodata_penghuni.NIK", "=", "tb_pembayaran.NIK")
+                                ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
+                                ->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_kamar.kode_gedung")
+                                ->where("tb_gedung.kode_gedung", "=", $kode_gedung)
+                                ->where("tahun", "=", date("Y"))
+                                ->groupBy("bulan");
+            header("Content-type: application/vnd-ms-excel");
+            header("Content-Disposition: attachment; filename=Laporan Pendapatan Gedung ".$query->first()->nama_gedung.".xls");
+            return view("export/cetak_laporan_pendapatan_gedung", ["pendapatan" => $query->get(), "nama" => "laporan pendapatan", "detail_gedung" => $query->first()]);
         } catch (\Throwable $th) {
             return response()->json($th);
         }

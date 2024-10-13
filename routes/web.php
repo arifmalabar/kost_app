@@ -59,7 +59,7 @@ Route::controller(RuanganController::class)->group(function () {
 });
 
 Route::controller(PenghuniController::class)->group(function () {
-    Route::get('/penghuni_ruang', 'index')->name('penghuni.index');
+    Route::get('/penghuni_ruang', 'index')->name('penghunicontroller.index');
     Route::get('/penghuni_ruang/status_ruangan/{id}', 'getRuanganKosong')->name('penghuni.getRuanganKosong');
     Route::get('/penghuni_ruang/tambah_penghuni', 'halamanTambah')->name('penghuni.halamanTambah');
     Route::get('/penghuni_ruang/detail_penghuni/{id}', 'detailPenghuni')->name('penghuni.detailPenghuni');
@@ -126,13 +126,6 @@ Route::controller(GrafikPendapatan::class)->group(function(){
     Route::get("/laporan_pendapatan", 'index')->name('grafik_pendapatan.index');
     Route::get('/data_pendapatan', 'getDataPembayaran'); 
     Route::get("/data_pendapatan_gedung", "getDataPembayaranGedung");
-<<<<<<< HEAD
+    Route::get("/laporan_pendapatan_gedung/{kode_gedung}/{tahun}", "getLaporanGedung")->name('grafik_pendapatan');
+    Route::get("/cetak_laporan_gedung/{kode_gedung}", "cetakLaporanGedung");
 });
-Route::get("/laporan_pendapatan", function(){
-    //return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"])->middleware('auth');
-    return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"]);
-});
-=======
-    Route::get("/laporan_pendapatan_gedung/{kode_gedung}/{tahun}", "getLaporanGedung");
-});
->>>>>>> f475f699ecc65d04852b0df420fc8f9993d25c0c
