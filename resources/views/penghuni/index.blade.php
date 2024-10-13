@@ -7,7 +7,7 @@
     </style>
 @endsection
 @section('judul')
-    Setting Gedung
+    Data Penghuni 
 @endsection
 @section('content')
     <h1>Data Penghuni</h1>
@@ -19,7 +19,7 @@
                 <th>Email</th>
                 <th>No Telepon</th>
                 <th>Alamat</th>
-               
+
             </tr>
         </thead>
         <tbody>

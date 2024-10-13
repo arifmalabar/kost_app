@@ -102,15 +102,7 @@ class GedungController extends Controller
             return Redirect::back()->with(['warning' => 'Data Gagal Dihapus!']);
         }
     }
-    // public function showPenghuni($kode_gedung)
-    // {
-    //     // Ambil data penghuni berdasarkan kode_gedung
-    //     $penghuni = Penghuni::whereHas('ruangan', function ($query) use ($kode_gedung) {
-    //         $query->where('kode_gedung', $kode_gedung);
-    //     })->get();
 
-    //     return view('penghuni.index', compact('penghuni'));
-    // }
 
 
 }
