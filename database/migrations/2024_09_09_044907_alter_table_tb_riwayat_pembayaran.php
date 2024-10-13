@@ -14,7 +14,7 @@ class AlterTableTbRiwayatPembayaran extends Migration
     public function up()
     {
         Schema::table('tb_riwayat_pembayaran', function (Blueprint $table) {
-            $table->dropPrimary();
+            //$table->dropPrimary();
         });
     }
 

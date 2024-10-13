@@ -37,7 +37,9 @@ function LaporanPendapatan() {
             <td>
                 <a
                     className="btn btn-sm btn-primary"
-                    href={`/lp/${e.kd_gedung}`}
+                    href={`/laporan_pendapatan_gedung/${
+                        e.kd_gedung
+                    }/${new Date().getFullYear()}`}
                 >
                     <i className="fa fa-info"></i> Detail
                 </a>
