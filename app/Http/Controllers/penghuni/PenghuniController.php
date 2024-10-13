@@ -252,4 +252,42 @@ class PenghuniController extends Controller
             return Redirect::back()->with(['warning' => 'Data Gagal Dihapus!']);
         }
     }
+
+//     public function showPenghuni($kode_gedung)
+// {
+//     // Mengambil data penghuni berdasarkan kode_gedung
+//     $penghuni = Penghuni::join('tb_kamar', 'tb_kamar.kode_kamar', '=', 'tb_biodata_penghuni.kode_kamar')
+//         ->where('tb_kamar.kode_gedung', '=', $kode_gedung)
+//         ->select('tb_biodata_penghuni.*')
+//         ->get();
+
+//         dd($penghuni);
+
+//     // Pastikan ada data sebelum mengembalikan view
+//     if ($penghuni->isEmpty()) {
+//         // Jika tidak ada data, Anda bisa mengembalikan pesan kosong atau sejenisnya
+//         return view('penghuni.index', ['penghuni' => [], 'message' => 'Tidak ada penghuni ditemukan.']);
+//     }
+
+
+//     return view('penghuni.index', compact('penghuni'));
+// }
+
+public function showPenghuni($kode_gedung)
+{
+    // Mengambil data penghuni berdasarkan kode_gedung
+    $penghuni = Penghuni::join('tb_kamar', 'tb_kamar.kode_kamar', '=', 'tb_biodata_penghuni.kode_kamar')
+        ->where('tb_kamar.kode_gedung', '=', $kode_gedung)
+        ->select('tb_biodata_penghuni.*')
+        ->get();
+    if ($penghuni->isEmpty()) {
+
+        return view('penghuni.index', ['penghuni' => [], 'message' => 'Tidak ada penghuni ditemukan.']);
+    }
+
+    return view('penghuni.index', compact('penghuni'));
+}
+
+
+
 }

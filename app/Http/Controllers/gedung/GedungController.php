@@ -26,7 +26,8 @@ class GedungController extends Controller
     public function GedungPenghuni()
     {
         $data = array(
-            "data" => Gedung::all()
+            "data" => Gedung::all(),
+            "nama" => "gedung penghuni"
         );
         return view('component.sidebar', $data);
     }
@@ -46,6 +47,8 @@ class GedungController extends Controller
             return response()->json(["error" => true, "msg" => $th->getMessage()]);
         }
     }
+
+
 
     public function store(Request $request)
     {
@@ -99,4 +102,18 @@ class GedungController extends Controller
             return Redirect::back()->with(['warning' => 'Data Gagal Dihapus!']);
         }
     }
+    // public function showPenghuni($kode_gedung)
+    // {
+    //     // Ambil data penghuni berdasarkan kode_gedung
+    //     $penghuni = Penghuni::whereHas('ruangan', function ($query) use ($kode_gedung) {
+    //         $query->where('kode_gedung', $kode_gedung);
+    //     })->get();
+
+    //     return view('penghuni.index', compact('penghuni'));
+    // }
+
+
 }
+
+
+
