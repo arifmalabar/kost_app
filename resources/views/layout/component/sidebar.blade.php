@@ -108,7 +108,7 @@
                     <ul class="nav nav-treeview">
                         @foreach ($data as $d)
                             <li class="nav-item">
-                                <a href="{{ route('gedung.penghuni', $d->kode_gedung) }}" class="nav-link">
+                            <a href="{{ route('gedung.penghuni', ['kode_gedung' => $d->kode_gedung]) }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{ $d->nama_gedung }}</p>
                                 </a>

@@ -108,7 +108,7 @@ Route::controller(GrafikPenghuni::class)->group(function () {
 // Route::get('/gedung_penghuni/{kode_gedung}', [GedungController::class, 'showPenghuni'])->name('gedung.penghuni');
 
 // Route::get('/gedung/{kode_gedung}/penghuni', [PenghuniController::class, 'showPenghuni'])->name('gedung.penghuni');
-Route::get('/penghuni/{kode_gedung}', [PenghuniController::class, 'showPenghuni']);
+// Route::get('/penghuni/{kode_gedung}', [PenghuniController::class, 'showPenghuni']);
 Route::get('/gedung/{kode_gedung}/penghuni', [PenghuniController::class, 'showPenghuni'])->name('gedung.penghuni');
 
 
