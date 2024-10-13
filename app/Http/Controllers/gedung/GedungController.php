@@ -13,7 +13,7 @@ use Exception;
 
 class GedungController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
 
         $data = array(
@@ -23,10 +23,16 @@ class GedungController extends Controller
         return view('setting_gedung.setting_gedung', $data);
     }
 
+    public function GedungPenghuni()
+    {
+        $data = array(
+            "data" => Gedung::all()
+        );
+        return view('component.sidebar', $data);
+    }
+
     public function exportExcel($kode_gedung)
     {
-        
-        
         try {
             $query_gedung = Gedung::find($kode_gedung);
             $query_penghuni = Penghuni::selectRaw("NIK, nama, tb_kamar.nama_ruang, status")

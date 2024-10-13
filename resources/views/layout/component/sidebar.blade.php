@@ -4,7 +4,7 @@
     <a href="/dashboard" class="brand-link">
         <img src="{{ asset('assets/dist/img/KOS.png') }}" alt="AdminLTE Logo" class="brand-image"
             style="width: 40px; height: auto;">
-        <span class="brand-text font-weight-bold">NAMA KOST</span>
+        <span class="brand-text font-weight-bold">SIKOST</span>
     </a>
 
     <!-- Sidebar -->
@@ -75,6 +75,25 @@
                         <i class="fas nav-icon fa-calculator"></i>
                         <p>Grafik Penghuni</p>
                     </a>
+                </li>
+                <li class="nav-item has-treeview {{ Request::is('gedung_penghuni*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Request::is('gedung_penghuni*') ? 'active' : '' }}">
+                        <i class="fas nav-icon fa-building"></i>
+                        <p>
+                            Gedung Penghuni
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @foreach ($data as $d)
+                            <li class="nav-item">
+                                <a href="/gedung_penghuni/{{ $d->kode_gedung }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ $d->nama_gedung }}</p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="faktur" class="nav-link">

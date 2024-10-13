@@ -1,17 +1,17 @@
 <?php
 
-use App\Http\Controllers\dashboard\DashboardController;
 use App\Models\Penghuni;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pembayaran\Bayar;
-use App\Http\Controllers\gedung\GedungController;
-use App\Http\Controllers\grafik_pendapatan\GrafikPendapatan;
-use App\Http\Controllers\grafik_penghuni\GrafikPenghuni;
-use App\Http\Controllers\ruangan\RuanganController;
-use App\Http\Controllers\penghuni\PenghuniController;
-use App\Http\Controllers\pembayaran\PembayaranController;
-use App\Http\Controllers\tagihan\TagihanController;
 use App\Http\Controllers\Login\LoginController;
+use App\Http\Controllers\gedung\GedungController;
+use App\Http\Controllers\ruangan\RuanganController;
+use App\Http\Controllers\tagihan\TagihanController;
+use App\Http\Controllers\penghuni\PenghuniController;
+use App\Http\Controllers\dashboard\DashboardController;
+use App\Http\Controllers\grafik_penghuni\GrafikPenghuni;
+use App\Http\Controllers\pembayaran\PembayaranController;
+use App\Http\Controllers\grafik_pendapatan\GrafikPendapatan;
 
 
 /*
@@ -46,6 +46,7 @@ Route::controller(GedungController::class)->group(function () {
     Route::get('/setting_gedung/{kode_gedung}/edit', 'edit')->name('gedung.edit');
     Route::put('/setting_gedung/{kode_gedung}/update', 'update')->name('gedung.update');
     Route::delete('/setting_gedung/{kode_gedung}/delete', 'delete')->name('gedung.delete');
+    Route::get('/sidebar', 'GedungPenghuni')->name('gedung.GedungPenghuni');
 });
 
 Route::controller(RuanganController::class)->group(function () {
@@ -125,5 +126,13 @@ Route::controller(GrafikPendapatan::class)->group(function(){
     Route::get("/laporan_pendapatan", 'index')->name('grafik_pendapatan.index');
     Route::get('/data_pendapatan', 'getDataPembayaran'); 
     Route::get("/data_pendapatan_gedung", "getDataPembayaranGedung");
+<<<<<<< HEAD
+});
+Route::get("/laporan_pendapatan", function(){
+    //return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"])->middleware('auth');
+    return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"]);
+});
+=======
     Route::get("/laporan_pendapatan_gedung/{kode_gedung}/{tahun}", "getLaporanGedung");
 });
+>>>>>>> f475f699ecc65d04852b0df420fc8f9993d25c0c
