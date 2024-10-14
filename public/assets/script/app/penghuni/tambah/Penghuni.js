@@ -1,4 +1,5 @@
 import {
+  get_detail_bygedung,
   get_gedung,
   host,
   informasi_ruangan,
@@ -40,6 +41,9 @@ export function init() {
   $(".next-btn").click(function () {
     validateForm();
   });
+  $('input[name="files"]').on("change", function (params) {
+    validasiKtp(this.files[0]);
+  });
 }
 
 export async function getStatusRuangan(id) {
@@ -72,6 +76,19 @@ export async function getGedung() {
     .catch((err) => {
       console.log(err);
     });
+}
+function validasiKtp(obj) {
+  const ukfile = (obj.size / 1024).toFixed(2);
+  const allowedTypes = ["image/jpeg", "image/png", "image/gif"]; // Allowed image types
+  if (!(ukfile >= 1500)) {
+    ifValidError("Upload KTP tidak boleh melebihi 1.5mb");
+    $('input[name="files"]').val("");
+  } else if (!allowedTypes.includes(obj.type)) {
+    ifValidError("Format gambar yang diminta JPG/PNG/GIF");
+    $('input[name="files"]').val("");
+  } else {
+    return true;
+  }
 }
 async function simpanPenghuni() {
   try {
@@ -220,9 +237,6 @@ export function ketersediaanRuang(dt) {
         },
       },
       {
-        data: "nama_gedung",
-      },
-      {
         data: null,
         render: function (data, type, row) {
           return `Ruangan ${row.nama_ruang}`;
@@ -266,7 +280,6 @@ function validateForm() {
   const alamat_rumah = document.querySelector(".alamat_rumah").value;
   const token = document.querySelector(".token").value;
   const kd_kamar = document.querySelector('input[name="kode_kamar"]').value;
-
   const data = [];
 
   if (NIK === "") {
@@ -287,6 +300,8 @@ function validateForm() {
     ifValidError("Alamat Kampus/Instansi belum diisi");
   } else if (alamat_rumah === "") {
     ifValidError("Alamat Rumah belum diisi");
+  } else if (uploadktp === undefined) {
+    ifValidError("KTP belum diupload");
   } else {
     $(".is-invalid").removeClass("is-invalid");
     stepper.next();

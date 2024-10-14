@@ -188,9 +188,6 @@ export function ketersediaanRuang(dt) {
         },
       },
       {
-        data: "nama_gedung",
-      },
-      {
         data: null,
         render: function (data, type, row) {
           return `Ruangan ${row.nama_ruang}`;

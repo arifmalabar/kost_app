@@ -228,6 +228,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
+                                                            <th>Gedung</th>
                                                             <th>Ruang</th>
                                                             <th>Status</th>
                                                             <th>Opsi</th>
@@ -235,6 +236,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr>
+                                                            <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>

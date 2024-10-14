@@ -17,6 +17,7 @@ export let get_detail_penghuni = `${host}/penghuni_ruang/getDetailPenghuniData/$
 export let update_penghuni = `${host}/penghuni_ruang/update`;
 export let penghuni_ruang = `${host}/penghuni_ruang`;
 export let halaman_update_penghuni = `${host}/penghuni_ruang/detail_penghuni`;
+export let get_detail_bygedung = `${host}/penghuni_ruang/by_gedung`;
 export let get_ruangan_bygedung = `${host}/setting_ruang`;
 export let get_data_pendapatan = `${host}/data_pendapatan`;
 export let get_grafik_penghuni = `${host}/data_grafik_penghuni`;

@@ -62,7 +62,7 @@
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-outline-danger btn-sm"
                                                             onclick="confirmDelete('{{ $d->NIK }}')">
-                                                            <i class="fas fa-trash-alt"></i>&nbsp;Hapus
+                                                            <i class="fas fa-trash-alt"></i>&nbsp;Non Aktifkan
                                                         </button>
                                                     </form>
                                                 </center>
@@ -276,6 +276,7 @@
 @endsection
 @section('jscript')
     <script>
+        window.token =" {{ csrf_token() }}"
         $(function() {
             $('.select2').select2()
 
@@ -363,8 +364,8 @@
 
         function confirmDelete(NIK) {
             Swal.fire({
-                title: "Apakah kamu yakin?",
-                text: "Ingin menghapus data penghuni ini?",
+                title: "Apakah anda yakin?",
+                text: "Ingin menonaktifkan data penghuni ini?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#068c15",
@@ -374,8 +375,8 @@
                 if (result.isConfirmed) {
                     document.getElementById('delete-form-' + NIK).submit();
                     Swal.fire({
-                        title: "Dihapus!",
-                        text: "Data penghuni dihapus",
+                        title: "Dinonaktifkan!",
+                        text: "Data penghuni dinonaktifkan",
                         icon: "success"
                     });
                 }

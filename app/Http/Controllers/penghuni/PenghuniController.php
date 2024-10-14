@@ -18,16 +18,42 @@ class PenghuniController extends Controller
 
         $data = array(
             "nama"=> "penghuni",
-            "data" => Penghuni::all(),
+            "data" => Penghuni::where("status", "=", 1)->get(),
             "kode"=>Kamar::all()
             );
         return view('penghuni.penghuni', $data);
     }
 
+    public function getPenghuniByGedung($kode_gedung)
+    {
+        try {
+            $query = Penghuni::join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
+                                ->where("status", "=", 1)
+                                ->where("kode_gedung", "=", $kode_gedung)
+                                ->get();
+            return response()->json($query);
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
+
     public function getRuanganKosong($kode_gedung)
     {
         try {
-            $query = Kamar::selectRaw("tb_kamar.kode_kamar, tb_kamar.nama_ruang, tb_gedung.nama_gedung, IF(NIK IS NULL, 'tersedia', 'terisi') as status")->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_gedung.kode_gedung")->leftJoin("tb_biodata_penghuni", "tb_biodata_penghuni.kode_kamar", "=", "tb_kamar.kode_kamar")->where("tb_kamar.kode_gedung", "=", $kode_gedung)->groupBy("tb_kamar.kode_kamar")->get();
+            /*$query = Kamar::selectRaw("tb_kamar.kode_kamar, tb_kamar.nama_ruang, tb_gedung.nama_gedung, IF(NIK IS NULL, 'tersedia', 'terisi') as status")
+                            ->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_gedung.kode_gedung")
+                            ->leftJoin("tb_biodata_penghuni", "tb_biodata_penghuni.kode_kamar", "=", "tb_kamar.kode_kamar")
+                            ->where("tb_kamar.kode_gedung", "=", $kode_gedung)
+                            ->groupBy("tb_kamar.kode_kamar")
+                            ->get();*/
+            $query = Kamar::selectRaw("tb_kamar.kode_kamar, tb_kamar.nama_ruang, 
+                            (
+                                CASE 
+                                    WHEN (SELECT NIK FROM tb_biodata_penghuni WHERE kode_kamar = tb_kamar.kode_kamar AND status = 1) IS NULL THEN 'tersedia' 
+                                    WHEN (SELECT NIK FROM tb_biodata_penghuni WHERE kode_kamar = tb_kamar.kode_kamar AND status = 1) IS NOT NULL THEN 'terisi' END
+                            ) AS status")
+                            ->where("kode_gedung", "=", $kode_gedung)
+                            ->get();
             return response()->json($query);
         } catch (\Throwable $th) {
             return response()->json($th);
@@ -245,11 +271,13 @@ class PenghuniController extends Controller
 
     public function delete($NIK)
     {
-        $delete = DB::table('tb_biodata_penghuni')->where('NIK', $NIK)->delete();
-        if ($delete) {
-            return Redirect::back()->with(['success' => 'Data Berhasil Dihapus!']);
-        } else {
-            return Redirect::back()->with(['warning' => 'Data Gagal Dihapus!']);
+        //$delete = DB::table('tb_biodata_penghuni')->where('NIK', $NIK)->delete();
+        try {
+            $penghuni_query = Penghuni::find($NIK);
+            $penghuni_query->status = 0;
+            $penghuni_query->save();
+        } catch (\Throwable $th) {
+            return $th;
         }
     }
 }

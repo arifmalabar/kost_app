@@ -259,14 +259,12 @@
                                                         <tr>
                                                             <th>No</th>
                                                             <th>Ruang</th>
-                                                            <th>Gedung</th>
                                                             <th>Status</th>
                                                             <th>Opsi</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
