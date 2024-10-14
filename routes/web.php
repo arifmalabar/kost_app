@@ -47,6 +47,8 @@ Route::controller(GedungController::class)->group(function () {
     Route::put('/setting_gedung/{kode_gedung}/update', 'update')->name('gedung.update');
     Route::delete('/setting_gedung/{kode_gedung}/delete', 'delete')->name('gedung.delete');
     Route::get('/sidebar', 'GedungPenghuni')->name('gedung.GedungPenghuni');
+
+
 });
 
 Route::controller(RuanganController::class)->group(function () {
@@ -102,6 +104,15 @@ Route::controller(GrafikPenghuni::class)->group(function () {
 });
 
 
+
+// Route untuk mendapatkan penghuni berdasarkan kode gedung
+// Route::get('/gedung_penghuni/{kode_gedung}', [GedungController::class, 'showPenghuni'])->name('gedung.penghuni');
+
+// Route::get('/gedung/{kode_gedung}/penghuni', [PenghuniController::class, 'showPenghuni'])->name('gedung.penghuni');
+// Route::get('/penghuni/{kode_gedung}', [PenghuniController::class, 'showPenghuni']);
+Route::get('/gedung/{kode_gedung}/penghuni', [PenghuniController::class, 'showPenghuni'])->name('gedung.penghuni');
+
+
 // Route::get("/login", function() {
 //     return view("login/login", ["nama"=> "login"]);
 // });
@@ -123,10 +134,27 @@ Route::get("/profile", function(){
 // });
 
 
-Route::controller(GrafikPendapatan::class)->group(function(){
-    Route::get("/laporan_pendapatan", 'index')->name('grafik_pendapatan.index');
-    Route::get('/data_pendapatan', 'getDataPembayaran'); 
-    Route::get("/data_pendapatan_gedung", "getDataPembayaranGedung");
-    Route::get("/laporan_pendapatan_gedung/{kode_gedung}/{tahun}", "getLaporanGedung")->name('grafik_pendapatan');
-    Route::get("/cetak_laporan_gedung/{kode_gedung}", "cetakLaporanGedung");
-});
+// <<<<<<< HEAD
+// // Route::controller(GrafikPendapatan::class)->group(function(){
+// //     Route::get("/laporan_pendapatan", 'index')->name('grafik_pendapatan.index');
+// //     Route::get('/data_pendapatan', 'getDataPembayaran');
+// //     Route::get("/data_pendapatan_gedung", "getDataPembayaranGedung");
+// // <<<<<<< HEAD
+// // });
+// // Route::get("/laporan_pendapatan", function(){
+// //     //return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"])->middleware('auth');
+// //     return view("laporan_pendapatan/laporan_pendapatan", ["nama" => "laporan pendapatan"]);
+// // });
+// // =======
+// //     Route::get("/laporan_pendapatan_gedung/{kode_gedung}/{tahun}", "getLaporanGedung");
+// // });
+// // >>>>>>> f475f699ecc65d04852b0df420fc8f9993d25c0c
+// =======
+// Route::controller(GrafikPendapatan::class)->group(function(){
+//     Route::get("/laporan_pendapatan", 'index')->name('grafik_pendapatan.index');
+//     Route::get('/data_pendapatan', 'getDataPembayaran');
+//     Route::get("/data_pendapatan_gedung", "getDataPembayaranGedung");
+//     Route::get("/laporan_pendapatan_gedung/{kode_gedung}/{tahun}", "getLaporanGedung")->name('grafik_pendapatan');
+//     Route::get("/cetak_laporan_gedung/{kode_gedung}", "cetakLaporanGedung");
+// });
+// >>>>>>> f06ede20d29284bf5c0e3473449dc5e42223ded8

@@ -25,10 +25,17 @@ class GedungController extends Controller
 
     public function GedungPenghuni()
     {
-        $data = array(
-            "data" => Gedung::all()
+        /*$data = array(
+            "data" => Gedung::all(),
+            "nama" => "gedung penghuni"
         );
-        return view('component.sidebar', $data);
+        return view('component.sidebar', $data);*/
+        try {
+            $query = Gedung::get();
+            return response()->json($query);
+        } catch (\Throwable $th) {
+            return $th;
+        }
     }
 
     public function exportExcel($kode_gedung)
@@ -46,6 +53,8 @@ class GedungController extends Controller
             return response()->json(["error" => true, "msg" => $th->getMessage()]);
         }
     }
+
+
 
     public function store(Request $request)
     {
@@ -99,4 +108,10 @@ class GedungController extends Controller
             return Redirect::back()->with(['warning' => 'Data Gagal Dihapus!']);
         }
     }
+
+
+
 }
+
+
+

@@ -280,4 +280,24 @@ class PenghuniController extends Controller
             return $th;
         }
     }
+
+
+
+public function showPenghuni($kode_gedung)
+{
+    // Mengambil data penghuni berdasarkan kode_gedung
+    $penghuni = Penghuni::join('tb_kamar', 'tb_kamar.kode_kamar', '=', 'tb_biodata_penghuni.kode_kamar')
+        ->where('tb_kamar.kode_gedung', '=', $kode_gedung)
+        ->select('tb_biodata_penghuni.*')
+        ->get();
+    if ($penghuni->isEmpty()) {
+
+        return view('penghuni.index', ['penghuni' => [], "nama"=> "gedung penghuni", 'message' => 'Tidak ada penghuni ditemukan.']);
+    }
+
+    return view('penghuni.index', ["nama"=> "gedung penghuni", "penghuni" => $penghuni]);
+}
+
+
+
 }
