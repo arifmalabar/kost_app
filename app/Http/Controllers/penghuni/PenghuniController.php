@@ -27,11 +27,12 @@ class PenghuniController extends Controller
     public function getPenghuniByGedung($kode_gedung)
     {
         try {
-            $query = Penghuni::join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
+            $query = Penghuni::selectRaw("NIK, nama, email, no_telp")
+                                ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
                                 ->where("status", "=", 1)
                                 ->where("kode_gedung", "=", $kode_gedung)
                                 ->get();
-            return response()->json($query);
+            return $query;
         } catch (\Throwable $th) {
             return $th;
         }
@@ -276,9 +277,11 @@ class PenghuniController extends Controller
             $penghuni_query = Penghuni::find($NIK);
             $penghuni_query->status = 0;
             $penghuni_query->save();
+            return redirect('/penghuni_ruang');
         } catch (\Throwable $th) {
             return $th;
         }
+        
     }
 
 
@@ -291,7 +294,6 @@ public function showPenghuni($kode_gedung)
         ->select('tb_biodata_penghuni.*')
         ->get();
     if ($penghuni->isEmpty()) {
-
         return view('penghuni.index', ['penghuni' => [], "nama"=> "gedung penghuni", 'message' => 'Tidak ada penghuni ditemukan.']);
     }
 

@@ -15,7 +15,7 @@ class CreateTableTbRiwayatPembayaran extends Migration
     {
         Schema::create('tb_riwayat_pembayaran', function (Blueprint $table) {
             $table->string('no_transaksi', 500)->primary();
-            $table->integer('total_transaksi')->unsigned()->unique();
+            $table->integer('total_transaksi')->unsigned();
         });
     }
 

@@ -160,6 +160,7 @@
                                                     <label for="">Upload KTP<sup>*</sup>: </label>
                                                     <input type="file" name="files" id=""
                                                         class="form-control">
+                                                        <label class="msg-err-file" style="color: red;"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

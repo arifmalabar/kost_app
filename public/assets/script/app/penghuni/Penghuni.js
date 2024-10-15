@@ -10,7 +10,7 @@ async function fecthKamarByKode() {
     const resp = await fetch(
       `${get_detail_bygedung}/${$("#sort-gedung").val()}`
     );
-    if (resp.ok) {
+    if (resp.status === 200) {
       const data = await resp.json();
       console.log(data);
       setTable(data);

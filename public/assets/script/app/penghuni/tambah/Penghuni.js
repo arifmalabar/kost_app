@@ -78,15 +78,18 @@ export async function getGedung() {
     });
 }
 function validasiKtp(obj) {
-  const ukfile = (obj.size / 1024).toFixed(2);
+  const msg_error = document.querySelector(".msg-err-file");
   const allowedTypes = ["image/jpeg", "image/png", "image/gif"]; // Allowed image types
-  if (!(ukfile >= 1500)) {
-    ifValidError("Upload KTP tidak boleh melebihi 1.5mb");
+  if (obj.size >= 15000000) {
+    //ifValidError("Upload KTP tidak boleh melebihi 1.5mb");
+    msg_error.innerHTML = "Upload KTP tidak boleh melebihi 1.5mb";
     $('input[name="files"]').val("");
   } else if (!allowedTypes.includes(obj.type)) {
-    ifValidError("Format gambar yang diminta JPG/PNG/GIF");
+    //ifValidError("Format gambar yang diminta JPG/PNG/GIF");
+    msg_error.innerHTML = "Format gambar yang diminta JPG/PNG/GIF";
     $('input[name="files"]').val("");
   } else {
+    msg_error.innerHTML = "";
     return true;
   }
 }
