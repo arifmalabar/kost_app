@@ -300,8 +300,6 @@ function validateForm() {
     ifValidError("Alamat Kampus/Instansi belum diisi");
   } else if (alamat_rumah === "") {
     ifValidError("Alamat Rumah belum diisi");
-  } else if (uploadktp === undefined) {
-    ifValidError("KTP belum diupload");
   } else {
     $(".is-invalid").removeClass("is-invalid");
     stepper.next();

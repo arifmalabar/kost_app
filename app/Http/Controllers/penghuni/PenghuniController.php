@@ -137,13 +137,13 @@ class PenghuniController extends Controller
             ];
         }
         try {
-            $simpan = Penghuni::insert($data);
-            //$tagihan = $this->buatTagihanBaru($NIK);
-            if ($simpan) {
-                return response()->json(['status' => 'success']);
+            $cek = Penghuni::find($NIK);
+            if($cek->count() == 0){
+                Penghuni::insert($data);
             } else {
-                return response()->json(['status' => 'failed']);
+                Penghuni::where("NIK", "=", $NIK)->update($data);
             }
+            return response()->json(['status' => 'success']);
         } catch (\Throwable $th) {
             return response()->json($th);
         }
