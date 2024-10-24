@@ -97,6 +97,7 @@ class PenghuniController extends Controller
     }
     public function store(Request $request)
     {
+        //return $request->all();
         $NIK= $request->NIK;
         $nama = $request->nama;
         $email= $request->email;
@@ -125,16 +126,16 @@ class PenghuniController extends Controller
             "tanggal_bergabung" => $tgl_bergabung,
         ];
         try {
-            $cek = Penghuni::find($NIK);
+            $cek = Penghuni::where("NIK", "=", $NIK)->get();
             if($cek->count() == 0)
             {
                 Penghuni::insert($data);
             } else {
-                Penghuni::where("NIK", "=", $NIK)->update($data);
+                Penghuni::where("NIK", "=", $NIK)->update($request->all());
             }
-            return response()->json(['status' => 'success']);
+            return response()->json(["status" => "success"]);
         } catch (\Throwable $th) {
-            return response()->json($th);
+            return response()->json(["Error" => $th->getMessage()]);
         }
     }
     private function buatTagihanBaru($nik)

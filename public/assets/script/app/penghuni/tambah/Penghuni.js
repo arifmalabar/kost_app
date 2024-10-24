@@ -207,7 +207,7 @@ async function insertDataPenghuni(data, token) {
           }
         });
       } else {
-        throw new Error("Gagal menginput data");
+        throw new Error(data);
       }
     })
     .catch((er) => {
