@@ -23,8 +23,7 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-header">Menu Utama</li>
 
                 <li class="nav-item">
@@ -76,15 +75,9 @@
                         <p>Grafik Penghuni</p>
                     </a>
                 </li>
-                
-                <li class="nav-item">
-                    <a href="faktur" class="nav-link">
-                        <i class="fas nav-icon fa-university"></i>
-                        <p>Tingkat Hunian</p>
-                    </a>
-                </li>
+
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link {{ $nama == "gedung penghuni" ? "active" :"" }}">
+                    <a href="#" class="nav-link {{ $nama == " gedung penghuni" ? "active" :"" }}">
                         <i class="fas nav-icon fa-building"></i>
                         <p>
                             Gedung Penghuni
@@ -92,12 +85,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview all-gedung">
-                            <li class="nav-item">
-                                <a href="/gedung_penghuni/" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p></p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="/gedung_penghuni/" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p></p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">

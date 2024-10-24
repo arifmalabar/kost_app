@@ -131,7 +131,7 @@ class PenghuniController extends Controller
             {
                 Penghuni::insert($data);
             } else {
-                Penghuni::where("NIK", "=", $NIK)->update($request->all());
+                Penghuni::where("NIK", "=", $NIK)->update($data);
             }
             return response()->json(["status" => "success"]);
         } catch (\Throwable $th) {

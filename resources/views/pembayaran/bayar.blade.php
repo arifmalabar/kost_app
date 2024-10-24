@@ -1,51 +1,51 @@
 @extends('layout.layout')
 @section('judul')
-    Bayar
+Bayar
 @endsection
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="card card-success">
-                <div class="card-header">
-                    <h4 class="card-title">Formulir Pembayaran</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12"><h4>Data Penghuni Ruangan</h4></div>
-                        <div class="col-md-5">
-                            <label>Foto KTP/Identitas Lain</label>
-                            <img src="https://www.jitoe.com/wp-content/uploads/2022/10/KTP-Hilang-atau-Ingin-Ubah-Data-akan-Dirujuk-Buat-KTP-Digital.png" width="400px" height="280px" alt="KTP" srcset="">
-                        </div>
-                        <div class="col-md-7">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>NIK:</label>
-                                    <p class="view-nik">undefined</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Nama:</label>
-                                    <p class="view-nama">undefined</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Gedung</label>
-                                    <p class="view-gedung">undefined</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Ruangan</label>
-                                    <p class="view-ruang">undefined</p>
-                                </div>
-                                <div class="col-md-12">
-                                    <label>Total Tagihan</label>
-                                    <p class="view-tagihan" style="color:red;"></p>
-                                </div>
-                                <div class="col-md-12">
-                                    <br>
-                                    <br>
-                                    <a href="" class="btn btn-outline-warning btn-sm btn-edit" style="width: 100%"><i class="fa fa-edit"></i>Ubah Akun</a>
-                                </div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-success">
+            <div class="card-header">
+                <h4 class="card-title">Formulir Pembayaran</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Data Penghuni Ruangan</h4>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>NIK:</label>
+                                <p class="view-nik">undefined</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Nama:</label>
+                                <p class="view-nama">undefined</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Gedung</label>
+                                <p class="view-gedung">undefined</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Ruangan</label>
+                                <p class="view-ruang">undefined</p>
+                            </div>
+                            <div class="col-md-12">
+                                <label>Total Tagihan</label>
+                                <p class="view-tagihan" style="color:red;"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                                <br>
+                                <a href="" class="btn btn-outline-warning btn-sm btn-edit" style="width: 100%"><i
+                                        class="fa fa-edit"></i>Ubah Akun</a>
                             </div>
                         </div>
-                        <!--<div class="container-bayar" style="display: none;">
+                    </div>
+                    <!--<div class="container-bayar" style="display: none;">
                             <div class="col-md-12"><br><h4>Bayar Tagihan</h4></div>
                             
                             <div class="col-md-12">
@@ -112,27 +112,27 @@
                                 <button class="btn btn-success pull-left btn-proses">Bayar</button>
                             </div>
                         </div>-->
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Riwayat Pembayaran</h4>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4>Riwayat Pembayaran</h4>
-                        </div>
-                        <div class="col-md-12">
-                            <table id="example2" style="text-align: center" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nominal Bayar</th>
-                                        <th>Sisa Bayar</th>
-                                        <th>Tanggal Bayar</th>
-                                        <th>Tanggal Tagihan</th>
-                                        <th>Status</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!--<tr>
+                    <div class="col-md-12">
+                        <table id="example2" style="text-align: center" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nominal Bayar</th>
+                                    <th>Sisa Bayar</th>
+                                    <th>Tanggal Bayar</th>
+                                    <th>Tanggal Tagihan</th>
+                                    <th>Status</th>
+                                    <th>Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--<tr>
                                         <td>1</td>
                                         <td>Rp 650.000</td>
                                         <td>Rp 0</td>
@@ -140,60 +140,64 @@
                                         <td><center><span class="badge badge-success">Lunas</span></center></td>
                                         <td><center><a href="" class="btn btn-primary btn-sm"><i class="fa fa-print"></i>&nbsp;Cetak Struk</a></center></td>
                                     </tr>-->
-                                </tbody>
-                            </table>
-                            <button class="btn btn-success btn-sm" style="position: absolute; top: 1px"><i class="fa fa-sort"></i> Shorting</button>
-                        </div>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-success btn-sm" style="position: absolute; top: 1px"><i
+                                class="fa fa-sort"></i> Shorting</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="modal-lg">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
+    </div>
+    <div class="modal fade" id="modal-lg">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
                 <div class="modal-header">
-                  <h4 class="modal-title">Bayar Tagihan</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+                    <h4 class="modal-title">Bayar Tagihan</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="">Tahun Tagihan</label>
-                            <input disabled type="number" name="" id="" class="form-control field-tahun-modal" placeholder="Tahun Tagihan">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Tahun Tagihan</label>
+                                <input disabled type="number" name="" id="" class="form-control field-tahun-modal"
+                                    placeholder="Tahun Tagihan">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Bulan Tagihan</label>
+                                <input disabled="text" name="" id="" class="form-control field-bulan-modal"
+                                    placeholder="Bulan Tagihan">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Tagihan</label>
+                                <input type="text" name="" id="" value="" class="form-control field-tagihan-modal"
+                                    placeholder="Tagihan">
+                                <input type="hidden" name="" class="csrf_modal" value="{{ csrf_token() }}">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="">Bulan Tagihan</label>
-                            <input disabled ="text" name="" id="" class="form-control field-bulan-modal" placeholder="Bulan Tagihan">
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="">Tagihan</label>
-                            <input type="text" name="" id="" value="" class="form-control field-tagihan-modal" placeholder="Tagihan">
-                            <input type="hidden" name="" class="csrf_modal" value="{{ csrf_token() }}">
-                        </div>
-                    </div>
-                  </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Batal</button>
-                  <button type="button" class="btn btn-success btn-proses">Proses</button>
+                    <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success btn-proses">Proses</button>
                 </div>
-              </div>
-              <!-- /.modal-content -->
             </div>
-            <!-- /.modal-dialog -->
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal -->
-    </section>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</section>
 @endsection
 @section('js')
-    <script src="{{ asset('assets/script/app/bayar/index.js') }}" type="module"></script>
+<script src="{{ asset('assets/script/app/bayar/index.js') }}" type="module"></script>
 @endsection
 @section('jscript')
 <script>
@@ -207,5 +211,5 @@
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
-  </script>
+</script>
 @endsection
