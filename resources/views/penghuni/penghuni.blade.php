@@ -1,98 +1,98 @@
 @extends('layout.layout')
 
 @section('judul')
-    Tambah Penghuni
+Tambah Penghuni
 @endsection
 
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="card card-default">
-                <div class="card-header">
-                    <h4 class="card-title">Informasi Penghuni</h4>
-                    <div class="card-tools">
-                        <a href="/penghuni_ruang/tambah_penghuni" class="btn btn-success btn-sm">
-                            <i class="fa fa-plus"></i>&nbsp;Tambah Penghuni Baru
-                        </a>
-                    </div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h4 class="card-title">Informasi Penghuni</h4>
+                <div class="card-tools">
+                    <a href="/penghuni_ruang/tambah_penghuni" class="btn btn-success btn-sm">
+                        <i class="fa fa-plus"></i>&nbsp;Tambah Penghuni Baru
+                    </a>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-10">
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-10">
 
-                                    <div class="position-absolute" style="z-index: 10; width: 100%">
-                                        <select name="" id="sort-gedung" title="Pilih"
-                                            class="form-control select2bs4 col-md-3">
-                                            <option value="0" hidden selected>Pilih Gedung</option>
-                                        </select>
-                                    </div>
+                                <div class="position-absolute" style="z-index: 10; width: 100%">
+                                    <select name="" id="sort-gedung" title="Pilih"
+                                        class="form-control select2bs4 col-md-3">
+                                        <option value="0" hidden selected>Pilih Gedung</option>
+                                    </select>
                                 </div>
                             </div>
-                            <table id="example2" style="text-align: center" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>NIK</th>
-                                        <th>Nama</th>
-                                        <th>Email</th>
-                                        <th>No Telepon</th>
-
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($data as $d)
-                                        <tr>
-                                            <td>{{ $d->NIK }}</td>
-                                            <td>{{ $d->nama }}</td>
-                                            <td>{{ $d->email }}</td>
-                                            <td>{{ $d->no_telp }}</td>
-
-                                            <td>
-                                                <center>
-                                                    <a href="/penghuni_ruang/detail_penghuni/{{ $d->NIK }}"
-                                                        class="btn btn-outline-info btn-sm">
-                                                        <i class="fas fa-pencil-alt"></i>&nbsp;Ubah
-                                                    </a>
-                                                    <!-- Form Hapus -->
-                                                    <form action="{{ route('penghuni.delete', $d->NIK) }}" method="POST"
-                                                        id="delete-form-{{ $d->NIK }}" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-outline-danger btn-sm"
-                                                            onclick="confirmDelete('{{ $d->NIK }}')">
-                                                            <i class="fas fa-trash-alt"></i>&nbsp;Non Aktifkan
-                                                        </button>
-                                                    </form>
-                                                </center>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
                         </div>
+                        <table id="example2" style="text-align: center" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>NIK</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>No Telepon</th>
+                                    <th>Kamar</th>
+                                    <th>Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $d)
+                                <tr>
+                                    <td>{{ $d->NIK }}</td>
+                                    <td>{{ $d->nama }}</td>
+                                    <td>{{ $d->email }}</td>
+                                    <td>{{ $d->no_telp }}</td>
+                                    <td>{{ $d->nama_ruang }}</td>
+                                    <td>
+                                        <center>
+                                            <a href="/penghuni_ruang/detail_penghuni/{{ $d->NIK }}"
+                                                class="btn btn-outline-info btn-sm">
+                                                <i class="fas fa-pencil-alt"></i>&nbsp;Ubah
+                                            </a>
+                                            <!-- Form Hapus -->
+                                            <form action="{{ route('penghuni.delete', $d->NIK) }}" method="POST"
+                                                id="delete-form-{{ $d->NIK }}" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-outline-danger btn-sm"
+                                                    onclick="confirmDelete('{{ $d->NIK }}')">
+                                                    <i class="fas fa-trash-alt"></i>&nbsp;Non Aktifkan
+                                                </button>
+                                            </form>
+                                        </center>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Tambah data -->
-    <div class="modal fade" id="tambahPenghuniModal" tabindex="-1" role="dialog"
-        aria-labelledby="tambahPenghuniModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tambahPenghuniModalLabel">Tambah Penghuni</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="formTambahPenghuni" action="{{ url('/penghuni_ruang/store') }}" method="POST">
-                        @csrf
-                        <!--<div class="input-group mb-3">
+<!-- Tambah data -->
+<div class="modal fade" id="tambahPenghuniModal" tabindex="-1" role="dialog" aria-labelledby="tambahPenghuniModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tambahPenghuniModalLabel">Tambah Penghuni</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahPenghuni" action="{{ url('/penghuni_ruang/store') }}" method="POST">
+                    @csrf
+                    <!--<div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                 </div>
@@ -163,120 +163,119 @@
     @endforeach
                                     </select>
                                 </div>-->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-                </form>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <!-- Modal Edit Penghuni -->
-    <div class="modal fade" id="editPenghuniModal" tabindex="-1" role="dialog"
-        aria-labelledby="editPenghuniModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editPenghuniModalLabel">Edit Penghuni</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="formEditPenghuni" action="" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editNikPenghuni" name="NIK" readonly>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editNamaPenghuni" name="nama" required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editemail" name="email" required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editHargaPenghuni" name="harga" required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editNoTelp" name="no_telp" required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editNamaWali" name="nama_wali" required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-university"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editNamaKampus" name="nama_kampus_kantor"
-                                required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editAlamatKampus" name="alamat_kampus_kantor"
-                                required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-home"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editStatus" name="status" required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editAlamat" name="alamat" required>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-door-closed "></i></span>
-                            </div>
-                            <select class="form-control" id="editKodeKamar" name="kode_kamar" required>
-                                <option value="" disabled>Pilih Nomor Kamar</option>
-                                @foreach ($kode as $d)
-                                    <option value="{{ $d->kode_kamar }}">{{ $d->kode_kamar }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-                </form>
+<!-- Modal Edit Penghuni -->
+<div class="modal fade" id="editPenghuniModal" tabindex="-1" role="dialog" aria-labelledby="editPenghuniModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPenghuniModalLabel">Edit Penghuni</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+                <form id="formEditPenghuni" action="" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editNikPenghuni" name="NIK" readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editNamaPenghuni" name="nama" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editemail" name="email" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editHargaPenghuni" name="harga" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editNoTelp" name="no_telp" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editNamaWali" name="nama_wali" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-university"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editNamaKampus" name="nama_kampus_kantor" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editAlamatKampus" name="alamat_kampus_kantor"
+                            required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-home"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editStatus" name="status" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-door-closed"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="editAlamat" name="alamat" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-door-closed "></i></span>
+                        </div>
+                        <select class="form-control" id="editKodeKamar" name="kode_kamar" required>
+                            <option value="" disabled>Pilih Nomor Kamar</option>
+                            @foreach ($kode as $d)
+                            <option value="{{ $d->kode_kamar }}">{{ $d->kode_kamar }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+            </form>
         </div>
     </div>
+</div>
 @endsection
 @section('js')
-    <script src="{{ asset('assets/script/app/penghuni/index.js') }}" type="module"></script>
+<script src="{{ asset('assets/script/app/penghuni/index.js') }}" type="module"></script>
 @endsection
 @section('jscript')
-    <script>
-        window.token =" {{ csrf_token() }}"
+<script>
+    window.token =" {{ csrf_token() }}"
         $(function() {
             $('.select2').select2()
 
@@ -382,5 +381,5 @@
                 }
             });
         }
-    </script>
+</script>
 @endsection

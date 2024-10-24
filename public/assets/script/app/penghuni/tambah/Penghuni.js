@@ -41,9 +41,6 @@ export function init() {
   $(".next-btn").click(function () {
     validateForm();
   });
-  $('input[name="files"]').on("change", function (params) {
-    validasiKtp(this.files[0]);
-  });
 }
 
 export async function getStatusRuangan(id) {
@@ -294,7 +291,7 @@ function validateForm() {
   const nm_kampus = document.querySelector(
     'input[name="nama_kampus_kantor"]'
   ).value;
-  const uploadktp = document.querySelector('input[name="files"]').files[0];
+  //const uploadktp = document.querySelector('input[name="files"]').files[0];
   const alamat_kampus = document.querySelector(".alamat_kampus").value;
   const alamat_rumah = document.querySelector(".alamat_rumah").value;
   const token = document.querySelector(".token").value;
@@ -319,8 +316,6 @@ function validateForm() {
     ifValidError("Alamat Kampus/Instansi belum diisi");
   } else if (alamat_rumah === "") {
     ifValidError("Alamat Rumah belum diisi");
-  } else if (uploadktp === undefined) {
-    ifValidError("KTP belum diupload");
   } else {
     $(".is-invalid").removeClass("is-invalid");
     stepper.next();

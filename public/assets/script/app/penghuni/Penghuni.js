@@ -46,6 +46,9 @@ function setTable(dt) {
         data: "no_telp",
       },
       {
+        data: "nama_ruang",
+      },
+      {
         data: null,
         render: function (data, type, row) {
           return `

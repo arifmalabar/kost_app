@@ -42,7 +42,6 @@ export async function getData() {
     const response = await fetch(get_detail_penghuni);
     const data = await response.json();
     showDetailPenghuni(data.biodata);
-    showKtp(data.foto_ktp);
   } catch (error) {
     console.log(error);
   }
@@ -57,49 +56,25 @@ async function updateData() {
   const nm_kampus = document.querySelector(
     'input[name="nama_kampus_kantor"]'
   ).value;
-  const uploadktp = document.querySelector('input[name="files"]').files[0];
+  //const uploadktp = document.querySelector('input[name="files"]').files[0];
   const alamat_kampus = document.querySelector(".alamat_kampus").value;
   const alamat_rumah = document.querySelector(".alamat_rumah").value;
   const token = document.querySelector(".token").value;
-  if (uploadktp == undefined) {
-    let data = {
-      NIK: NIK,
-      old_nik: old_nik,
-      nama: nama,
-      email: email,
-      harga: parseRupiahToInt(harga),
-      no_telp: notelp,
-      nama_wali: nm_wali,
-      nama_kampus_kantor: nm_kampus,
-      alamat_kampus_kantor: alamat_kampus,
-      alamat: alamat_rumah,
-      kode_kamar: last_kdruang === "" ? old_kdruang : last_kdruang,
-      token: $(".token").val(),
-    };
-    fecthEditPenghuni(data);
-  } else {
-    const reader = new FileReader();
-    reader.readAsDataURL(uploadktp);
-    reader.onload = async function () {
-      const base64file = reader.result.split(",")[1];
-      let data = {
-        NIK: NIK,
-        oldNIK: old_nik,
-        nama: nama,
-        email: email,
-        harga: parseRupiahToInt(harga),
-        no_telp: notelp,
-        nama_wali: nm_wali,
-        nama_kampus_kantor: nm_kampus,
-        alamat_kampus_kantor: alamat_kampus,
-        alamat: alamat_rumah,
-        kode_kamar: last_kdruang === "" ? old_kdruang : last_kdruang,
-        file: base64file,
-        token: $(".token").val(),
-      };
-      fecthEditPenghuni(data);
-    };
-  }
+  let data = {
+    NIK: NIK,
+    old_nik: old_nik,
+    nama: nama,
+    email: email,
+    harga: parseRupiahToInt(harga),
+    no_telp: notelp,
+    nama_wali: nm_wali,
+    nama_kampus_kantor: nm_kampus,
+    alamat_kampus_kantor: alamat_kampus,
+    alamat: alamat_rumah,
+    kode_kamar: last_kdruang === "" ? old_kdruang : last_kdruang,
+    token: $(".token").val(),
+  };
+  fecthEditPenghuni(data);
 }
 async function fecthEditPenghuni(data) {
   await fetch(update_penghuni, {
