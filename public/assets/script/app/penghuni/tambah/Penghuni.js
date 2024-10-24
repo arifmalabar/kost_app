@@ -104,12 +104,28 @@ async function simpanPenghuni() {
     const nm_kampus = document.querySelector(
       'input[name="nama_kampus_kantor"]'
     ).value;
-    const uploadktp = document.querySelector('input[name="files"]').files[0];
+    //const uploadktp = document.querySelector('input[name="files"]').files[0];
     const alamat_kampus = document.querySelector(".alamat_kampus").value;
     const alamat_rumah = document.querySelector(".alamat_rumah").value;
     const token = document.querySelector(".token").value;
     const kd_kamar = document.querySelector('input[name="kode_kamar"]').value;
-    if (uploadktp === undefined) {
+    const data = {
+      NIK: NIK,
+      nama: nama,
+      email: email,
+      harga: parseRupiahToInt(harga),
+      no_telp: notelp,
+      nama_wali: nm_wali,
+      nama_kampus_kantor: nm_kampus,
+      alamat_kampus_kantor: alamat_kampus,
+      alamat: alamat_rumah,
+      kode_kamar: kd_kamar,
+      token: token,
+      tanggal_bergabung: $(".tanggal_bergabung").val(),
+      status: 1,
+    };
+    insertDataPenghuni(data, token);
+    /*if (uploadktp === undefined) {
       const data = {
         NIK: NIK,
         nama: nama,
@@ -149,7 +165,7 @@ async function simpanPenghuni() {
         };
         insertDataPenghuni(data, token);
       };
-    }
+    }*/
   } catch (error) {
     console.log(error);
   }
