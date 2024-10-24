@@ -214,46 +214,26 @@ class PenghuniController extends Controller
         $status= $request->status;
         $alamat = $request->alamat;
         $kode_kamar= $request->kode_kamar;
-        $ktpFileBinary = base64_encode($request->file);
-        if($ktpFileBinary != "")
-        {
-            $data = [
-                'NIK' => $NIK,
-                'nama' => $nama,
-                'email' => $email,
-                'harga' => $harga,
-                'no_telp' => $no_telp,
-                'nama_wali' => $nama_wali,
-                'nama_kampus_kantor' => $nama_kampus_kantor,
-                'alamat_kampus_kantor' => $alamat_kampus_kantor,
-                'status' => $status,
-                'alamat' => $alamat,
-                'kode_kamar' => $kode_kamar,
-                'status' => 1,
-                'file_ktp' => $ktpFileBinary
-            ];
-        } else {
-            $data = [
-                'NIK' => $NIK,
-                'nama' => $nama,
-                'email' => $email,
-                'harga' => $harga,
-                'no_telp' => $no_telp,
-                'nama_wali' => $nama_wali,
-                'nama_kampus_kantor' => $nama_kampus_kantor,
-                'alamat_kampus_kantor' => $alamat_kampus_kantor,
-                'status' => $status,
-                'alamat' => $alamat,
-                'kode_kamar' => $kode_kamar,
-                'status' => 1,
-            ];
+        $data = [
+            'NIK' => $NIK,
+            'nama' => $nama,
+            'email' => $email,
+            'harga' => $harga,
+            'no_telp' => $no_telp,
+            'nama_wali' => $nama_wali,
+            'nama_kampus_kantor' => $nama_kampus_kantor,
+            'alamat_kampus_kantor' => $alamat_kampus_kantor,
+            'status' => $status,
+            'alamat' => $alamat,
+            'kode_kamar' => $kode_kamar,
+            'status' => 1,
+        ];
+        $update = Penghuni::where('NIK', $old_nik)->update($data);
+        if($update){
+            return response()->json(["status" => "success", "msg" => "berhasil menambah mengubah data"]);
+        }else{
+            return response()->json(["status"=> "error", "msg" => "terjadi kesalahan"]);
         }
-            $update = Penghuni::where('NIK', $old_nik)->update($data);
-            if($update){
-                return response()->json(["status" => "success", "msg" => "berhasil menambah mengubah data"]);
-            }else{
-                return response()->json(["status"=> "error", "msg" => "terjadi kesalahan"]);
-            }
         } catch (\Throwable $th) {
             return response()->json($th);
         }
