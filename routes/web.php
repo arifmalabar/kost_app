@@ -102,7 +102,13 @@ Route::controller(GrafikPenghuni::class)->group(function () {
     Route::get("/grafik_penghuni", "index")->name("GrafikPenghuni.index");
     Route::get('/data_grafik_penghuni', "getDataGrafikPenghuni");
 });
-
+Route::controller(GrafikPendapatan::class)->group(function(){
+    Route::get("/laporan_pendapatan", 'index')->name('grafik_pendapatan.index');
+     Route::get('/data_pendapatan', 'getDataPembayaran');
+     Route::get("/data_pendapatan_gedung", "getDataPembayaranGedung");
+     Route::get("/laporan_pendapatan_gedung/{kode_gedung}/{tahun}", "getLaporanGedung")->name('grafik_pendapatan');
+     Route::get("/cetak_laporan_gedung/{kode_gedung}", "cetakLaporanGedung");
+ });
 
 
 // Route untuk mendapatkan penghuni berdasarkan kode gedung

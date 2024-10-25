@@ -86,10 +86,10 @@
                         <div class="card-header">
                             <h4 class="card-title">Grafik Terhutang Dan Terbayar</h4>
                             <div class="card-tools">
-                                <button class="btn btn-success btn-sm" data-toggle="modal"
+                                <!--<button class="btn btn-success btn-sm" data-toggle="modal"
                                     data-target="#modalShortingHutang"><i class="fa fa-sort"></i>&nbsp;Shorting</button>
                                 <button class="btn btn-primary btn-sm" style="color: white"><i
-                                        class="fa fa-retweet"></i>&nbsp;Refresh</button>
+                                        class="fa fa-retweet"></i>&nbsp;Refresh</button>-->
                             </div>
                         </div>
                         <div class="card-body">
@@ -115,10 +115,10 @@
                         <div class="card-header">
                             <h3 class="card-title"><i class="fa fa-users"></i>&nbsp;Penghuni Baru</h3>
                             <div class="card-tools">
-                                <button class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>
+                                <!--<button class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>-->
                             </div>
                         </div>
-                        <div class="card-body" style="height: 280px">
+                        <div class="card-body" style="height: 280px; overflow : auto">
                             <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -141,7 +141,7 @@
                         <div class="card-header">
                             <h3 class="card-title"><i class="fa fa-signal"></i>&nbsp;Ketersediaan Kamar</h3>
                             <div class="card-tools">
-                                <button class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>
+                                <!--<button class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>-->
                             </div>
                         </div>
                         <div class="card-body">

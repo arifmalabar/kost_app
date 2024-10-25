@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableTbRiwayatPembayaran extends Migration
+class DeleteColumnFileKtp extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateTableTbRiwayatPembayaran extends Migration
      */
     public function up()
     {
-        Schema::create('tb_riwayat_pembayaran', function (Blueprint $table) {
-            $table->string('no_transaksi', 500)->primary();
-            $table->integer('total_transaksi')->unsigned();
+        Schema::table('tb_biodata_penghuni', function (Blueprint $table) {
+            $table->dropColumn('file_ktp');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateTableTbRiwayatPembayaran extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_riwayat_pembayaran');
+        Schema::table('tb_biodata_penghuni', function (Blueprint $table) {
+            //
+        });
     }
 }

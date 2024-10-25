@@ -18,20 +18,32 @@ class PenghuniController extends Controller
 
         $data = array(
             "nama"=> "penghuni",
-            "data" => Penghuni::where("status", "=", 1)->get(),
+            "data" => $this->getPenghuni(),
             "kode"=>Kamar::all()
             );
         return view('penghuni.penghuni', $data);
     }
-
+    private function getPenghuni()
+    {
+        try {
+            $query = Penghuni::selectRaw("NIK, nama, email, no_telp, nama_ruang")
+                                ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
+                                ->where("status", "=", 1)
+                                ->get();
+            return $query;
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
     public function getPenghuniByGedung($kode_gedung)
     {
         try {
-            $query = Penghuni::join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
+            $query = Penghuni::selectRaw("NIK, nama, email, no_telp, nama_ruang")
+                                ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
                                 ->where("status", "=", 1)
                                 ->where("kode_gedung", "=", $kode_gedung)
                                 ->get();
-            return response()->json($query);
+            return $query;
         } catch (\Throwable $th) {
             return $th;
         }
@@ -49,8 +61,8 @@ class PenghuniController extends Controller
             $query = Kamar::selectRaw("tb_kamar.kode_kamar, tb_kamar.nama_ruang, 
                             (
                                 CASE 
-                                    WHEN (SELECT NIK FROM tb_biodata_penghuni WHERE kode_kamar = tb_kamar.kode_kamar AND status = 1) IS NULL THEN 'tersedia' 
-                                    WHEN (SELECT NIK FROM tb_biodata_penghuni WHERE kode_kamar = tb_kamar.kode_kamar AND status = 1) IS NOT NULL THEN 'terisi' END
+                                    WHEN (SELECT NIK FROM tb_biodata_penghuni WHERE kode_kamar = tb_kamar.kode_kamar AND status = 1 LIMIT 1) IS NULL THEN 'tersedia' 
+                                    WHEN (SELECT NIK FROM tb_biodata_penghuni WHERE kode_kamar = tb_kamar.kode_kamar AND status = 1 LIMIT 1) IS NOT NULL THEN 'terisi' END
                             ) AS status")
                             ->where("kode_gedung", "=", $kode_gedung)
                             ->get();
@@ -70,9 +82,7 @@ class PenghuniController extends Controller
     {
         try {
             $query = Penghuni::selectRaw("NIK, nama, email, harga, no_telp, tanggal_bergabung, nama_wali, nama_kampus_kantor, alamat_kampus_kantor, alamat, tb_kamar.kode_kamar, tb_kamar.nama_ruang")->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")->join("tb_gedung", "tb_gedung.kode_gedung", "=", "tb_kamar.kode_gedung")->where("tb_biodata_penghuni.NIK", "=", $id)->limit(1)->first();
-            $query_ktp = Penghuni::selectRaw("file_ktp")->where("tb_biodata_penghuni.NIK", "=", $id)->limit(1)->first();
-            $ktp = base64_encode($query_ktp->file_ktp);
-            return response()->json(["biodata" => $query, "foto_ktp" => $ktp]);
+            return response()->json(["biodata" => $query]);
         } catch (\Throwable $th) {
             return response()->json($th);
         }
@@ -87,6 +97,7 @@ class PenghuniController extends Controller
     }
     public function store(Request $request)
     {
+        //return $request->all();
         $NIK= $request->NIK;
         $nama = $request->nama;
         $email= $request->email;
@@ -99,53 +110,32 @@ class PenghuniController extends Controller
         $alamat = $request->alamat;
         $kode_kamar= $request->kode_kamar;
         $tgl_bergabung = $request->tanggal_bergabung;
-        $ktpFileBinary = base64_encode($request->file);
-        $data = [];
-        if($ktpFileBinary != "")
-        {
-            $data = [
-                'NIK' => $NIK,
-                'nama' => $nama,
-                'email' => $email,
-                'harga' => $harga,
-                'no_telp' => $no_telp,
-                'nama_wali' => $nama_wali,
-                'nama_kampus_kantor' => $nama_kampus_kantor,
-                'alamat_kampus_kantor' => $alamat_kampus_kantor,
-                'status' => $status,
-                'alamat' => $alamat,
-                'kode_kamar' => $kode_kamar,
-                'status' => 1,
-                'file_ktp' => $ktpFileBinary,
-                "tanggal_bergabung" => $tgl_bergabung,
-            ];
-        } else {
-            $data = [
-                'NIK' => $NIK,
-                'nama' => $nama,
-                'email' => $email,
-                'harga' => $harga,
-                'no_telp' => $no_telp,
-                'nama_wali' => $nama_wali,
-                'nama_kampus_kantor' => $nama_kampus_kantor,
-                'alamat_kampus_kantor' => $alamat_kampus_kantor,
-                'status' => $status,
-                'alamat' => $alamat,
-                'kode_kamar' => $kode_kamar,
-                'status' => 1,
-                "tanggal_bergabung" => $tgl_bergabung,
-            ];
-        }
+        $data = [
+            'NIK' => $NIK,
+            'nama' => $nama,
+            'email' => $email,
+            'harga' => $harga,
+            'no_telp' => $no_telp,
+            'nama_wali' => $nama_wali,
+            'nama_kampus_kantor' => $nama_kampus_kantor,
+            'alamat_kampus_kantor' => $alamat_kampus_kantor,
+            'status' => $status,
+            'alamat' => $alamat,
+            'kode_kamar' => $kode_kamar,
+            'status' => 1,
+            "tanggal_bergabung" => $tgl_bergabung,
+        ];
         try {
-            $cek = Penghuni::find($NIK);
-            if($cek->count() == 0){
+            $cek = Penghuni::where("NIK", "=", $NIK)->get();
+            if($cek->count() == 0)
+            {
                 Penghuni::insert($data);
             } else {
                 Penghuni::where("NIK", "=", $NIK)->update($data);
             }
-            return response()->json(['status' => 'success']);
+            return response()->json(["status" => "success"]);
         } catch (\Throwable $th) {
-            return response()->json($th);
+            return response()->json(["Error" => $th->getMessage()]);
         }
     }
     private function buatTagihanBaru($nik)
@@ -224,46 +214,26 @@ class PenghuniController extends Controller
         $status= $request->status;
         $alamat = $request->alamat;
         $kode_kamar= $request->kode_kamar;
-        $ktpFileBinary = base64_encode($request->file);
-        if($ktpFileBinary != "")
-        {
-            $data = [
-                'NIK' => $NIK,
-                'nama' => $nama,
-                'email' => $email,
-                'harga' => $harga,
-                'no_telp' => $no_telp,
-                'nama_wali' => $nama_wali,
-                'nama_kampus_kantor' => $nama_kampus_kantor,
-                'alamat_kampus_kantor' => $alamat_kampus_kantor,
-                'status' => $status,
-                'alamat' => $alamat,
-                'kode_kamar' => $kode_kamar,
-                'status' => 1,
-                'file_ktp' => $ktpFileBinary
-            ];
-        } else {
-            $data = [
-                'NIK' => $NIK,
-                'nama' => $nama,
-                'email' => $email,
-                'harga' => $harga,
-                'no_telp' => $no_telp,
-                'nama_wali' => $nama_wali,
-                'nama_kampus_kantor' => $nama_kampus_kantor,
-                'alamat_kampus_kantor' => $alamat_kampus_kantor,
-                'status' => $status,
-                'alamat' => $alamat,
-                'kode_kamar' => $kode_kamar,
-                'status' => 1,
-            ];
+        $data = [
+            'NIK' => $NIK,
+            'nama' => $nama,
+            'email' => $email,
+            'harga' => $harga,
+            'no_telp' => $no_telp,
+            'nama_wali' => $nama_wali,
+            'nama_kampus_kantor' => $nama_kampus_kantor,
+            'alamat_kampus_kantor' => $alamat_kampus_kantor,
+            'status' => $status,
+            'alamat' => $alamat,
+            'kode_kamar' => $kode_kamar,
+            'status' => 1,
+        ];
+        $update = Penghuni::where('NIK', $old_nik)->update($data);
+        if($update){
+            return response()->json(["status" => "success", "msg" => "berhasil menambah mengubah data"]);
+        }else{
+            return response()->json(["status"=> "error", "msg" => "terjadi kesalahan"]);
         }
-            $update = Penghuni::where('NIK', $old_nik)->update($data);
-            if($update){
-                return response()->json(["status" => "success", "msg" => "berhasil menambah mengubah data"]);
-            }else{
-                return response()->json(["status"=> "error", "msg" => "terjadi kesalahan"]);
-            }
         } catch (\Throwable $th) {
             return response()->json($th);
         }
@@ -276,9 +246,11 @@ class PenghuniController extends Controller
             $penghuni_query = Penghuni::find($NIK);
             $penghuni_query->status = 0;
             $penghuni_query->save();
+            return redirect('/penghuni_ruang');
         } catch (\Throwable $th) {
             return $th;
         }
+        
     }
 
 
@@ -291,7 +263,6 @@ public function showPenghuni($kode_gedung)
         ->select('tb_biodata_penghuni.*')
         ->get();
     if ($penghuni->isEmpty()) {
-
         return view('penghuni.index', ['penghuni' => [], "nama"=> "gedung penghuni", 'message' => 'Tidak ada penghuni ditemukan.']);
     }
 

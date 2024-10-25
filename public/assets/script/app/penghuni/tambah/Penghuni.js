@@ -41,9 +41,6 @@ export function init() {
   $(".next-btn").click(function () {
     validateForm();
   });
-  $('input[name="files"]').on("change", function (params) {
-    validasiKtp(this.files[0]);
-  });
 }
 
 export async function getStatusRuangan(id) {
@@ -78,15 +75,18 @@ export async function getGedung() {
     });
 }
 function validasiKtp(obj) {
-  const ukfile = (obj.size / 1024).toFixed(2);
+  const msg_error = document.querySelector(".msg-err-file");
   const allowedTypes = ["image/jpeg", "image/png", "image/gif"]; // Allowed image types
-  if (!(ukfile >= 1500)) {
-    ifValidError("Upload KTP tidak boleh melebihi 1.5mb");
+  if (obj.size >= 15000000) {
+    //ifValidError("Upload KTP tidak boleh melebihi 1.5mb");
+    msg_error.innerHTML = "Upload KTP tidak boleh melebihi 1.5mb";
     $('input[name="files"]').val("");
   } else if (!allowedTypes.includes(obj.type)) {
-    ifValidError("Format gambar yang diminta JPG/PNG/GIF");
+    //ifValidError("Format gambar yang diminta JPG/PNG/GIF");
+    msg_error.innerHTML = "Format gambar yang diminta JPG/PNG/GIF";
     $('input[name="files"]').val("");
   } else {
+    msg_error.innerHTML = "";
     return true;
   }
 }
@@ -101,12 +101,28 @@ async function simpanPenghuni() {
     const nm_kampus = document.querySelector(
       'input[name="nama_kampus_kantor"]'
     ).value;
-    const uploadktp = document.querySelector('input[name="files"]').files[0];
+    //const uploadktp = document.querySelector('input[name="files"]').files[0];
     const alamat_kampus = document.querySelector(".alamat_kampus").value;
     const alamat_rumah = document.querySelector(".alamat_rumah").value;
     const token = document.querySelector(".token").value;
     const kd_kamar = document.querySelector('input[name="kode_kamar"]').value;
-    if (uploadktp === undefined) {
+    const data = {
+      NIK: NIK,
+      nama: nama,
+      email: email,
+      harga: parseRupiahToInt(harga),
+      no_telp: notelp,
+      nama_wali: nm_wali,
+      nama_kampus_kantor: nm_kampus,
+      alamat_kampus_kantor: alamat_kampus,
+      alamat: alamat_rumah,
+      kode_kamar: kd_kamar,
+      token: token,
+      tanggal_bergabung: $(".tanggal_bergabung").val(),
+      status: 1,
+    };
+    insertDataPenghuni(data, token);
+    /*if (uploadktp === undefined) {
       const data = {
         NIK: NIK,
         nama: nama,
@@ -146,7 +162,7 @@ async function simpanPenghuni() {
         };
         insertDataPenghuni(data, token);
       };
-    }
+    }*/
   } catch (error) {
     console.log(error);
   }
@@ -191,7 +207,7 @@ async function insertDataPenghuni(data, token) {
           }
         });
       } else {
-        throw new Error("Gagal menginput data");
+        throw new Error(data);
       }
     })
     .catch((er) => {
@@ -275,7 +291,7 @@ function validateForm() {
   const nm_kampus = document.querySelector(
     'input[name="nama_kampus_kantor"]'
   ).value;
-  const uploadktp = document.querySelector('input[name="files"]').files[0];
+  //const uploadktp = document.querySelector('input[name="files"]').files[0];
   const alamat_kampus = document.querySelector(".alamat_kampus").value;
   const alamat_rumah = document.querySelector(".alamat_rumah").value;
   const token = document.querySelector(".token").value;
