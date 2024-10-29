@@ -47,7 +47,7 @@ Route::controller(GedungController::class)->group(function () {
     Route::put('/setting_gedung/{kode_gedung}/update', 'update')->name('gedung.update');
     Route::delete('/setting_gedung/{kode_gedung}/delete', 'delete')->name('gedung.delete');
     Route::get('/sidebar', 'GedungPenghuni')->name('gedung.GedungPenghuni');
-
+    Route::get('/gedung/aktifkan/{kode_gedung}', 'aktifkanGedung');
 
 });
 
@@ -58,6 +58,7 @@ Route::controller(RuanganController::class)->group(function () {
     Route::get('/setting_ruangan/{kode_kamar}/edit', 'edit')->name('ruangan.edit');
     Route::put('/setting_ruangan/{kode_kamar}/update', 'update')->name('ruangan.update');
     Route::delete('/setting_ruangan/{kode_kamar}/delete', 'delete')->name('ruangan.delete');
+    Route::get("/setting_ruangan/aktifkan_ruangan/{kode_kamar}", "aktifkanKamar");
 });
 
 Route::controller(PenghuniController::class)->group(function () {

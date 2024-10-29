@@ -101,11 +101,30 @@ class RuanganController extends Controller
 
     public function delete($kode_kamar)
     {
-        $delete = DB::table('tb_kamar')->where('kode_kamar', $kode_kamar)->delete();
+        /*$delete = DB::table('tb_kamar')->where('kode_kamar', $kode_kamar)->delete();
         if ($delete) {
             return Redirect::back()->with(['success' => 'Data Berhasil Dihapus!']);
         } else {
             return Redirect::back()->with(['warning' => 'Data Gagal Dihapus!']);
+        }*/
+        try {
+            $kamar = Kamar::find($kode_kamar);
+            $kamar->status = 0;
+            $kamar->save();
+            return Redirect::back()->with(['warning' => 'Kamar berhasil Dinonaktifkan!']);
+        } catch (\Throwable $th) {
+            return Redirect::back()->with(['warning' => $th->getMessage()]);
+        }
+    }
+    public function aktifkanKamar($kode_kamar)
+    {
+        try {
+            $kamar = Kamar::find($kode_kamar);
+            $kamar->status = 1;
+            $kamar->save();
+            return Redirect::back()->with(['warning' => 'Kamar berhasil Diaktifkan!']);
+        } catch (\Throwable $th) {
+            return Redirect::back()->with(['warning' => $th->getMessage()]);
         }
     }
 }

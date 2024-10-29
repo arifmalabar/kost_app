@@ -47,11 +47,11 @@ class PembayaranController extends Controller
     public function getDataGedung()
     {
         $data = [];
-        $gedung = Gedung::all();
+        $gedung = Gedung::where("status", "=", 1)->get();
         foreach ($gedung as $key) {
             array_push($data, $key);
         }
-        return response()->json($data);
+        return response()->json($gedung);
     }
     public function getGedungById($id)
     {

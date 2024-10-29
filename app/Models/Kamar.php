@@ -12,6 +12,7 @@ class Kamar extends Model
     protected $primaryKey = "kode_kamar";
 
     public $incrementing = false;
+    public $timestamps = false;
 
     public function penghuni()
     {

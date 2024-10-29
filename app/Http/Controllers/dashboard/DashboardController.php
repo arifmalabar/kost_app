@@ -130,14 +130,14 @@ class DashboardController extends Controller
             $kosong = Penghuni::rightJoin('tb_kamar', 'tb_kamar.kode_kamar', '=', 'tb_biodata_penghuni.kode_kamar')
                             ->leftJoin('tb_gedung', 'tb_kamar.kode_gedung', '=', 'tb_gedung.kode_gedung')
                             ->whereNull('NIK')
-                            ->orWhere('status', '=', 0)
+                            ->orWhere('tb_kamar.status', '=', 0)
                             ->count();
 
                             // Menghitung jumlah kamar terisi
             $terisi = Penghuni::rightJoin('tb_kamar', 'tb_kamar.kode_kamar', '=', 'tb_biodata_penghuni.kode_kamar')
                             ->leftJoin('tb_gedung', 'tb_kamar.kode_gedung', '=', 'tb_gedung.kode_gedung')
                             ->whereNotNull('NIK')
-                            ->where('status', '=', 1)
+                            ->where('tb_kamar.status', '=', 1)
                             ->count();
 
             // Menggabungkan hasil

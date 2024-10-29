@@ -43,6 +43,7 @@
                                         <th>No</th>
                                         <th>Kode Gedung</th>
                                         <th>Nama Gedung</th>
+                                        <th>Status</th>
                                         <th>Alamat Gedung</th>
                                         <th>Opsi</th>
                                     </tr>
@@ -55,25 +56,41 @@
                                             <td><a href="/setting_gedung/export_excel/<?= $d->kode_gedung ?>" target="_blank" rel="noopener noreferrer">{{ $d->kode_gedung }}</a></td>
                                             <td>{{ $d->nama_gedung }}</td>
                                             <td>{{ $d->alamat_gedung }}</td>
+                                            <td>@if($d->status == 0)
+                                                    <span class='badge badge-danger'>Tidak Aktif</span>
+                                                @else
+                                                    <span class='badge badge-success'>Aktif</span>
+                                                
+                                                @endif
+                                            </td>
                                             <td>
-                                                <center>
-                                                    <button class="btn btn-outline-info btn-sm" data-toggle="modal"
-                                                        data-target="#editGedungModal" data-kode="{{ $d->kode_gedung }}"
-                                                        data-nama="{{ $d->nama_gedung }}"
-                                                        data-alamat="{{ $d->alamat_gedung }}">
-                                                        <i class="fas fa-pencil-alt"></i>&nbsp;Ubah
-                                                    </button>
-                                                    <form action="{{ route('gedung.delete', $d->kode_gedung) }}"
-                                                        method="POST" id="delete-form-{{ $d->kode_gedung }}"
-                                                        style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-outline-danger btn-sm"
-                                                            onclick="confirmDelete('{{ $d->kode_gedung }}')">
-                                                            <i class="fas fa-trash-alt"></i>&nbsp;Hapus
+                                                @if($d->status == 0)
+                                                    <center>
+                                                        <a class="btn btn-outline-success btn-sm" href="/gedung/aktifkan/{{ $d->kode_gedung }}">
+                                                            <i class="fas fa-lock"></i>&nbsp;Aktifkan
+                                                        </a>
+                                                    </center>
+                                                @else
+                                                    <center>
+                                                        <button class="btn btn-outline-info btn-sm" data-toggle="modal"
+                                                            data-target="#editGedungModal" data-kode="{{ $d->kode_gedung }}"
+                                                            data-nama="{{ $d->nama_gedung }}"
+                                                            data-alamat="{{ $d->alamat_gedung }}">
+                                                            <i class="fas fa-pencil-alt"></i>&nbsp;Ubah
                                                         </button>
-                                                    </form>
-                                                </center>
+                                                        <form action="{{ route('gedung.delete', $d->kode_gedung) }}"
+                                                            method="POST" id="delete-form-{{ $d->kode_gedung }}"
+                                                            style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                                                onclick="confirmDelete('{{ $d->kode_gedung }}')">
+                                                                <i class="fas fa-trash-alt"></i>&nbsp;Hapus
+                                                            </button>
+                                                        </form>
+                                                    </center>
+                                                @endif
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

@@ -63,7 +63,8 @@ class GedungController extends Controller
         $data = [
             'kode_gedung' => Kode::getCustomCode(new Gedung(), "G", 'kode_gedung'),
             'nama_gedung' => $nama_gedung,
-            'alamat_gedung' => $alamat_gedung
+            'alamat_gedung' => $alamat_gedung,
+            'status' => 1,
         ];
         $simpan = DB::table('tb_gedung')->insert($data);
         if ($simpan) {
@@ -88,7 +89,8 @@ class GedungController extends Controller
         $alamat_gedung = $request->alamat_gedung;
         $data = [
             'nama_gedung' => $nama_gedung,
-            'alamat_gedung' => $alamat_gedung
+            'alamat_gedung' => $alamat_gedung,
+            'status' => 1,
         ];
 
         $update = DB::table('tb_gedung')->where('kode_gedung', $kode_gedung)->update($data);
@@ -101,14 +103,32 @@ class GedungController extends Controller
 
     public function delete($kode_gedung)
     {
-        $delete = DB::table('tb_gedung')->where('kode_gedung', $kode_gedung)->delete();
+        /*$delete = DB::table('tb_gedung')->where('kode_gedung', $kode_gedung)->delete();
         if ($delete) {
             return Redirect::back()->with(['success' => 'Data Berhasil Dihapus!']);
         } else {
             return Redirect::back()->with(['warning' => 'Data Gagal Dihapus!']);
+        }*/
+        try {
+            $gedung = Gedung::find($kode_gedung);
+            $gedung->status = 0;
+            $gedung->save();
+            return Redirect::back()->with(['success' => 'Gedung Berhasil Dinonaktifkan!']);
+        } catch (\Throwable $th) {
+            return Redirect::back()->with(['success' => $th->getMessage()]);
         }
     }
-
+    public function aktifkanGedung($kode_gedung)
+    {
+        try {
+            $gedung = Gedung::find($kode_gedung);
+            $gedung->status = 1;
+            $gedung->save();
+            return Redirect::back()->with(['success' => 'Gedung Berhasil Diaktifkan!']);
+        } catch (\Throwable $th) {
+            return Redirect::back()->with(['success' => $th->getMessage()]);
+        }
+    }
 
 
 }

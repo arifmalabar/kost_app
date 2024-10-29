@@ -18,9 +18,10 @@ class PenghuniController extends Controller
 
         $data = array(
             "nama"=> "penghuni",
-            "data" => $this->getPenghuni(),
-            "kode"=>Kamar::all()
-            );
+            "penghuni" => $this->getPenghuni(),
+            "kode"=> Kamar::all()
+        );
+        //return $data;
         return view('penghuni.penghuni', $data);
     }
     private function getPenghuni()
@@ -28,7 +29,7 @@ class PenghuniController extends Controller
         try {
             $query = Penghuni::selectRaw("NIK, nama, email, no_telp, nama_ruang")
                                 ->join("tb_kamar", "tb_kamar.kode_kamar", "=", "tb_biodata_penghuni.kode_kamar")
-                                ->where("status", "=", 1)
+                                ->where("tb_biodata_penghuni.status", "=", 1)
                                 ->get();
             return $query;
         } catch (\Throwable $th) {

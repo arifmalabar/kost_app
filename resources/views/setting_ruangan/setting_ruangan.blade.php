@@ -36,6 +36,7 @@
                                         <th>Nama Gedung</th>
                                         <th>Nama Kamar</th>
                                         <th>No Kamar</th>
+                                        <th>Status</th>
                                         <th style="text-align: center">Opsi</th>
                                     </tr>
                                 </thead>
@@ -47,6 +48,16 @@
                                             <td>{{ $d->nama_ruang }}</td>
                                             <td>{{ $d->no_ruang }}</td>
                                             <td>
+                                                @if($d->status == 0)
+                                                    <span class="badge badge-danger">Tidak Aktif</span>
+                                                @else
+                                                    <span class="badge badge-success">Aktif</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($d->status == 0)
+                                                    <a href="/setting_ruangan/aktifkan_ruangan/{{ $d->kode_kamar }}" class="btn btn-outline-success btn-sm"><i class="fa fa-lock"></i> Aktifkan Ruangan</a>
+                                                @else
                                                 <center>
                                                     <button class="btn btn-outline-info btn-sm" data-toggle="modal"
                                                         data-target="#editRuanganModal" data-kode="{{ $d->kode_kamar }}"
@@ -62,10 +73,12 @@
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-outline-danger btn-sm"
                                                             onclick="confirmDelete('{{ $d->kode_kamar }}')">
-                                                            <i class="fas fa-trash-alt"></i>&nbsp;Hapus
+                                                            <i class="fas fa-trash-alt"></i>&nbsp;Non Aktifkan
                                                         </button>
                                                     </form>
                                                 </center>
+                                                @endif
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

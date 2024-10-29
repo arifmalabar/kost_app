@@ -13,6 +13,7 @@ class Gedung extends Model
     protected $primaryKey = "kode_gedung";
 
     public $incrementing = false;
+    public $timestamps = false;
 
     public function ruangan()
     {

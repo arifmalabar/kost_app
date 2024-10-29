@@ -42,7 +42,7 @@ Tambah Penghuni
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $d)
+                                @foreach ($penghuni as $d)
                                 <tr>
                                     <td>{{ $d->NIK }}</td>
                                     <td>{{ $d->nama }}</td>
