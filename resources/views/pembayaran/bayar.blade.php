@@ -119,12 +119,12 @@ Bayar
                         <h4>Riwayat Pembayaran</h4>
                     </div>
                     <div class="col-md-12">
-                        <div class="position-absolute" style="z-index: 10; width: 100%">
+                        <!--<div class="position-absolute" style="z-index: 10; width: 100%">
                             <select name="" id="sort-tahun" title="Pilih"
                                 class="form-control select2bs4 col-md-3">
                                 <option value="0" hidden selected>Pilih Tahun</option>
                             </select>
-                        </div>
+                        </div>-->
                         <table id="example2" style="text-align: center" class="table table-bordered table-hover">
                             <thead>
                                 <tr>

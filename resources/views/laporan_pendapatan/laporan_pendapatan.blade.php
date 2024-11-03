@@ -13,7 +13,7 @@
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title">Grafik Pendapatan</h3>
-                            <button style="position:absolute; right: 5px;" class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>
+                            <!--<button style="position:absolute; right: 5px;" class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>-->
                         </div>
                         <div class="card-body">
                             <div class="chart">
@@ -26,7 +26,7 @@
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title">Pendapatan</h3>
-                            <button style="position:absolute; right: 5px;" class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>
+                            <!--<button style="position:absolute; right: 5px;" class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>-->
                         </div>
                         <div class="card-body">
                             <table id="example2" style="text-align: center" class="table table-bordered table-hover">
@@ -51,7 +51,7 @@
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title">Pendapatan</h3>
-                            <button style="position:absolute; right: 5px;" class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>
+                            <!--<button style="position:absolute; right: 5px;" class="btn btn-success btn-sm"><i class="fa fa-sort"></i>&nbsp;Shorting</button>-->
                         </div>
                         <div class="card-body">
                             <table id="example1" style="text-align: center" class="table table-bordered table-hover">
