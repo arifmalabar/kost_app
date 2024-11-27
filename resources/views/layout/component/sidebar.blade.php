@@ -99,6 +99,18 @@
                         <p>Laporan Pendapatan</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="/user" class="nav-link {{ $nama  == 'user' ? 'active' : '' }}">
+                        <i class="fas nav-icon fa-users"></i>
+                        <p>User</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/akun" class="nav-link {{ $nama  == 'Akun' ? 'active' : '' }}">
+                        <i class="fas nav-icon fa-user"></i>
+                        <p>Akun</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

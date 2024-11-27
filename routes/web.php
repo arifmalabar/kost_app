@@ -12,7 +12,7 @@ use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\grafik_penghuni\GrafikPenghuni;
 use App\Http\Controllers\pembayaran\PembayaranController;
 use App\Http\Controllers\grafik_pendapatan\GrafikPendapatan;
-
+use App\Http\Controllers\user\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,6 +109,14 @@ Route::middleware('auth')->group(function() {
          Route::get("/data_pendapatan_gedung", "getDataPembayaranGedung");
          Route::get("/laporan_pendapatan_gedung/{kode_gedung}/{tahun}", "getLaporanGedung")->name('grafik_pendapatan');
          Route::get("/cetak_laporan_gedung/{kode_gedung}", "cetakLaporanGedung");
+     });
+     Route::controller(UserController::class)->group(function() {
+        $path = "/user";
+        Route::get($path, "index")->name("user");
+        Route::post($path."/tambah_user", "tambahUser")->name("user");
+        Route::put($path."/update_user/{id}", "updateUser")->name("user");
+        Route::delete($path."/delete_user/{id}", "deleteUser")->name("user");
+        Route::get($path."/hapus_data/{id}", "deleteUser")->name("user");
      });
     
     
